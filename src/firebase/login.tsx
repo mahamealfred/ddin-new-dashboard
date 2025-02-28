@@ -2,8 +2,8 @@ import { FC, Fragment, useContext, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import { ThemeChanger } from "../redux/action";
 import { Link, useNavigate } from 'react-router-dom';
-import desktoplogo from "../assets/images/brand-logos/desktop-logo.png";
-import desktopdarklogo from "../assets/images/brand-logos/desktop-logo.png";
+import desktoplogo from "../assets/images/brand-logos/ddinlogoT.png";
+import desktopdarklogo from "../assets/images/brand-logos/ddinlogoT.png";
 import react from "../assets/images/brand-logos/2.png";
 import firebase from "../assets/images/brand-logos/1.png";
 

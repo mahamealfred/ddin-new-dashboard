@@ -6,27 +6,27 @@ import { ThemeChanger } from '../../../redux/action';
 import { Link } from 'react-router-dom';
 import togglelogo from "../../../assets/images/brand-logos/toggle-logo.png";
 import toggledark from "../../../assets/images/brand-logos/toggle-dark.png";
-// import desktopdark from "../../../assets/images/brand-logos/desktop-dark.png";
-import desktoplogo from "../../../assets/images/brand-logos/desktop-logo.png";
-import desktopwhitelogo from "../../../assets/images/brand-logos/desktop-white.png";
-import landingpage1 from "../../../assets/images/media/landing/banner_image.jpg";
-// import landingpage3 from "../../../assets/images/media/landing/3.png";
-// import reactimg from "../../../assets/images/media/landing/web/react.png";
-// import tsimg from "../../../assets/images/media/landing/web/TYPESCRIPT.png";
-// import yarnimg from "../../../assets/images/media/landing/web/YARN.png";
-// import muiimg from "../../../assets/images/media/landing/web/MUI.png";
-// import cssimg from "../../../assets/images/media/landing/web/CSS.png";
-// import tailimg from "../../../assets/images/media/landing/web/1.png";
-// import npm from "../../../assets/images/media/landing/web/6.png";
-// import sass from "../../../assets/images/media/landing/web/4.png";
-// import { Accordiondata, Projectdata, Secondaccordion, slide, Stepsdata, Teamcardsdata } from '../../../components/ui/data/pages/landingdata';
-// import SwiperComponent from '../../../@spk/spk-packages/swiper-component';
+ import desktopdark from "../../../assets/images/brand-logos/desktop-dark.png";
+import desktoplogo from "../../../assets/images/brand-logos/ddinlogo.png";
+import desktopwhitelogo from "../../../assets/images/brand-logos/ddinlogo.png";
+import landingpage1 from "../../../assets/images/media/media-1.jpg";
+import landingpage3 from "../../../assets/images/media/landing/3.png";
+import reactimg from "../../../assets/images/media/landing/web/react.png";
+import tsimg from "../../../assets/images/media/landing/web/TYPESCRIPT.png";
+import yarnimg from "../../../assets/images/media/landing/web/YARN.png";
+import muiimg from "../../../assets/images/media/landing/web/MUI.png";
+import cssimg from "../../../assets/images/media/landing/web/CSS.png";
+import tailimg from "../../../assets/images/media/landing/web/1.png";
+import npm from "../../../assets/images/media/landing/web/6.png";
+import sass from "../../../assets/images/media/landing/web/4.png";
+import { Accordiondata, Projectdata, Secondaccordion, slide, Stepsdata, Teamcardsdata } from '../../../components/ui/data/pages/landingdata';
+import SwiperComponent from '../../../@spk/spk-packages/swiper-component';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-// import Spktitlecards from '../../../@spk/uielements/cards/spktitlecards';
-// import { Pricingdata } from '../../../components/ui/data/pages/pricingdata';
-// import SpkLandingpricingcards from '../../../@spk/spk-pages/pricing/spk-landingpricingcards';
-// import SpkAccordions from '../../../@spk/advanced-ui/spk-accordions';
-// import SpkButton from '../../../@spk/uielements/spk-button';
+import Spktitlecards from '../../../@spk/uielements/cards/spktitlecards';
+import { Pricingdata } from '../../../components/ui/data/pages/pricingdata';
+import SpkLandingpricingcards from '../../../@spk/spk-pages/pricing/spk-landingpricingcards';
+import SpkAccordions from '../../../@spk/advanced-ui/spk-accordions';
+import SpkButton from '../../../@spk/uielements/spk-button';
 
 interface LandingProps { }
 
@@ -264,10 +264,12 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                             <nav className="main-menu-container nav nav-pills flex-column sub-open">
                                 <div className="landing-logo-container my-auto hidden lg:block">
                                     <div className="responsive-logo">
-                                        <Link className="responsive-logo-light" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand"><img
-                                            src={desktoplogo} alt="logo" className="mx-auto w-[160px] h-auto" /></Link>
-                                        <Link className="responsive-logo-dark" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand"><img
-                                            src={desktopwhitelogo} alt="logo" className="mx-auto w-[160px] h-auto" /></Link>
+                                        <Link className="responsive-logo-light" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand">
+                                        <img src={desktoplogo} alt="logo" className="mx-auto w-[80px] h-auto" />
+                                        </Link>
+                                        <Link className="responsive-logo-dark" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand">
+                                        <img src={desktopwhitelogo} alt="logo" className="mx-auto w-[80px] h-auto" />
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="slide-left hidden" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path> </svg></div>
@@ -288,147 +290,148 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                 <div className="main-content !p-0 landing-main dark:text-defaulttextcolor/70"
                 //  onClick={(e) => handleClick(e)}
                  >
-                    <div className="landing-banner" id="home">
-                        <section className="section">
-                            <div className="container main-banner-container">
-                                <div className="grid grid-cols-12 gap-6">
-                                    <div className="xxl:col-span-7 xl:col-span-7 lg:col-span-6 col-span-12">
-                                        <div className="xl:py-[3rem]">
-                                            <div className="mb-4">
-                                                <h5 className="font-semibold text-white opacity-[0.9] text-[1.25rem]">Welcome to the RICA Import Inspection System</h5>
-                                            </div>
-                                            <p className="landing-banner-heading mb-4 opacity-[0.9]">Your partner in upholding import standards.<span className="text-secondary"></span></p>
-                                            <div className="text-[1rem] mb-[3rem] text-white opacity-[0.9]">Ensuring the quality and compliance of imported goods to protect consumers and promote trade efficiency. </div>
-                                            <Link to='https://stp.sw.rra.gov.rw/#/home' className="m-1 ti-btn ti-btn-primary-full">
-                                                Go to STP
-                                                <i className="ri-eye-line ms-2 align-middle"></i>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div className="xxl:col-span-5 xl:col-span-5 lg:col-span-6 col-span-12">
-                                        <div className="text-end landing-main-image landing-heading-img flex justify-end w-full">
-                                            <img src={landingpage1} alt="" className="img-fluid" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    {/* <section className="section !bg-[#f9fafb] dark:!bg-black/10 section-bg text-defaulttextcolor dark:text-defaulttextcolor/70" id="statistics">
-                        <div className="container text-center relative">
-                            <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">STATISTICS</span></p>
-                            <h3 className="font-semibold mb-2 text-defaulttextcolor dark:text-defaulttextcolor/70 ">More than 120+ projects completed.</h3>
-                            <div className="">
-                                <div className="xl:col-span-7 col-span-12">
-                                    <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-12 font-normal">We are proud to have top class clients and customers,which motivates us to work more on projects.</p>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                                {Projectdata.map((idx)=>(
-                                    <div className="col-span-1 mb-4" key={Math.random()}>
-                                        <div className="p-4 text-center !rounded-sm bg-white dark:bg-bodybg border dark:border-defaultborder/10">
-                                            <span className="mb-4 avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
-                                                <i className={idx.icon}></i>
-                                            </span>
-                                            <h3 className="font-semibold mb-0 text-dark">{idx.value}</h3>
-                                            <p className="mb-1 text-[0.875rem] opacity-[0.7] text-[#8c9097] dark:text-white/50 ">
-                                                {idx.text}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-                    <section className="section text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="about">
-                        <div className="container text-center">
-                            <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">CUSTOMIZATION</span></p>
-                            <h3 className="font-semibold mb-2 dark:text-defaulttextcolor dark:text-defaulttextcolor/70710">Designed with precision and well documented</h3>
-                            <div className="grid grid-cols-12 justify-center max-w-xl mx-auto">
-                                <div className="col-span-12">
-                                    <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-4 font-normal">ynex comes with multiple customization options that are very easy to implement.</p>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-8 justify-center align-center">
-                                <div className="xxl:col-span-3 xl:col-span-3 lg:col-span-3 col-span-12 customize-image text-center">
-                                    <div className="lg:text-start !flex items-center lg:justify-start justify-center">
-                                        <img src={landingpage3} alt="" className="img-fluid" />
-                                    </div>
-                                </div>
-                                <div className="xxl:col-span-5 xl:col-span-5 lg:col-span-5 col-span-12 pt-5 pb-0 lg:px-2 !text-start px-12 my-auto">
-                                    <h5 className="lg:text-start font-semibold mb-0 text-[1.25rem]">Present your awesome product</h5>
-                                    <p className=" text-[#8c9097] dark:text-white/50 mb-4">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or damsenlel verman code Lorem ipsum, dolor sit amet consectetur adipisicing elit</p>
-                                    <ul className="">
-                                        <li className="mb-4">
-                                            <div className="flex">
-                                                <span>
-                                                    <i className="bx bxs-badge-check !text-primary text-[1.125rem]"></i>
-                                                </span>
-                                                <div className="ms-2">
-                                                    <h6 className="font-semibold mb-0 text-[1rem]">Can Switch Easily From Vertical to HorizontalMenu.</h6>
-                                                    <p className=" text-[#8c9097] dark:text-white/50">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li className="mb-4">
-                                            <div className="flex">
-                                                <span>
-                                                    <i className="bx bxs-badge-check !text-primary text-[1.125rem]"></i>
-                                                </span>
-                                                <div className="ms-2">
-                                                    <h6 className="font-semibold mb-0 text-[1rem]">Switch Easily From One Color to Another Color style</h6>
-                                                    <p className=" text-[#8c9097] dark:text-white/50">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li className="">
-                                            <div className="flex">
-                                                <span>
-                                                    <i className="bx bxs-badge-check !text-primary text-[1.125rem]"></i>
-                                                </span>
-                                                <div className="ms-2">
-                                                    <h6 className="font-semibold mb-0 text-[1rem]">Switch Easily From Fixed to Scrollable Layout.</h6>
-                                                    <p className=" text-[#8c9097] dark:text-white/50">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or damsenlel verman code Lorem ipsum, dolor sit amet consectetur </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section className="section bg-[#f9fafb] section-bg text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="our-mission">
-                        <div className="container text-center">
-                            <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">OUR MISSION</span></p>
-                            <h3 className="font-semibold mb-2">Our mission consists of 8 major steps.</h3>
-                            <div>
-                                <div className="xl:col-span-7">
-                                    <p className="text-[#8c9097] dark:text-white/50 text-sm mb-12 font-normal">Our mission is to make web design easy, so you can focus on building your brand.</p>
-                                </div>
-                            </div>
+                <div className="landing-banner" id="home">
+                    <section className="section">
+                        <div className="container main-banner-container">
                             <div className="grid grid-cols-12 gap-6">
-                                {Stepsdata.map((idx)=>(
-                                <div className="xxl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-6 sm:col-span-6 col-span-12" key={Math.random()}>
-                                    <Spktitlecards Customclass='text-start landing-missions'>
-                                        <div className="items-start">
-                                                <div className="mb-2">
-                                                    <span className="avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
-                                                        <i className={idx.icon}></i>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <h6 className="font-semibold mb-1 text-[1rem]">
-                                                        {idx.title}
-                                                    </h6>
-                                                    <p className="mb-0 text-[#8c9097] dark:text-white/50">lorem ipsum, dolor sit var ameto condesetrat aiatel varen or damsenlel verman code Lorem ipsum, dolor sit amet consectetur adipisicing elit</p>
-                                                </div>
-                                            </div>
-                                    </Spktitlecards>
+                                <div className="xxl:col-span-7 xl:col-span-7 lg:col-span-6 col-span-12">
+                                    <div className="xl:py-[3rem]">
+                                        <div className="mb-4">
+                                            <h5 className="font-semibold text-white opacity-[0.9] text-[1.25rem]">Welcome to DDIN Group Ltd</h5>
+                                        </div>
+                                        <p className="landing-banner-heading mb-4 opacity-[0.9]">Building a smarter future with digital innovation.<span className="text-secondary"></span></p>
+                                        <div className="text-[1rem] mb-[3rem] text-white opacity-[0.9]">Providing seamless and efficient digital solutions to empower businesses and individuals through our corporate PWA.</div>
+                                        <Link to='/services' className="m-1 ti-btn ti-btn-primary-full">
+                                            Explore Services
+                                            <i className="ri-eye-line ms-2 align-middle"></i>
+                                        </Link>
+                                    </div>
                                 </div>
-                                ))}
+                                <div className="xxl:col-span-5 xl:col-span-5 lg:col-span-6 col-span-12">
+                                    <div className="text-end landing-main-image landing-heading-img flex justify-end w-full">
+                                        <img src={desktopwhitelogo} alt="DDIN Group Ltd" className="img-fluid" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
+                </div>
+                <section className="section !bg-[#f9fafb] dark:!bg-black/10 section-bg text-defaulttextcolor dark:text-defaulttextcolor/70" id="statistics">
+                    <div className="container text-center relative">
+                        <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">WHY CHOOSE DDIN GROUP LTD?</span></p>
+                        <h3 className="font-semibold mb-2 text-defaulttextcolor dark:text-defaulttextcolor/70 ">Driving Business Success with Innovation & Technology</h3>
+                        <div className="">
+                            <div className="xl:col-span-7 col-span-12">
+                                <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-12 font-normal">Partner with DDIN Group Ltd to access cutting-edge digital solutions, ensuring seamless operations and business growth.</p>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                            {Projectdata.map((idx) => (
+                                <div className="col-span-1 mb-4" key={Math.random()}>
+                                    <div className="p-4 text-center !rounded-sm bg-white dark:bg-bodybg border dark:border-defaultborder/10">
+                                        <span className="mb-4 avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
+                                            <i className={idx.icon}></i>
+                                        </span>
+                                        <h3 className="font-semibold mb-0 text-dark">{idx.value}</h3>
+                                        <p className="mb-1 text-[0.875rem] opacity-[0.7] text-[#8c9097] dark:text-white/50 ">
+                                            {idx.text}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+                <section className="section text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="about">
+    <div className="container text-center">
+        <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">INNOVATIVE FINANCIAL SOLUTIONS</span></p>
+        <h3 className="font-semibold mb-2 dark:text-defaulttextcolor dark:text-defaulttextcolor/70">Empowering Businesses with Seamless Payment and Loan Services</h3>
+        <div className="grid grid-cols-12 justify-center max-w-xl mx-auto">
+            <div className="col-span-12">
+                <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-4 font-normal">DDIN Group Ltd offers secure and efficient financial solutions, including seamless payment processing and easy access to business loans.</p>
+            </div>
+        </div>
+        <div className="grid grid-cols-8 justify-center align-center">
+            <div className="xxl:col-span-3 xl:col-span-3 lg:col-span-3 col-span-12 customize-image text-center">
+                <div className="lg:text-start !flex items-center lg:justify-start justify-center">
+                    <img src={desktopwhitelogo} alt="Financial Solutions" className="img-fluid" />
+                </div>
+            </div>
+            <div className="xxl:col-span-5 xl:col-span-5 lg:col-span-5 col-span-12 pt-5 pb-0 lg:px-2 !text-start px-12 my-auto">
+                <h5 className="lg:text-start font-semibold mb-0 text-[1.25rem]">Streamline Payments and Access Business Loans</h5>
+                <p className="text-[#8c9097] dark:text-white/50 mb-4">Our platform provides businesses with an integrated payment system and simplified access to financing options.</p>
+                <ul className="">
+                    <li className="mb-4">
+                        <div className="flex">
+                            <span>
+                                <i className="bx bxs-badge-check !text-primary text-[1.125rem]"></i>
+                            </span>
+                            <div className="ms-2">
+                                <h6 className="font-semibold mb-0 text-[1rem]">Fast and Secure Payment Processing</h6>
+                                <p className="text-[#8c9097] dark:text-white/50">Enable quick and secure transactions to enhance business efficiency.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li className="mb-4">
+                        <div className="flex">
+                            <span>
+                                <i className="bx bxs-badge-check !text-primary text-[1.125rem]"></i>
+                            </span>
+                            <div className="ms-2">
+                                <h6 className="font-semibold mb-0 text-[1rem]">Easy Loan Application and Approval</h6>
+                                <p className="text-[#8c9097] dark:text-white/50">Access business loans with a simple application process and quick approval.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li className="">
+                        <div className="flex">
+                            <span>
+                                <i className="bx bxs-badge-check !text-primary text-[1.125rem]"></i>
+                            </span>
+                            <div className="ms-2">
+                                <h6 className="font-semibold mb-0 text-[1rem]">Automated Financial Management Tools</h6>
+                                <p className="text-[#8c9097] dark:text-white/50">Optimize cash flow and financial planning with advanced automation features.</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section className="section bg-[#f9fafb] section-bg text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="our-mission">
+    <div className="container text-center">
+        <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">OUR MISSION</span></p>
+        <h3 className="font-semibold mb-2">Empowering Businesses with Seamless Financial Solutions</h3>
+        <div>
+            <div className="xl:col-span-7">
+                <p className="text-[#8c9097] dark:text-white/50 text-sm mb-12 font-normal">Our mission is to provide businesses with reliable payment processing and loan services, ensuring financial growth and stability.</p>
+            </div>
+        </div>
+        <div className="grid grid-cols-12 gap-6">
+            {Stepsdata.map((idx)=>(
+            <div className="xxl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-6 sm:col-span-6 col-span-12" key={Math.random()}>
+                <Spktitlecards Customclass='text-start landing-missions'>
+                    <div className="items-start">
+                        <div className="mb-2">
+                            <span className="avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
+                                <i className={idx.icon}></i>
+                            </span>
+                        </div>
+                        <div>
+                            <h6 className="font-semibold mb-1 text-[1rem]">
+                                {idx.title}
+                            </h6>
+                            <p className="mb-0 text-[#8c9097] dark:text-white/50">We enable businesses to accept payments, manage transactions, and access financial resources effortlessly.</p>
+                        </div>
+                    </div>
+                </Spktitlecards>
+            </div>
+            ))}
+        </div>
+    </div>
+</section>
+
                     <section className="section landing-Features text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="features">
                         <div className="container text-center">
                             <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">Features</span></p>
@@ -788,8 +791,8 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                                 </div>
                             </div>
                         </div>
-                    </section> */}
-                    {/* <div className="text-center landing-main-footer py-4 opacity-[0.87]">
+                    </section>
+                    <div className="text-center landing-main-footer py-4 opacity-[0.87]">
                         <span className="text-[#8c9097] dark:text-white/50 text-[0.9375rem]"> Copyright © 2024<span id="year"></span> <Link
                             to="https://spruko.com/"  className="!text-primary font-semibold"><u>ynex</u></Link>.
                             Designed with <span className="fa fa-heart text-danger"></span> by <Link to="#"  className="!text-primary font-semibold"><u>
@@ -798,7 +801,7 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                             rights
                             reserved
                         </span>
-                    </div> */}
+                    </div>
                 </div>
         </Fragment>
     )

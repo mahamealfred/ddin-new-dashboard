@@ -51,16 +51,17 @@ interface StepsType {
     icon:string;
     title:string;
 }
- export const Stepsdata:StepsType[]=[
-    {id:1, icon:'bx bx-badge-check text-[1.5625rem]', title:' Design Quality'},
-    {id:2, icon:'bx bx-file text-[1.5625rem]', title:'Documentation'},
-    {id:3, icon:'bx bx-cog text-[1.5625rem]', title:'Customization'},
-    {id:4, icon:'bx bx-cloud-upload text-[1.5625rem]', title:'Regular Updates'},
-    {id:5, icon:'bx bx-support text-[1.5625rem]', title:'24/7 Support'},
-    {id:6, icon:'bx bx-image text-[1.5625rem]', title:'Pre-Built Theme Styles'},
-    {id:7, icon:'bx bx-compass text-[1.5625rem]', title:' Compatibility'},
-    {id:8, icon:'bx bx-desktop text-[1.5625rem]', title:' Fully Responsive'},
- ]
+export const Stepsdata:StepsType[]=[
+    {id:1, icon:'bx bx-credit-card text-[1.5625rem]', title:'Secure Payment Processing'},
+    {id:2, icon:'bx bx-money text-[1.5625rem]', title:'Easy Loan Applications'},
+    {id:3, icon:'bx bx-wallet text-[1.5625rem]', title:'Multiple Payment Options'},
+    {id:4, icon:'bx bx-bar-chart text-[1.5625rem]', title:'Financial Analytics & Insights'},
+    {id:5, icon:'bx bx-lock text-[1.5625rem]', title:'Data Security & Compliance'},
+    {id:6, icon:'bx bx-support text-[1.5625rem]', title:'24/7 Customer Support'},
+    {id:7, icon:'bx bx-trending-up text-[1.5625rem]', title:'Business Growth Solutions'},
+    {id:8, icon:'bx bx-globe text-[1.5625rem]', title:'Global Payment Accessibility'},
+]
+
 
  interface ProjectsType {
     id:number;
@@ -68,13 +69,14 @@ interface StepsType {
     text:string;
     value:string;
 }
- export const Projectdata:ProjectsType[]=[
-    {id:1, icon:'text-[1.5rem] bx bx-spreadsheet', text:'Projects', value:'120+'},
-    {id:2, icon:'text-[1.5rem] bx bx-user-plus', text:'Clients', value:'20K+'},
-    {id:3, icon:'text-[1.5rem] bx bx-money', text:'Income Earned', value:'$45.8M'},
-    {id:4, icon:'text-[1.5rem] bx bx-user-circle', text:'Employees', value:'854'},
-    {id:5, icon:'text-[1.5rem] bx bx-calendar', text:' Years of Experience', value:'5+'}
- ]
+export const Projectdata:ProjectsType[]=[
+    {id:1, icon:'text-[1.5rem] bx bx-credit-card', text:'Payment Transactions', value:'500K+'},
+    {id:2, icon:'text-[1.5rem] bx bx-user-check', text:'Happy Clients', value:'30K+'},
+    {id:3, icon:'text-[1.5rem] bx bx-wallet', text:'Total Revenue Processed', value:'Rwf 75M+'},
+    {id:4, icon:'text-[1.5rem] bx bx-building', text:'Corporate Partnerships', value:'10+'},
+    {id:5, icon:'text-[1.5rem] bx bx-time', text:'Years in Business', value:'8+'}
+]
+
  interface TeamcardsType {
     id:number;
     src:string;

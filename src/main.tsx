@@ -194,7 +194,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <React.Suspense fallback={<Loader/>}>
                 <Routes>
                   <Route path={`${import.meta.env.BASE_URL}`} element={<Auth />}>
-                    <Route index element={<Login />} />
+                    <Route index element={<Landing/>} />
                     <Route path={`${import.meta.env.BASE_URL}firebase/login`} element={<Login />} />
                     <Route path={`${import.meta.env.BASE_URL}firebase/signup`} element={<Signup />} />
                   </Route>
