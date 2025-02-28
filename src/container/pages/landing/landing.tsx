@@ -9,8 +9,7 @@ import toggledark from "../../../assets/images/brand-logos/toggle-dark.png";
  import desktopdark from "../../../assets/images/brand-logos/desktop-dark.png";
 import desktoplogo from "../../../assets/images/brand-logos/ddinlogo.png";
 import desktopwhitelogo from "../../../assets/images/brand-logos/ddinlogo.png";
-import landingpage1 from "../../../assets/images/media/media-1.jpg";
-import landingpage3 from "../../../assets/images/media/landing/3.png";
+
 import reactimg from "../../../assets/images/media/landing/web/react.png";
 import tsimg from "../../../assets/images/media/landing/web/TYPESCRIPT.png";
 import yarnimg from "../../../assets/images/media/landing/web/YARN.png";
