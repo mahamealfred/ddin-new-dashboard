@@ -2,8 +2,8 @@
 import { Outlet, useLocation } from "react-router-dom";
 import store from "../redux/store";
 import { Provider } from "react-redux";
-import { Fragment, useEffect, useState } from "react";
-import { Initialload } from "../components/common/contextapi";
+import { Fragment, useEffect } from "react";
+import {AuthProvider } from "../components/common/contextapi";
 import "preline/preline";
 import { IStaticMethods } from "preline/preline";
 
@@ -20,14 +20,14 @@ const Auth = () => {
     window.HSStaticMethods.autoInit();
   }, [location.pathname]);
 
-   const [pageloading, setpageloading] = useState(false)
+  // const [pageloading, setpageloading] = useState(false)
   return (
     <Fragment>
-      <Initialload.Provider value={{ pageloading, setpageloading }}>
+      <AuthProvider>
             <Provider store={store}>
               <Outlet/>      
             </Provider>
-      </Initialload.Provider>
+      </AuthProvider>
     </Fragment>
   );
 };

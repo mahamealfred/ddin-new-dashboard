@@ -6,12 +6,12 @@ import { MenuItems } from "./nav";
 import store from "../../../redux/store";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeChanger } from "../../../redux/action";
-import logo1 from "../../../assets/images/brand-logos/desktop-logo.png";
-import logo2 from "../../../assets/images/brand-logos/toggle-logo.png";
-import logo3 from "../../../assets/images/brand-logos/desktop-dark.png";
-import logo4 from "../../../assets/images/brand-logos/toggle-dark.png";
-import logo5 from "../../../assets/images/brand-logos/desktop-white.png";
-import logo6 from "../../../assets/images/brand-logos/toggle-white.png";
+import logo1 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
+import logo2 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
+import logo3 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
+import logo4 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
+import logo5 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
+import logo6 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
 import SpkButton from "../../../@spk/uielements/spk-button";
 // import SpkButton from "../../../@spk/uielements/spk-button";
 // import SpkOverlay from "../../../@spk/uielements/spk-overlay";
@@ -633,7 +633,7 @@ const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 			<aside className="app-sidebar" id="sidebar" onMouseOver={() => Onhover()}
 				onMouseLeave={() => Outhover()}>
 				<div className="main-sidebar-header">
-					<Link to={`${import.meta.env.BASE_URL}dashboards/crm/`} className="header-logo">
+					<Link to={`${import.meta.env.BASE_URL}dashboards/corporate/`} className="header-logo">
 					<img src={logo1} alt="logo" className="desktop-logo" />
 					<img src={logo2} alt="logo" className="toggle-logo" />
 					<img src={logo3} alt="logo" className="desktop-dark" />

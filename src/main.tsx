@@ -194,7 +194,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <React.Suspense fallback={<Loader/>}>
                 <Routes>
                   <Route path={`${import.meta.env.BASE_URL}`} element={<Auth />}>
-                    <Route index element={<Landing/>} />
+                    {/* <Route index element={<Landing/>} /> */}
+                    <Route index element={<Login/>} />
                     <Route path={`${import.meta.env.BASE_URL}firebase/login`} element={<Login />} />
                     <Route path={`${import.meta.env.BASE_URL}firebase/signup`} element={<Signup />} />
                   </Route>
@@ -204,7 +205,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     <Route path={`${import.meta.env.BASE_URL}dashboards/crypto`} element={<Crypto/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/jobs`} element={<Jobs/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/nft`} element={<Nft/>} />
-                    <Route path={`${import.meta.env.BASE_URL}dashboards/sales`} element={<Sales/>} />
+                    <Route path={`${import.meta.env.BASE_URL}dashboards/corporate`} element={<Sales/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/analytics`} element={<Analytics/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/projects`} element={<Projects/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/hrm`} element={<Hrm/>} />

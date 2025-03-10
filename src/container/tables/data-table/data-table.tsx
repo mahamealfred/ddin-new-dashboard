@@ -1,5 +1,9 @@
 import   { FC, Fragment, useState } from 'react';
-import StickyHeadTable, { Basiccolumns, Basicdata, CustomizedTables,   } from '../../../components/ui/data/tables/datatabledata';
+import 
+//StickyHeadTable,
+ { Basiccolumns, Basicdata,
+ //  CustomizedTables,  
+   } from '../../../components/ui/data/tables/datatabledata';
 import Pageheader from '../../../components/common/page-header/pageheader';
 import Spkdatatable from '../../../@spk/spk-packages/spk-data-table';
 
@@ -17,7 +21,7 @@ const Datatable: FC<DatatableProps> = () => {
   return (
     <Fragment>
       <Pageheader currentpage="Data Tables" activepage="Tables" mainpage="Data Tables" />
-      <div className="grid grid-cols-12 gap-6">
+      {/* <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12">
           <div className="box">
             <div className="box-header">
@@ -32,12 +36,12 @@ const Datatable: FC<DatatableProps> = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12">
           <div className="box">
             <div className="box-header">
-              <h5 className="box-title">Editable Table</h5>
+              <h5 className="box-title">Completed Tranctions</h5>
             </div>
             <div className="box-body space-y-3">
               <div className="overflow-hidden">
@@ -54,7 +58,7 @@ const Datatable: FC<DatatableProps> = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-6">
+      {/* <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12">
           <div className="box">
             <div className="box-header">
@@ -69,8 +73,8 @@ const Datatable: FC<DatatableProps> = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="grid grid-cols-12 gap-6">
+      </div> */}
+      {/* <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12">
           <div className="box">
             <div className="box-header">
@@ -85,7 +89,7 @@ const Datatable: FC<DatatableProps> = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       
     </Fragment>
   )

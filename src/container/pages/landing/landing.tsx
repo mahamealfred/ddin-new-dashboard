@@ -7,23 +7,23 @@ import { Link } from 'react-router-dom';
 import togglelogo from "../../../assets/images/brand-logos/toggle-logo.png";
 import toggledark from "../../../assets/images/brand-logos/toggle-dark.png";
  import desktopdark from "../../../assets/images/brand-logos/desktop-dark.png";
-import desktoplogo from "../../../assets/images/brand-logos/ddinlogo.png";
-import desktopwhitelogo from "../../../assets/images/brand-logos/ddinlogo.png";
+import desktoplogo from "../../../assets/images/brand-logos/ddinlogoT.png";
+import desktopwhitelogo from "../../../assets/images/brand-logos/ddinlogoT.png";
 
-import reactimg from "../../../assets/images/media/landing/web/react.png";
-import tsimg from "../../../assets/images/media/landing/web/TYPESCRIPT.png";
-import yarnimg from "../../../assets/images/media/landing/web/YARN.png";
-import muiimg from "../../../assets/images/media/landing/web/MUI.png";
-import cssimg from "../../../assets/images/media/landing/web/CSS.png";
-import tailimg from "../../../assets/images/media/landing/web/1.png";
-import npm from "../../../assets/images/media/landing/web/6.png";
-import sass from "../../../assets/images/media/landing/web/4.png";
-import { Accordiondata, Projectdata, Secondaccordion, slide, Stepsdata, Teamcardsdata } from '../../../components/ui/data/pages/landingdata';
-import SwiperComponent from '../../../@spk/spk-packages/swiper-component';
+// import reactimg from "../../../assets/images/media/landing/web/react.png";
+// import tsimg from "../../../assets/images/media/landing/web/TYPESCRIPT.png";
+// import yarnimg from "../../../assets/images/media/landing/web/YARN.png";
+// import muiimg from "../../../assets/images/media/landing/web/MUI.png";
+// import cssimg from "../../../assets/images/media/landing/web/CSS.png";
+// import tailimg from "../../../assets/images/media/landing/web/1.png";
+// import npm from "../../../assets/images/media/landing/web/6.png";
+// import sass from "../../../assets/images/media/landing/web/4.png";
+import { Accordiondata, Projectdata, Secondaccordion, Stepsdata } from '../../../components/ui/data/pages/landingdata';
+// import SwiperComponent from '../../../@spk/spk-packages/swiper-component';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Spktitlecards from '../../../@spk/uielements/cards/spktitlecards';
-import { Pricingdata } from '../../../components/ui/data/pages/pricingdata';
-import SpkLandingpricingcards from '../../../@spk/spk-pages/pricing/spk-landingpricingcards';
+// import { Pricingdata } from '../../../components/ui/data/pages/pricingdata';
+// import SpkLandingpricingcards from '../../../@spk/spk-pages/pricing/spk-landingpricingcards';
 import SpkAccordions from '../../../@spk/advanced-ui/spk-accordions';
 import SpkButton from '../../../@spk/uielements/spk-button';
 
@@ -184,33 +184,33 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
 		};
 	}, []);
 
-    const breakpoint = {
-        // when window width is >= 320px
-        320: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-        },
-        // when window width is >= 480px
-        480: {
-            slidesPerView: 2,
-            spaceBetween: 30,
-        },
-        // when window width is >= 780px
-        780: {
-            slidesPerView: 3,
-            spaceBetween: 40,
-        },
-        // when window width is >= 990px
-        990: {
-            slidesPerView: 3,
-            spaceBetween: 40,
-        },
-        // for full-screen mode
-        1920: {
-            slidesPerView: 3,
-            spaceBetween: 40,
-        },
-    };
+    // const breakpoint = {
+    //     // when window width is >= 320px
+    //     320: {
+    //         slidesPerView: 1,
+    //         spaceBetween: 20,
+    //     },
+    //     // when window width is >= 480px
+    //     480: {
+    //         slidesPerView: 2,
+    //         spaceBetween: 30,
+    //     },
+    //     // when window width is >= 780px
+    //     780: {
+    //         slidesPerView: 3,
+    //         spaceBetween: 40,
+    //     },
+    //     // when window width is >= 990px
+    //     990: {
+    //         slidesPerView: 3,
+    //         spaceBetween: 40,
+    //     },
+    //     // for full-screen mode
+    //     1920: {
+    //         slidesPerView: 3,
+    //         spaceBetween: 40,
+    //     },
+    // };
 
     function menuClose() {
         const theme = store.getState();
@@ -226,70 +226,135 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
         <Fragment>
             <HelmetProvider>
                 <Helmet>
-                    <body className="landing-body"></body>
+                <body className="landing-body jobs-landing"></body>
                 </Helmet>
             </HelmetProvider>
-                <header className="app-header">
-                    <div className="main-header-container container-fluid">
-                        <div className="header-content-left">
-                            <div className="header-element">
-                                <div className="horizontal-logo">
-                                    <Link to={`${import.meta.env.BASE_URL}dashboards/crm/`} className="header-logo">
-                                    <img src={togglelogo} alt="logo" className="toggle-logo" />
-                                        <img src={toggledark} alt="logo" className="toggle-dark" /> 
-                                    </Link>
-                                    
-                                </div> 
-                            </div>
-                            <div className="header-element">
-                                <Link aria-label="anchor" to="#"  className="sidemenu-toggle header-link" onClick={() => toggleNavigation()}>
-                                    <span className="open-toggle"> <i className="ri-menu-3-line text-xl"></i> </span> </Link>
-                            </div>
-                        </div>
-                        <div className="header-content-right">
-                            <div className="header-element !items-center">
-                                <div className="lg:hidden block">
-                                    <Link to={`${import.meta.env.BASE_URL}authentication/sign-up/signup-basic/`} className="ti-btn ti-btn-primary !m-0 !me-2"> Sign Up </Link>
-                                    <Link aria-label="anchor" to="#"  className="ti-btn m-0 p-2 px-3 ti-btn-success" data-hs-overlay="#hs-overlay-switcher"><i className="ri-settings-3-line animate-spin-slow"></i></Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </header>
+            <header className="app-header">
+
+<div className="main-header-container container-fluid">
+
+    <div className="header-content-left">
+
+        <div className="header-element">
+            <div className="horizontal-logo">
+                <Link to={`${import.meta.env.BASE_URL}dashboards/crm/`} className="header-logo">
+                    <img src={togglelogo} alt="logo" className="toggle-logo" />
+                    <img src={toggledark} alt="logo" className="toggle-dark" /> </Link>
+            </div> </div>
+
+        <div className="header-element">
+            <Link aria-label="anchor" to="#" className="sidemenu-toggle header-link">
+                <span className="open-toggle" onClick={() => toggleNavigation()}> <i className="ri-menu-3-line text-xl"></i> </span>
+            </Link>
+        </div>
+    </div>
+    <div className="header-content-right">
+        <div className="header-element !items-center">
+            <div className="lg:hidden block">
+                <Link to={`${import.meta.env.BASE_URL}authentication/sign-up/signup-basic/`} className="ti-btn ti-btn-primary me-2 !mb-0"> Sign Up </Link>
+                <Link aria-label="anchor" to="#" className="ti-btn p-2 px-3 ti-btn-success !mb-0" data-hs-overlay="#hs-overlay-switcher"><i className="ri-settings-3-line animate-spin-slow"></i></Link>
+            </div>
+        </div>  </div>
+</div>
+</header>
                 <div id="responsive-overlay" onClick={() => menuClose()}></div>
-                <aside className="app-sidebar sticky !topacity-0 !bg-white" id="sidebar">
+                <aside className="app-sidebar sticky !topacity-0 " id="sidebar">
                     <div className="container-xl xl:!p-0">
                         <div className="main-sidebar mx-0">
                             <nav className="main-menu-container nav nav-pills flex-column sub-open">
                                 <div className="landing-logo-container my-auto hidden lg:block">
                                     <div className="responsive-logo">
-                                        <Link className="responsive-logo-light" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand">
-                                        <img src={desktoplogo} alt="logo" className="mx-auto w-[80px] h-auto" />
+                                        <Link className="responsive-logo-light" to={`${import.meta.env.BASE_URL}`} aria-label="Brand">
+                                        <img src={desktoplogo} alt="logo" className="mx-auto w-[65px] h-auto" />
                                         </Link>
-                                        <Link className="responsive-logo-dark" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand">
-                                        <img src={desktopwhitelogo} alt="logo" className="mx-auto w-[80px] h-auto" />
+                                        <Link className="responsive-logo-dark" to={`${import.meta.env.BASE_URL}`} aria-label="Brand">
+                                        <img src={desktopwhitelogo} alt="logo" className="mx-auto w-[65px] h-auto" />
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="slide-left hidden" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path> </svg></div>
                                 <ul className="main-menu">
-                                  
+                                <li className="slide">
+                                        <a className="side-menu__item" href="#home">
+                                            <span className="side-menu__label">Home</span>
+                                        </a>
+                                    </li>
+                                    <li className="slide">
+                                        <a href="#jobs" className="side-menu__item">
+                                            <span className="side-menu__label">About Us</span>
+                                        </a>
+                                    </li>
+                                    <li className="slide">
+                                        <a href="#candidate" className="side-menu__item">
+                                            <span className="side-menu__label">Services</span>
+                                        </a>
+                                    </li>
+                                    <li className="slide">
+                                        <a href="#blogs" className="side-menu__item">
+                                            <span className="side-menu__label">Blogs</span>
+                                        </a>
+                                    </li>
+                                    <li className="slide">
+                                        <a href="#contact" className="side-menu__item">
+                                            <span className="side-menu__label">Contact Us</span>
+                                        </a>
+                                    </li>
                                 </ul>
                                 <div className="slide-right hidden" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path> </svg></div>
-                                <div className="lg:flex hidden space-x-2 rtl:space-x-reverse">
-                                    <Link to={`${import.meta.env.BASE_URL}firebase/login/`} className="ti-btn w-[6.375rem] ti-btn-primary-full m-0 p-2">Sign
-                                        In</Link>
-                                    <Link aria-label="anchor" to="#"  className="ti-btn m-0 p-2 px-3 ti-btn-light !font-medium"
-                                        data-hs-overlay="#hs-overlay-switcher"><i className="ri-settings-3-line animate-spin-slow"></i></Link>
+                             
+                                <div className="lg:flex hidden">
+                                    <div className="btn-list lg:flex hidden lg:mt-2 xl:mt-0 mt-0">
+                                        <Link to={`${import.meta.env.BASE_URL}firebase/login/`} className="ti-btn bg-primary text-white font-![500] me-[0.365rem] whitespace-nowrap">
+                                            Sign In
+                                        </Link>
+                                        <Link to={`${import.meta.env.BASE_URL}firebase/signup`} className="ti-btn  bg-secondary text-white !font-medium me-[0.365rem] whitespace-nowrap">
+                                            Sign Up
+                                        </Link>
+                                        <Link aria-label="anchor" to="#" className="ti-btn m-0 p-2 px-3 ti-btn-light"
+                                            data-hs-overlay="#hs-overlay-switcher"><i className="ri-settings-2-line animate-spin-slow"></i></Link>
+                                    </div>
                                 </div>
                             </nav>
                         </div>
                     </div>
                 </aside>
+                <div className="main-content !p-0 landing-main dark:text-defaulttextcolor/70" >
+                    
+                    {/* </div>
                 <div className="main-content !p-0 landing-main dark:text-defaulttextcolor/70"
-                //  onClick={(e) => handleClick(e)}
-                 >
-                <div className="landing-banner" id="home">
+                 onClick={(e) => handleClick(e)}
+                 > */}
+                    <div className="landing-banner !h-auto" id="home">
+                    <section className="section !pb-0 text-[0.813rem]">
+    <div className="container main-banner-container">
+        <div className="grid grid-cols-12 justify-center text-center">
+            <div className="xxl:col-span-2 xl:col-span-2 lg:col-span-2 col-span-12"></div>
+            <div className="xxl:col-span-8 xl:col-span-8 lg:col-span-8 col-span-12">
+                <div className="">
+                    <h5 className="landing-banner-heading mb-3 !text-[2.4rem]">
+                        <span className="text-secondary font-bold">Empowering Businesses</span> with Digital Solutions
+                    </h5>
+                    <p className="text-[1.125rem] mb-[3rem] opacity-[0.8] font-normal text-white">
+                        Unlock seamless operations and enhanced efficiency with DDIN Group Ltd’s cutting-edge digital services.
+                    </p>
+                    <div className="mb-4 custom-form-group">
+                        <input type="text" className="form-control !py-4 !px-6 w-full !rounded-md form-control-lg shadow-sm" placeholder="Search for services, solutions, or support..." aria-label="Search Input" />
+                        <div className="custom-form-btn">
+                            <Link aria-label="anchor" to="#" className="gps-location"><i className="ti ti-current-location"></i></Link>
+                            <SpkButton customClass="ti-btn bg-primary text-white !font-medium !border dark:border-defaultborder/10-0" buttontype="button">
+                                <i className="bi bi-search me-2"></i> Explore
+                            </SpkButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="xxl:col-span-2 xl:col-span-2 lg:col-span-2 col-span-12"></div>
+        </div>
+    </div>
+</section>
+
+                    </div>
+                {/* <div className="landing-banner" id="home">
                     <section className="section">
                         <div className="container main-banner-container">
                             <div className="grid grid-cols-12 gap-6">
@@ -300,7 +365,7 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                                         </div>
                                         <p className="landing-banner-heading mb-4 opacity-[0.9]">Building a smarter future with digital innovation.<span className="text-secondary"></span></p>
                                         <div className="text-[1rem] mb-[3rem] text-white opacity-[0.9]">Providing seamless and efficient digital solutions to empower businesses and individuals through our corporate PWA.</div>
-                                        <Link to='/services' className="m-1 ti-btn ti-btn-primary-full">
+                                        <Link to='/' className="m-1 ti-btn ti-btn-primary-full">
                                             Explore Services
                                             <i className="ri-eye-line ms-2 align-middle"></i>
                                         </Link>
@@ -314,33 +379,38 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                             </div>
                         </div>
                     </section>
-                </div>
+                </div> */}
                 <section className="section !bg-[#f9fafb] dark:!bg-black/10 section-bg text-defaulttextcolor dark:text-defaulttextcolor/70" id="statistics">
-                    <div className="container text-center relative">
-                        <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">WHY CHOOSE DDIN GROUP LTD?</span></p>
-                        <h3 className="font-semibold mb-2 text-defaulttextcolor dark:text-defaulttextcolor/70 ">Driving Business Success with Innovation & Technology</h3>
-                        <div className="">
-                            <div className="xl:col-span-7 col-span-12">
-                                <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-12 font-normal">Partner with DDIN Group Ltd to access cutting-edge digital solutions, ensuring seamless operations and business growth.</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                            {Projectdata.map((idx) => (
-                                <div className="col-span-1 mb-4" key={Math.random()}>
-                                    <div className="p-4 text-center !rounded-sm bg-white dark:bg-bodybg border dark:border-defaultborder/10">
-                                        <span className="mb-4 avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
-                                            <i className={idx.icon}></i>
-                                        </span>
-                                        <h3 className="font-semibold mb-0 text-dark">{idx.value}</h3>
-                                        <p className="mb-1 text-[0.875rem] opacity-[0.7] text-[#8c9097] dark:text-white/50 ">
-                                            {idx.text}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+    <div className="container text-center relative">
+        <p className="text-[0.75rem] font-semibold text-success mb-1">
+            <span className="landing-section-heading">WHY CHOOSE DDIN GROUP LTD?</span>
+        </p>
+        <h3 className="font-semibold mb-2 text-defaulttextcolor dark:text-defaulttextcolor/70">
+            Empowering Businesses with Innovation & Technology
+        </h3>
+        <div className="xl:col-span-7 col-span-12">
+            <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-12 font-normal">
+                DDIN Group Ltd delivers top-tier digital solutions, enabling seamless transactions, optimized workflows, and business growth through cutting-edge technology.
+            </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {Projectdata.map((item) => (
+                <div className="col-span-1 mb-4" key={item.id}>
+                    <div className="p-4 text-center !rounded-sm bg-white dark:bg-bodybg border dark:border-defaultborder/10">
+                        <span className="mb-4 avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
+                            <i className={item.icon}></i>
+                        </span>
+                        <h3 className="font-semibold mb-0 text-dark">{item.value}</h3>
+                        <p className="mb-1 text-[0.875rem] opacity-[0.7] text-[#8c9097] dark:text-white/50">
+                            {item.text}
+                        </p>
                     </div>
-                </section>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
                 <section className="section text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="about">
     <div className="container text-center">
         <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">INNOVATIVE FINANCIAL SOLUTIONS</span></p>
@@ -431,88 +501,76 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
     </div>
 </section>
 
-                    <section className="section landing-Features text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="features">
-                        <div className="container text-center">
-                            <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">Features</span></p>
-                            <h3 className="font-semibold mb-2 !text-white">Features Used in YNEX</h3>
-                            <div>
-                                <div className="xl:col-span-7 col-span-12">
-                                    <p className="text-white opacity-[0.8] text-[0.9375rem] mb-4 font-normal">Some of the reviews our clients gave which brings motivation to work for future projects.</p>
-                                </div>
-                            </div>
-                            <div className="text-start">
-                                <div className="justify-center">
-                                    <div className="">
-                                    <div className="feature-logos sm:mt-[3rem] flex-wrap">
-                                        <div className="sm:ms-[3rem] ms-2 text-center">
-                                            <div className="featur-icon">
-                                                <img src={reactimg} alt="image" />
-                                            </div>
-                                            <h5 className="mt-3 text-white text-[1.25rem] ">React</h5>
-                                        </div>
-                                        <div className="sm:ms-[3rem] ms-2 text-center">
-                                            <div className="featur-icon">
-                                                <img src={tsimg} alt="image" />
-                                            </div>
-                                            <h5 className="mt-3 text-white text-[1.25rem] ">Typescript</h5>
-                                        </div>
-                                        <div className="sm:ms-[3rem] ms-2 text-center">
-                                            <div className="featur-icon">
-                                                <img src={tailimg} alt="image" />
-                                            </div>
-                                            <h5 className="mt-3 text-white text-[1.25rem] ">Tailwind Css</h5>
-                                        </div>
-                                        <div className="sm:ms-[3rem] ms-2 text-center">
-                                            <div className="featur-icon">
-                                                <img src={npm} alt="image" />
-                                            </div>
-                                            <h5 className="mt-3 text-white text-[1.25rem] ">NPM</h5>
-                                        </div>
-                                        <div className="sm:ms-[3rem] ms-2 text-center">
-                                            <div className="featur-icon">
-                                                <img src={yarnimg} alt="image" />
-                                            </div>
-                                            <h5 className="mt-3 text-white text-[1.25rem] ">Yarn</h5>
-                                        </div>
-                                        <div className="sm:ms-[3rem] ms-2 text-center">
-                                            <div className="featur-icon">
-                                                <img src={sass} alt="image" />
-                                            </div>
-                                            <h5 className="mt-3 text-white text-[1.25rem] ">Sass</h5>
-                                        </div>
-                                        <div className="sm:ms-[3rem] ms-2 text-center">
-                                            <div className="featur-icon">
-                                                <img src={cssimg} alt="image" />
-                                            </div>
-                                            <h5 className="mt-3 text-white text-[1.25rem] ">Css</h5>
-                                        </div>
-                                        <div className="sm:ms-[3rem] ms-2 text-center">
-                                            <div className="featur-icon">
-                                                <img src={muiimg} alt="image" />
-                                            </div>
-                                            <h5 className="mt-3 text-white text-[1.25rem] ">MUi</h5>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                <div className="swiper-pagination mt-4"></div>
-                            </div>
-                        </div>
-                    </section>
-                    <section className="section landing-testimonials bg-[#f9fafb] section-bg text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="testimonials">
-                        <div className="container text-center">
-                            <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">TESTIMONIALS</span></p>
-                            <h3 className="font-semibold mb-2">We never failed to reach expectations</h3>
-                            <div>
-                                <div className="xl:col-span-7 col-span-12">
-                                    <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-[3rem] font-normal">Some of the reviews our clients gave which brings motivation to work for future projects.</p>
-                                </div>
-                            </div>
-                            <SwiperComponent slides={slide} autoplay={true} pagination ={true} centeredSlides={false} loop spaceBetween={30} slidesPerView={1} 
-                              breakpoint={breakpoint}/>
-                        </div>
-                    </section>
-                    <section className="section  bg-[#f9fafb] section-bg text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="team">
+<section className="section landing-Features text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="features">
+    <div className="container text-center">
+        <p className="text-[0.75rem] font-semibold text-success mb-1">
+            <span className="landing-section-heading">OUR SOLUTIONS</span>
+        </p>
+        <h3 className="font-semibold mb-2 !text-white">
+            Empowering Businesses with Secure & Seamless Transactions
+        </h3>
+        <div>
+            <div className="xl:col-span-7 col-span-12">
+                <p className="text-white opacity-[0.8] text-[0.9375rem] mb-4 font-normal">
+                    DDIN Group Ltd offers innovative financial solutions, from secure payment processing to customized loan services, designed to drive business growth and streamline corporate transactions.
+                </p>
+            </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 text-start">
+            <div className="p-4 text-center bg-white dark:bg-bodybg border dark:border-defaultborder/10 !rounded-sm">
+                <span className="mb-4 avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
+                    <i className="bx bx-credit-card-front"></i>
+                </span>
+                <h5 className="font-semibold text-dark mb-1">Secure Payment Processing</h5>
+                <p className="text-[#8c9097] dark:text-white/50 text-[0.875rem]">
+                    Fast, secure, and seamless transactions for businesses and individuals.
+                </p>
+            </div>
+
+            <div className="p-4 text-center bg-white dark:bg-bodybg border dark:border-defaultborder/10 !rounded-sm">
+                <span className="mb-4 avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
+                    <i className="bx bx-wallet"></i>
+                </span>
+                <h5 className="font-semibold text-dark mb-1">Corporate Wallets</h5>
+                <p className="text-[#8c9097] dark:text-white/50 text-[0.875rem]">
+                    Manage business transactions effortlessly with our corporate wallet solutions.
+                </p>
+            </div>
+
+            <div className="p-4 text-center bg-white dark:bg-bodybg border dark:border-defaultborder/10 !rounded-sm">
+                <span className="mb-4 avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
+                    <i className="bx bx-bar-chart-alt-2"></i>
+                </span>
+                <h5 className="font-semibold text-dark mb-1">Automated Financial Reports</h5>
+                <p className="text-[#8c9097] dark:text-white/50 text-[0.875rem]">
+                    Generate real-time financial reports to track transactions and revenue.
+                </p>
+            </div>
+
+            <div className="p-4 text-center bg-white dark:bg-bodybg border dark:border-defaultborder/10 !rounded-sm">
+                <span className="mb-4 avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
+                    <i className="bx bx-money"></i>
+                </span>
+                <h5 className="font-semibold text-dark mb-1">Instant Loan Approvals</h5>
+                <p className="text-[#8c9097] dark:text-white/50 text-[0.875rem]">
+                    Get quick access to business loans with minimal processing time.
+                </p>
+            </div>
+
+            <div className="p-4 text-center bg-white dark:bg-bodybg border dark:border-defaultborder/10 !rounded-sm">
+                <span className="mb-4 avatar avatar-lg avatar-rounded bg-primary/10 !text-primary">
+                    <i className="bx bx-globe"></i>
+                </span>
+                <h5 className="font-semibold text-dark mb-1">Cross-Border Payments</h5>
+                <p className="text-[#8c9097] dark:text-white/50 text-[0.875rem]">
+                    Effortless international transactions for global business expansion.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+                    {/* <section className="section  bg-[#f9fafb] section-bg text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="team">
                         <div className="container text-center">
                             <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">OUR TEAM</span></p>
                             <h3 className="font-semibold mb-2">Great things in business are done by a team.</h3>
@@ -542,8 +600,8 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                                 <SpkButton buttontype="button" customClass="ti-btn bg-primary text-white">View All</SpkButton>
                             </div>
                         </div>
-                    </section>
-                    <section className="section text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem] " id="pricing">
+                    </section> */}
+                    {/* <section className="section text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem] " id="pricing">
                         <div className="container text-center">
                             <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">PRICING</span></p>
                             <h3 className="font-semibold mb-2">ynex comes with most affordable pricing range.</h3>
@@ -589,14 +647,14 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </section> */}
                     <section className="section bg-[#f9fafb] section-bg text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="faq">
                         <div className="container text-center">
                             <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">F.A.Q</span></p>
                             <h3 className="font-semibold mb-2">Frequently asked questions ?</h3>
                             <div className="grid grid-cols-12 justify-center">
                                 <div className="col-span-12">
-                                    <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-12 font-normal">We have shared some of the most frequently asked questions to help you out.</p>
+                                    <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-12 font-normal">Here are some frequently asked questions about our corporate services, including airtime top-up, bulk SMS, RRA payments, and electricity services.</p>
                                 </div>
                             </div>
                             <div className="grid grid-cols-12 gap-6 text-start">
@@ -620,17 +678,17 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                     <section className="section text-defaulttextcolor dark:text-defaulttextcolor/70 text-[0.813rem]" id="contact">
                         <div className="container text-center">
                             <p className="text-[0.75rem] font-semibold text-success mb-1"><span className="landing-section-heading">CONTACT US</span></p>
-                            <h3 className="font-semibold mb-2">Have any questions ? We would love to hear from you.</h3>
+                            <h3 className="font-semibold mb-2">Need Assistance? We're Here to Help!</h3>
                             <div className="grid grid-cols-12 justify-center">
                                 <div className="col-span-12">
-                                    <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-12 font-normal">You can contact us anytime regarding any queries or deals,dont hesitate to clear your doubts before trying our product.</p>
+                                    <p className="text-[#8c9097] dark:text-white/50 text-[0.9375rem] mb-12 font-normal">Reach out to us for any queries related to our corporate services, including airtime recharge, bulk SMS, RRA payments, or electricity bill payments.</p>
                                 </div>
                             </div>
                             <div className="grid grid-cols-12 gap-6 text-start">
                                 <div className="xxl:col-span-6 xl:col-span-6 lg:col-span-6 md:col-span-12 sm:col-spam-12 col-span-12">
                                     <div className="box border dark:border-defaultborder/10 shadow-none">
                                         <div className="box-body !p-0">
-                                            <iframe title="map" src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d30444.274596168965!2d78.54114692513858!3d17.48198883339408!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e6!4m3!3m2!1d17.4886524!2d78.5495041!4m5!1s0x3bcb9c7ec139a15d%3A0x326d1c90786b2ab6!2sspruko%20technologies!3m2!1d17.474805099999998!2d78.570258!5e0!3m2!1sen!2sin!4v1670225507254!5m2!1sen!2sin" height="365" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                                        <iframe title="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26508.863152251895!2d30.067488999999996!3d-1.9440727999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19db59e8f1a5bff5%3A0x7bdacaf54c5f9f9f!2sNorresken%20House%2C%20Kigali%2C%20Rwanda!5e0!3m2!1sen!2srw!4v1700000000000!5m2!1sen!2srw" height="365" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                                         </div>
                                     </div>
                                 </div>
@@ -685,122 +743,104 @@ const Landing: FC<LandingProps> = ({ ThemeChanger }: any) => {
                             </div>
                         </div>
                     </section>
-                    <section className="section landing-footer  text-white text-[0.813rem] opacity-[0.87]">
-                        <div className="container">
-                            <div className="grid grid-cols-12 gap-6">
-                                <div className="xl:col-span-4 col-span-12">
-                                    <div className="px-6">
-                                        <p className="font-semibold mb-4"><Link aria-label="anchor" to={`${import.meta.env.BASE_URL}dashboards/crm/`}><img src={desktopdark} alt="" /></Link></p>
-                                        <p className="mb-2 opacity-[0.6] font-normal">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit et magnam, fuga est mollitia eius, quo illum illo inventore optio aut quas omnis rem. Dolores accusantium aspernatur minus ea incidunt.
-                                        </p>
-                                        <p className="mb-0 opacity-[0.6] font-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem ea esse ad</p>
-                                    </div>
-                                </div>
-                                <div className="xl:col-span-2 col-span-12">
-                                    <div className="px-6">
-                                        <h6 className="font-semibold text-[1rem] mb-4">PAGES</h6>
-                                        <ul className="list-unstyled opacity-[0.6] font-normal landing-footer-list">
-                                            <li>
-                                                <Link to="#"  className="text-white">Email</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">Profile</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">Timeline</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">Projects</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">Contacts</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">Portfolio</Link>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="xl:col-span-2 col-span-12">
-                                    <div className="px-6">
-                                        <h6 className="font-semibold text-[1rem] mb-2">INFO</h6>
-                                        <ul className="list-unstyled opacity-[0.6] font-normal landing-footer-list">
-                                            <li>
-                                                <Link to="#"  className="text-white">Our Team</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">Contact US</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">About</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">Services</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">Blog</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white">Terms &amp; Conditions</Link>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="xl:col-span-4 col-span-12">
-                                    <div className="px-6">
-                                        <h6 className="font-semibold text-[1rem] mb-2">CONTACT</h6>
-                                        <ul className="list-unstyled font-normal landing-footer-list">
-                                            <li>
-                                                <Link to="#"  className="text-white opacity-[0.6]"><i className="ri-home-4-line me-1 align-middle"></i> New York, NY 10012, US</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white opacity-[0.6]"><i className="ri-mail-line me-1 align-middle"></i> info@fmail.com</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white opacity-[0.6]"><i className="ri-phone-line me-1 align-middle"></i> +(555)-1920 1831</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="#"  className="text-white opacity-[0.6]"><i className="ri-printer-line me-1 align-middle"></i> +(123) 1293 123</Link>
-                                            </li>
-                                            <li className="mt-4 !mb-0">
-                                                <p className="mb-2 font-semibold opacity-[0.8] text-[1rem]">FOLLOW US ON :</p>
-                                                <div className="mb-0">
-                                                    <div className="btn-list">
-                                                        <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-primary me-[0.365rem]">
-                                                            <i className="ri-facebook-line font-bold"></i>
-                                                        </SpkButton>
-                                                        <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-secondary me-[0.365rem]">
-                                                            <i className="ri-twitter-x-line font-bold"></i>
-                                                        </SpkButton>
-                                                        <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-warning me-[0.365rem]">
-                                                            <i className="ri-instagram-line font-bold"></i>
-                                                        </SpkButton>
-                                                        <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-success me-[0.365rem]">
-                                                            <i className="ri-github-line font-bold"></i>
-                                                        </SpkButton>
-                                                        <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-danger">
-                                                            <i className="ri-youtube-line font-bold"></i>
-                                                        </SpkButton>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                    <section className="section landing-footer text-white text-[0.813rem] opacity-[0.87]">
+    <div className="container">
+        <div className="grid grid-cols-12 gap-6">
+            <div className="xl:col-span-4 col-span-12">
+                <div className="px-6">
+                    <p className="font-semibold mb-4">
+                        <Link aria-label="anchor" to={`${import.meta.env.BASE_URL}dashboards/crm/`}>
+                            <img src={desktopdark} alt="DDIN Logo" />
+                        </Link>
+                    </p>
+                    <p className="mb-2 opacity-[0.6] font-normal">
+                        DDIN Group Ltd is a leading payment solutions provider based in Kigali, Rwanda. We specialize in secure and efficient financial transactions for businesses and individuals.
+                    </p>
+                    <p className="mb-0 opacity-[0.6] font-normal">Providing seamless payment experiences with cutting-edge technology.</p>
+                </div>
+            </div>
+            <div className="xl:col-span-2 col-span-12">
+                <div className="px-6">
+                    <h6 className="font-semibold text-[1rem] mb-4">PAGES</h6>
+                    <ul className="list-unstyled opacity-[0.6] font-normal landing-footer-list">
+                        <li><Link to="#" className="text-white">Home</Link></li>
+                        <li><Link to="#" className="text-white">Services</Link></li>
+                        {/* <li><Link to="#" className="text-white">About Us</Link></li>
+                        <li><Link to="#" className="text-white">Contact</Link></li> */}
+                        {/* <li><Link to="#" className="text-white">Careers</Link></li>
+                        <li><Link to="#" className="text-white">Blog</Link></li> */}
+                    </ul>
+                </div>
+            </div>
+            <div className="xl:col-span-2 col-span-12">
+                <div className="px-6">
+                    <h6 className="font-semibold text-[1rem] mb-2">INFO</h6>
+                    <ul className="list-unstyled opacity-[0.6] font-normal landing-footer-list">
+                        {/* <li><Link to="#" className="text-white">Our Team</Link></li> */}
+                        <li><Link to="#" className="text-white">Contact Us</Link></li>
+                        <li><Link to="#" className="text-white">Privacy Policy</Link></li>
+                        <li><Link to="#" className="text-white">Terms & Conditions</Link></li>
+                    </ul>
+                </div>
+            </div>
+            <div className="xl:col-span-4 col-span-12">
+                <div className="px-6">
+                    <h6 className="font-semibold text-[1rem] mb-2">CONTACT</h6>
+                    <ul className="list-unstyled font-normal landing-footer-list">
+                        <li>
+                            <Link to="#" className="text-white opacity-[0.6]">
+                                <i className="ri-home-4-line me-1 align-middle"></i> Norresken House, Kigali, Rwanda
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="#" className="text-white opacity-[0.6]">
+                                <i className="ri-mail-line me-1 align-middle"></i> info@ddin.rw
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="#" className="text-white opacity-[0.6]">
+                                <i className="ri-phone-line me-1 align-middle"></i> +250 783 038 641
+                            </Link>
+                        </li>
+                        <li className="mt-4 !mb-0">
+                            <p className="mb-2 font-semibold opacity-[0.8] text-[1rem]">FOLLOW US ON :</p>
+                            <div className="mb-0">
+                                <div className="btn-list">
+                                    <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-primary me-[0.365rem]">
+                                        <i className="ri-facebook-line font-bold"></i>
+                                    </SpkButton>
+                                    <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-secondary me-[0.365rem]">
+                                        <i className="ri-twitter-x-line font-bold"></i>
+                                    </SpkButton>
+                                    <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-warning me-[0.365rem]">
+                                        <i className="ri-instagram-line font-bold"></i>
+                                    </SpkButton>
+                                    <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-success me-[0.365rem]">
+                                        <i className="ri-github-line font-bold"></i>
+                                    </SpkButton>
+                                    <SpkButton Label="button" buttontype="button" variant="" customClass="ti-btn ti-btn-sm !mb-0 ti-btn-danger">
+                                        <i className="ri-youtube-line font-bold"></i>
+                                    </SpkButton>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                    <div className="text-center landing-main-footer py-4 opacity-[0.87]">
-                        <span className="text-[#8c9097] dark:text-white/50 text-[0.9375rem]"> Copyright © 2024<span id="year"></span> <Link
-                            to="https://spruko.com/"  className="!text-primary font-semibold"><u>ynex</u></Link>.
-                            Designed with <span className="fa fa-heart text-danger"></span> by <Link to="#"  className="!text-primary font-semibold"><u>
-                                Spruko</u>
-                            </Link> All
-                            rights
-                            reserved
-                        </span>
-                    </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div className="text-center landing-main-footer py-4 opacity-[0.87]">
+    <span className="text-[#8c9097] dark:text-white/50 text-[0.9375rem]"> 
+        Copyright © 2025 <span id="year"></span> 
+        <Link to="https://ddin.rw/" className="!text-primary font-semibold"><u>DDIN Group Ltd</u></Link>. 
+        Designed with <span className="fa fa-heart text-danger"></span> by 
+        <Link to="#" className="!text-primary font-semibold"><u> DDIN Team</u></Link>. 
+        All rights reserved.
+    </span>
+</div>
+
                 </div>
         </Fragment>
     )

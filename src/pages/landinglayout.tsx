@@ -6,7 +6,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import store from '../redux/store'
 import "preline/preline";
 import { IStaticMethods } from "preline/preline";
-import { Initialload } from '../components/common/contextapi'
+import { AuthProvider } from '../components/common/contextapi'
 
 declare global {
   interface Window {
@@ -27,10 +27,10 @@ const Landinglayout = () => {
     window.HSStaticMethods.autoInit();
   }, [location.pathname]);
 
-  const [pageloading, setpageloading] = useState(false)
+ 
   return (
     <Fragment>
-        <Initialload.Provider value={{ pageloading, setpageloading }}>
+        <AuthProvider>
           <div style={{display: `${lateLoad ? 'block' : 'none'}`}}>
               <Provider store={store}>
                 <Landingswitcher />
@@ -38,7 +38,7 @@ const Landinglayout = () => {
                 </Provider>
                 <Backtotop/>  
             </div>
-        </Initialload.Provider>
+        </AuthProvider>
     </Fragment>
   )
 }

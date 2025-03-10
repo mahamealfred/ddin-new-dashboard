@@ -9,7 +9,7 @@ import Backtotop from "../components/common/backtotop/backtotop";
 import { Outlet, useLocation } from "react-router-dom";
 import "preline/preline";
 import { IStaticMethods } from "preline/preline";
-import { Initialload } from "../components/common/contextapi";
+import { AuthProvider } from "../components/common/contextapi";
 
 declare global {
   interface Window {
@@ -43,11 +43,11 @@ const App = () => {
     window.HSStaticMethods.autoInit();
   }, [location.pathname]);
   
-  const [pageloading, setpageloading] = useState(false)
+
   return (
     <>
     <Fragment>
-    <Initialload.Provider value={{ pageloading, setpageloading }}>
+    <AuthProvider >
             <div style={{display: `${lateLoad ? 'block' : 'none'}`}}>
                     <Switcher/>
                   <div className='page'>
@@ -62,7 +62,7 @@ const App = () => {
                   </div>
                   <Backtotop/>
             </div>
-        </Initialload.Provider>
+        </AuthProvider>
     </Fragment>
     </>
   )

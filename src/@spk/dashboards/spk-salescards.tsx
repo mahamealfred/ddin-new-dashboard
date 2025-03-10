@@ -8,10 +8,11 @@ interface SpksalescardsProps {
     Percentagevalue?: string;            
     Color?: string;     
     Titletext?: string ;   
+    Period?: string ;   
 }
 
 
-const Spksalescards :React.FC<SpksalescardsProps>= ({SvgIcon, Titletext, Value, Color, Percentagevalue}:any) => {
+const Spksalescards :React.FC<SpksalescardsProps>= ({SvgIcon, Titletext, Value, Color, Percentagevalue,Period}:any) => {
   return (
     <Fragment>
         <div className="box">
@@ -23,9 +24,9 @@ const Spksalescards :React.FC<SpksalescardsProps>= ({SvgIcon, Titletext, Value, 
                           </p>
                           <p className="mb-2 text-[0.75rem]">
                               <span className="text-[1.5625rem] font-semibold leading-none vertical-bottom mb-0">{Value}</span>
-                              <span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">THIS MONTH</span>
+                              <span className="block text-[0.625rem] font-semibold text-[#8c9097] dark:text-white/50">{Period}</span>
                           </p>
-                          <Link to="#"  className="text-[0.75rem] mb-0 text-primary">Show full stats<i className="ti ti-chevron-right ms-1 inline-flex"></i></Link>
+                          <Link to="#"  className="text-[0.75rem] mb-0 text-primary">Show full status<i className="ti ti-chevron-right ms-1 inline-flex"></i></Link>
                       </div>
                       <div className="col-span-6">
                           <p className={`badge bg-${Color}/10 !text-${Color} ltr:float-right rtl:float-left inline-flex`}><i className={`ti ti-caret-${Color.includes("success")? "up": "down"} me-1`}></i>{Percentagevalue}</p>

@@ -1,20 +1,21 @@
 
-import  { FC, Fragment, useContext, useEffect } from 'react'
+import  { FC, Fragment, useEffect } from 'react'
 import { connect } from 'react-redux';
 import Themeprimarycolor, * as switcherdata from '../../ui/data/switcherdata/switcherdata';
 import { ThemeChanger } from '../../../redux/action';
 import SpkButton from '../../../@spk/uielements/spk-button';
 import SpkOverlay from '../../../@spk/uielements/spk-overlay';
-import { Initialload } from '../contextapi';
+import {  useAuth } from '../contextapi';
 
 interface SwitcherProps { }
 
 const Switcher: FC<SwitcherProps> = ({ local_varaiable, ThemeChanger }: any) => {
   
-  const theme :any= useContext(Initialload);
+  //const theme :any= useContext(Initialload);
+  const {setpageloading}=useAuth()
 
   useEffect(() => {
-    switcherdata.LocalStorageBackup(ThemeChanger, theme.setpageloading);
+    switcherdata.LocalStorageBackup(ThemeChanger, setpageloading);
 
   }, []);
 

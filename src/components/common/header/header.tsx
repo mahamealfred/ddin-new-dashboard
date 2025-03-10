@@ -1,36 +1,38 @@
-import React, { FC, Fragment, useEffect, useState } from 'react';
+import
+// React,
+ { FC, Fragment, useEffect, useState } from 'react';
 import { Link,  useNavigate } from 'react-router-dom';
 import Modalsearch from '../modal-search/modalsearch';
 import { connect } from 'react-redux';
 import { ThemeChanger } from '../../../redux/action';
 import store from '../../../redux/store';
 import us from "../../../assets/images/flags/us_flag.jpg";
-import spain from "../../../assets/images/flags/spain_flag.jpg";
-import french from "../../../assets/images/flags/french_flag.jpg";
-import germany from "../../../assets/images/flags/germany_flag.jpg";
-import italy from "../../../assets/images/flags/italy_flag.jpg";
-import russia from "../../../assets/images/flags/russia_flag.jpg";
-import figma from "../../../assets/images/apps/figma.png";
-import powerpoint from "../../../assets/images/apps/microsoft-powerpoint.png";
-import word from "../../../assets/images/apps/microsoft-word.png";
-import calender from "../../../assets/images/apps/calender.png";
-import sketch from "../../../assets/images/apps/sketch.png";
-import googledocs from "../../../assets/images/apps/google-docs.png";
-import google from "../../../assets/images/apps/google.png";
-import translate from "../../../assets/images/apps/translate.png";
-import googlesheets from "../../../assets/images/apps/google-sheets.png";
+// import spain from "../../../assets/images/flags/spain_flag.jpg";
+//import french from "../../../assets/images/flags/french_flag.jpg";
+// import germany from "../../../assets/images/flags/germany_flag.jpg";
+// import italy from "../../../assets/images/flags/italy_flag.jpg";
+// import russia from "../../../assets/images/flags/russia_flag.jpg";
+// import figma from "../../../assets/images/apps/figma.png";
+// import powerpoint from "../../../assets/images/apps/microsoft-powerpoint.png";
+// import word from "../../../assets/images/apps/microsoft-word.png";
+// import calender from "../../../assets/images/apps/calender.png";
+// import sketch from "../../../assets/images/apps/sketch.png";
+// import googledocs from "../../../assets/images/apps/google-docs.png";
+// import google from "../../../assets/images/apps/google.png";
+// import translate from "../../../assets/images/apps/translate.png";
+// import googlesheets from "../../../assets/images/apps/google-sheets.png";
 import face9 from "../../../assets/images/faces/9.jpg";
 import desktoplogo from "../../../assets/images/brand-logos/desktop-logo.png";
 import togglelogo from "../../../assets/images/brand-logos/toggle-logo.png";
-import desktopdark from "../../../assets/images/brand-logos/desktop-dark.png";
+import desktopdark from "../../../assets/images/brand-logos/ddinlogoT.png";
 import toggledark from "../../../assets/images/brand-logos/toggle-dark.png";
-import desktopwhite from "../../../assets/images/brand-logos/desktop-white.png";
+import desktopwhite from "../../../assets/images/brand-logos/ddinlogoT.png";
 import togglewhite from "../../../assets/images/brand-logos/toggle-white.png";
-import product1 from "../../../assets/images/ecommerce/jpg/1.jpg";
-import product3 from "../../../assets/images/ecommerce/jpg/3.jpg";
-import product5 from "../../../assets/images/ecommerce/jpg/5.jpg";
-import product4 from "../../../assets/images/ecommerce/jpg/4.jpg";
-import product6 from "../../../assets/images/ecommerce/jpg/6.jpg";
+// import product1 from "../../../assets/images/ecommerce/jpg/1.jpg";
+// import product3 from "../../../assets/images/ecommerce/jpg/3.jpg";
+// import product5 from "../../../assets/images/ecommerce/jpg/5.jpg";
+// import product4 from "../../../assets/images/ecommerce/jpg/4.jpg";
+// import product6 from "../../../assets/images/ecommerce/jpg/6.jpg";
 import SpkDropdown from '../../../@spk/uielements/spk-dropdown';
 import SpkButton from '../../../@spk/uielements/spk-button';
 import { auth } from '../../../firebase/firebaseapi';
@@ -40,92 +42,109 @@ interface HeaderProps { }
 const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
 
 
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
 
 
-  const data=  <span className="font-[600] py-[0.25rem] px-[0.45rem] rounded-[0.25rem] bg-pinkmain/10 text-pinkmain text-[0.625rem]">Free shipping</span>
+  useEffect(() => {
+      
+      const storedData = localStorage.getItem("userData");
 
-  const cartProduct = [
-    {
-      id: 1,
-      src: product1,
-      name: 'SomeThing Phone',
-      price: '$1,299.00',
-      color: 'Metallic Blue',
-      text: '6gb Ram',
-      class: '',
-    },
-    {
-      id: 2,
-      src: product3,
-      name: 'Stop Watch',
-      price: '$179.29',
-      color: 'Analog',
-      text: data,
-      class: '',
-    },
-    {
-      id: 3,
-      src: product5,
-      name: 'Photo Frame',
-      price: '$29.00',
-      color: 'Decorative',
-      text: '',
-      class: '',
-    },
-    {
-      id: 4,
-      src: product4,
-      name: 'Kikon Camera',
-      price: '$4,999.00',
-      color: 'Black',
-      text: '50MM',
-      class: '',
-    },
-    {
-      id: 5,
-      src: product6,
-      name: 'Canvas Shoes',
-      price: '$129.00',
-      color: 'Gray',
-      text: 'Sports',
-      class: 'border-b-0',
-    },
-  ];
+      if (storedData) {
 
-  const [cartItems, setCartItems] = useState([...cartProduct]);
-  const [cartItemCount, setCartItemCount] = useState(cartProduct.length);
-  const handleRemove = (itemId: number,event: { stopPropagation: () => void; }) => {
-    event.stopPropagation();
-    const updatedCart = cartItems.filter((item) => item.id !== itemId);
-    setCartItems(updatedCart);
-    setCartItemCount(updatedCart.length);
-  };
+          //setData(JSON.parse(storedData));
+        
+          setName(JSON.parse(storedData).name)
+          setRole(JSON.parse(storedData).role)
+      }
+      
+  }, []);
+
+
+  //const data=  <span className="font-[600] py-[0.25rem] px-[0.45rem] rounded-[0.25rem] bg-pinkmain/10 text-pinkmain text-[0.625rem]">Free shipping</span>
+
+  // const cartProduct = [
+  //   {
+  //     id: 1,
+  //     src: product1,
+  //     name: 'SomeThing Phone',
+  //     price: '$1,299.00',
+  //     color: 'Metallic Blue',
+  //     text: '6gb Ram',
+  //     class: '',
+  //   },
+  //   {
+  //     id: 2,
+  //     src: product3,
+  //     name: 'Stop Watch',
+  //     price: '$179.29',
+  //     color: 'Analog',
+  //     text: data,
+  //     class: '',
+  //   },
+  //   {
+  //     id: 3,
+  //     src: product5,
+  //     name: 'Photo Frame',
+  //     price: '$29.00',
+  //     color: 'Decorative',
+  //     text: '',
+  //     class: '',
+  //   },
+  //   {
+  //     id: 4,
+  //     src: product4,
+  //     name: 'Kikon Camera',
+  //     price: '$4,999.00',
+  //     color: 'Black',
+  //     text: '50MM',
+  //     class: '',
+  //   },
+  //   {
+  //     id: 5,
+  //     src: product6,
+  //     name: 'Canvas Shoes',
+  //     price: '$129.00',
+  //     color: 'Gray',
+  //     text: 'Sports',
+  //     class: 'border-b-0',
+  //   },
+  // ];
+
+  // const [cartItems, setCartItems] = useState([...cartProduct]);
+  // const [cartItemCount, setCartItemCount] = useState(cartProduct.length);
+  // const handleRemove = (itemId: number,event: { stopPropagation: () => void; }) => {
+  //   event.stopPropagation();
+  //   const updatedCart = cartItems.filter((item) => item.id !== itemId);
+  //   setCartItems(updatedCart);
+  //   setCartItemCount(updatedCart.length);
+  // };
 
   //Notifications
 
-  const span1 = <span className="text-warning">ID: #1116773</span>
-  const span2 = <span className="text-success">ID: 7731116</span>
+  // const span1 = <span className="text-warning">ID: #1116773</span>
+  // const span2 = <span className="text-success">ID: 7731116</span>
 
 //  const span3 = <span className="font-[600] py-[0.25rem] px-[0.45rem] rounded-[0.25rem] bg-pinkmain/10 text-pinkmain text-[0.625rem]">Free shipping</span>
 
- const notifydata = [
-  { id: 1, class: "Your Order Has Been Shipped", data: "Order No: 123456 Has Shipped To Your Delivery Address", icon: "gift", class2: "", color: "!bg-primary/10",color2: "primary"},
-  { id: 2, class: "Discount Available", data: "Discount Available On Selected Products", icon: "discount-2", class2: "", color: "!bg-secondary/10",color2:"secondary" },
-  { id: 3, class: "Account Has Been Verified", data: "Your Account Has Been Verified Sucessfully", icon: "user-check", class2: "", color: "!bg-pinkmain/10",color2: "pink"},
-  { id: 4, class: "Order Placed", data: "Order Placed Successfully", icon: "circle-check", class2: span1, color: "!bg-warning/10",color2: "warning"},
-  { id: 5, class: "Order Delayed", data: "Order Delayed Unfortunately", icon: "clock", class2: span2, color: "!bg-success/10",color2: "success"},
-]
+//  const notifydata = [
+//   { id: 1, class: "Your Order Has Been Shipped", data: "Order No: 123456 Has Shipped To Your Delivery Address", icon: "gift", class2: "", color: "!bg-primary/10",color2: "primary"},
+//   { id: 2, class: "Discount Available", data: "Discount Available On Selected Products", icon: "discount-2", class2: "", color: "!bg-secondary/10",color2:"secondary" },
+//   { id: 3, class: "Account Has Been Verified", data: "Your Account Has Been Verified Sucessfully", icon: "user-check", class2: "", color: "!bg-pinkmain/10",color2: "pink"},
+//   { id: 4, class: "Order Placed", data: "Order Placed Successfully", icon: "circle-check", class2: span1, color: "!bg-warning/10",color2: "warning"},
+//   { id: 5, class: "Order Delayed", data: "Order Delayed Unfortunately", icon: "clock", class2: span2, color: "!bg-success/10",color2: "success"},
+// ]
 
-  const [notifications, setNotifications] = useState([...notifydata]);
+  //const [notifications, setNotifications] = useState([...notifydata]);
 
-  const handleNotificationClose = (index: number,event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    if (event) {
-      event.stopPropagation();
-    }
-    const updatedNotifications = [...notifications];
-    updatedNotifications.splice(index, 1);
-    setNotifications(updatedNotifications);
-  };
+  // const handleNotificationClose = (index: number,event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  //   if (event) {
+  //     event.stopPropagation();
+  //   }
+  //   const updatedNotifications = [...notifications];
+  //   updatedNotifications.splice(index, 1);
+  //   setNotifications(updatedNotifications);
+  // };
 
 
   //full screen
@@ -356,7 +375,6 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
 
     });
     const theme = store.getState();
-
     if (theme.class != 'dark') {
 
       ThemeChanger({
@@ -414,9 +432,12 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
   const navigate = useNavigate();
   const routeChange = () => {
     const path = `${import.meta.env.BASE_URL}firebase/login`;
+    localStorage.removeItem("userData")
+    localStorage.removeItem("token")
+    localStorage.removeItem("balance")
     navigate(path);
-    console.log("navigate", path, )
-      console.log("path", path)
+   
+
   };
   return (
     <Fragment>
@@ -427,7 +448,7 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
             <div className="header-content-left">
               <div className="header-element">
                 <div className="horizontal-logo">
-                  <Link to={`${import.meta.env.BASE_URL}dashboards/crm`} className="header-logo">
+                  <Link to={`${import.meta.env.BASE_URL}dashboards/corporate`} className="header-logo">
                     <img src={desktoplogo} alt="logo" className="desktop-logo" />
                     <img src={togglelogo} alt="logo" className="toggle-logo" />
                     <img src={desktopdark} alt="logo" className="desktop-dark" />
@@ -445,7 +466,7 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
             <div className="header-content-right">
 
               <div className="header-element py-[1rem] md:px-[0.65rem] px-2 header-search">
-                <SpkButton Label="button" buttontype="button" Overlay="#search-modal" customClass="inline-flex flex-shrink-0 justify-center items-center gap-2  rounded-full font-medium focus:ring-offset-0 focus:ring-offset-white transition-all text-xs dark:bg-bgdark dark:hover:bg-black/20 dark:text-[#8c9097] dark:text-white/50 dark:hover:text-white dark:focus:ring-white/10 dark:focus:ring-offset-white/10">
+                <SpkButton disabled Label="button" buttontype="button" Overlay="#search-modal" customClass="inline-flex flex-shrink-0 justify-center items-center gap-2  rounded-full font-medium focus:ring-offset-0 focus:ring-offset-white transition-all text-xs dark:bg-bgdark dark:hover:bg-black/20 dark:text-[#8c9097] dark:text-white/50 dark:hover:text-white dark:focus:ring-white/10 dark:focus:ring-offset-white/10">
                     <i className="bx bx-search-alt-2 header-link-icon"></i>
                 </SpkButton>
               </div>
@@ -468,23 +489,10 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                             </div>
                           </div>
                         </div>
-                        <div className="ti-dropdown-item !p-[0.65rem]">
+                        {/* <div className="ti-dropdown-item !p-[0.65rem]">
                           <div className="flex items-center space-x-2 rtl:space-x-reverse w-full">
                             <div className="h-[1.375rem] w-[1.375rem] flex items-center rounded-full">
                               <img src={spain} alt="flag-img"
-                                className="h-[1rem] w-[1rem] rounded-full" />
-                            </div>
-                            <div>
-                              <p className="!text-[0.8125rem] font-medium">
-                                Spanish
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="ti-dropdown-item !p-[0.65rem]">
-                          <div className="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                            <div className="h-[1.375rem] w-[1.375rem] flex items-center rounded-full">
-                              <img src={french} alt="flag-img"
                                 className="h-[1rem] w-[1rem] rounded-full" />
                             </div>
                             <div>
@@ -493,46 +501,7 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                               </p>
                             </div>
                           </div>
-                        </div>
-                        <div className="ti-dropdown-item !p-[0.65rem]">
-                          <div className="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                            <div className="h-[1.375rem] w-[1.375rem] flex items-center rounded-full">
-                              <img src={germany} alt="flag-img"
-                                className="h-[1rem] w-[1rem] rounded-full" />
-                            </div>
-                            <div>
-                              <p className="!text-[0.8125rem] font-medium">
-                                German
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="ti-dropdown-item !p-[0.65rem]">
-                          <div className="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                            <div className="h-[1.375rem] w-[1.375rem] flex items-center rounded-full">
-                              <img src={italy} alt="flag-img"
-                                className="h-[1rem] w-[1rem] rounded-full" />
-                            </div>
-                            <div>
-                              <p className="!text-[0.8125rem] font-medium">
-                                Italian
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="ti-dropdown-item !p-[0.65rem]">
-                          <div className="flex items-center space-x-2 rtl:space-x-reverse w-full">
-                            <div className="h-[1.375rem] w-[1.375rem] flex items-center  rounded-sm">
-                              <img src={russia} alt="flag-img"
-                                className="h-[1rem] w-[1rem] rounded-full" />
-                            </div>
-                            <div>
-                              <p className="!text-[0.8125rem] font-medium">
-                                Russian
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
               </SpkDropdown>
@@ -548,7 +517,7 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                   <i className="bx bx-sun header-link-icon"></i>
                 </SpkButton>
               </div>
-                <SpkDropdown Customclass="header-element cart-dropdown  md:!block !hidden py-[1rem] md:px-[0.65rem] px-2 [--placement:bottom-right] rtl:[--placement:bottom-left]" 
+                {/* <SpkDropdown Customclass="header-element cart-dropdown  md:!block !hidden py-[1rem] md:px-[0.65rem] px-2 [--placement:bottom-right] rtl:[--placement:bottom-left]" 
                    Custommenuclass="main-header-dropdown bg-white !-mt-3 !p-0 w-[22rem] border-0 border-defaultborder " Icon={true} Badgetext={cartItemCount} Badgetag={true}
                     IconClass="bx bx-cart header-link-icon"  Menulabel="dropdown-flag" buttonid="dropdown-cart" CustomToggleclass="relative !p-0 !border-0 flex-shrink-0  !rounded-full !shadow-none align-middle text-xs"  
                     Badgeclass="relative inline-flex !rounded-full h-[14.8px] w-[14px] !text-[0.625rem] bg-primary text-white justify-center items-center" Badgeid="cart-icon-badge">
@@ -610,30 +579,30 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                           data-abc="true">continue shopping <i className="bi bi-arrow-right ms-1"></i></Link>
                       </div>
                     </div>
-                </SpkDropdown>
+                </SpkDropdown> */}
               <div className="hs-dropdown ti-dropdown  header-element py-[1rem] md:px-[0.65rem] px-2 notifications-dropdown header-notification  !hidden md:!block [--placement:bottom-right]">
                 <SpkButton Id="dropdown-notification" buttontype="button"
                   customClass="hs-dropdown-toggle relative ti-dropdown-toggle !p-0 !border-0 flex-shrink-0  !rounded-full !shadow-none align-middle text-xs">
                   <i className="bx bx-bell header-link-icon  text-[1.125rem]"></i>
-                  <span className="flex absolute h-5 w-5 -top-[0.25rem] end-0  -me-[0.6rem]">
+                  {/* <span className="flex absolute h-5 w-5 -top-[0.25rem] end-0  -me-[0.6rem]">
                     <span
                       className="animate-slow-ping absolute inline-flex -top-[2px] -start-[2px] h-full w-full rounded-full bg-secondary/40 opacity-75"></span>
                     <span
                       className="relative inline-flex justify-center items-center rounded-full  h-[14.7px] w-[14px] bg-secondary text-[0.625rem] text-white"
                       id="notification-icon-badge">{notifications.length}</span>
-                  </span>
+                  </span> */}
                 </SpkButton>
                 <div className="main-header-dropdown !-mt-3 !p-0 hs-dropdown-menu ti-dropdown-menu bg-white !w-[22rem] border-0 border-defaultborder hidden !m-0"
                   aria-labelledby="dropdown-notification">
 
                   <div className="ti-dropdown-header !m-0 !p-4 !bg-transparent flex justify-between items-center">
                     <p className="mb-0 text-[1.0625rem] text-defaulttextcolor font-semibold ">Notifications</p>
-                    <span className="text-[0.75em] py-[0.25rem/2] px-[0.45rem] font-[600] rounded-sm bg-secondary/10 text-secondary"
-                      id="notifiation-data">{`${notifications.length} Unread`}</span>
+                    {/* <span className="text-[0.75em] py-[0.25rem/2] px-[0.45rem] font-[600] rounded-sm bg-secondary/10 text-secondary"
+                      id="notifiation-data">{`${notifications.length} Unread`}</span> */}
                   </div>
                   <div className="dropdown-divider"></div>
                   <ul className="list-none !m-0 !p-0 end-0" id="header-notification-scroll">
-                  {notifications.map((idx, index) => (
+                  {/* {notifications.map((idx, index) => (
                       <li className="ti-dropdown-item dropdown-item" key={Math.random()}>
                         <div className="flex items-start">
                           <div className="pe-2">
@@ -654,9 +623,9 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                           </div>
                         </div>
                       </li>
-                    ))}
+                    ))} */}
                   </ul>
-
+{/* 
                   <div className={`p-4 empty-header-item1 border-t mt-2 ${notifications.length === 0 ? 'hidden' : 'block'}`}>
                     <div className="grid">
                       <Link to={`${import.meta.env.BASE_URL}pages/notifications/`} className="ti-btn ti-btn-primary-full !m-0 w-full p-2">View All</Link>
@@ -669,7 +638,7 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                       </span>
                       <h6 className="font-semibold mt-3 text-defaulttextcolor dark:text-[#8c9097] dark:text-white/50 text-[1rem]">No New Notifications</h6>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <SpkDropdown Customclass="header-element header-apps dark:text-[#8c9097] dark:text-white/50 py-[1rem] md:px-[0.65rem] px-2 md:!block !hidden [--placement:bottom-left]" 
@@ -677,12 +646,12 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                   Menulabel="dropdown-apps" Icon={true} IconClass="bx bx-grid-alt header-link-icon text-[1.125rem]" Custommenuclass="main-header-dropdown !-mt-3 !w-[22rem] border-0 border-defaultborder">
                   <div className="p-4">
                     <div className="flex items-center justify-between">
-                      <p className="mb-0 text-defaulttextcolor text-[1.0625rem]  font-semibold">Related Apps</p>
+                      <p className="mb-0 text-defaulttextcolor text-[1.0625rem]  font-semibold">Corporate Dashboard</p>
                     </div>
                   </div>
                   <div className="dropdown-divider mb-0"></div>
-                  <div className="ti-dropdown-divider divide-y divide-gray-200 dark:divide-white/10 main-header-shortcuts p-2" id="header-shortcut-scroll">
-                    <div className="grid grid-cols-3 gap-2">
+                <div className="ti-dropdown-divider divide-y divide-gray-200 dark:divide-white/10 main-header-shortcuts p-2" id="header-shortcut-scroll">
+                      {/* <div className="grid grid-cols-3 gap-2">
                       <div className="">
                         <Link to="#" className="p-4 items-center related-app block text-center rounded-sm hover:bg-gray-50 dark:hover:bg-black/20">
                           <div>
@@ -749,13 +718,13 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                           <div className="text-[0.75rem] text-defaulttextcolor dark:text-white">Sheets</div>
                         </Link>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
-                  <div className="p-4 first:pt-0 border-t">
+                  {/* <div className="p-4 first:pt-0 border-t">
                     <Link className="w-full ti-btn ti-btn-primary-full p-2 !m-0" to="#">
                       View All
                     </Link>
-                  </div>
+                  </div> */}
               </SpkDropdown>
 
               <div className="header-element header-fullscreen py-[1rem] md:px-[0.65rem] px-2">
@@ -778,15 +747,15 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                   <img className="inline-block rounded-full " src={face9} width="32" height="32" alt="Image Description" />
                 </SpkButton>
                 <div className="md:block hidden dropdown-profile">
-                  <p className="font-semibold mb-0 leading-none text-[#536485] text-[0.813rem] ">Json Taylor</p>
-                  <span className="opacity-[0.7] font-normal text-[#536485] block text-[0.6875rem] ">Web Designer</span>
+                  <p className="font-semibold mb-0 leading-none text-[#536485] text-[0.813rem] ">{name}</p>
+                  <span className="opacity-[0.7] font-normal text-[#536485] block text-[0.6875rem] ">{role}</span>
                 </div>
                 <div
                   className="hs-dropdown-menu ti-dropdown-menu !-mt-3 border-0 w-[11rem] !p-0 border-defaultborder hidden main-header-dropdown  pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end"
                   aria-labelledby="dropdown-profile">
 
                   <ul className="text-defaulttextcolor font-medium dark:text-[#8c9097] dark:text-white/50">
-                    <li>
+                    {/* <li>
                       <Link className="w-full ti-dropdown-item !text-[0.8125rem] !gap-x-0  !p-[0.65rem]" to={`${import.meta.env.BASE_URL}pages/profile/`}>
                         <i className="ti ti-user-circle text-[1.125rem] me-2 opacity-[0.7] !inline-flex"></i>Profile
                       </Link>
@@ -804,7 +773,7 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                     <li><Link className="w-full ti-dropdown-item !text-[0.8125rem] !gap-x-0 !p-[0.65rem] " to="#"><i
                       className="ti ti-wallet text-[1.125rem] me-2 opacity-[0.7 !inline-flex"></i>Bal: $7,12,950</Link></li>
                     <li><Link className="w-full ti-dropdown-item !text-[0.8125rem] !p-[0.65rem] !gap-x-0 !inline-flex" to={`${import.meta.env.BASE_URL}pages/chat/`}><i
-                      className="ti ti-headset text-[1.125rem] me-2 opacity-[0.7] !inline-flex"></i>Support</Link></li>
+                      className="ti ti-headset text-[1.125rem] me-2 opacity-[0.7] !inline-flex"></i>Support</Link></li> */}
                     <li><a className="w-full ti-dropdown-item !text-[0.8125rem] !p-[0.65rem] !gap-x-0 !inline-flex" href='#'  onClick={(e) => {
                             e.preventDefault(); // Prevent default navigation
                             auth.signOut();

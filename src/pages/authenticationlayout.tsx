@@ -1,11 +1,11 @@
-import  { Fragment, useEffect, useState } from 'react'
+import  { Fragment, useEffect } from 'react'
 import Switcher from '../components/common/switcher/switcher';
 import {  Provider } from 'react-redux';
 import store from '../redux/store';
 import { Outlet, useLocation } from 'react-router-dom';
 import "preline/preline";
 import { IStaticMethods } from "preline/preline";
-import { Initialload } from '../components/common/contextapi';
+import { AuthProvider } from '../components/common/contextapi';
 
 declare global {
   interface Window {
@@ -17,15 +17,15 @@ const Authenticationlayout = () => {
   useEffect(() => {
     window.HSStaticMethods.autoInit();
   }, [location.pathname]);
-  const [pageloading, setpageloading] = useState(false)
+  
   return (
     <Fragment>
-      <Initialload.Provider value={{ pageloading, setpageloading }}>
+      <AuthProvider >
           <Provider store={store}>
               <Switcher/>
               <Outlet/>
           </Provider>
-      </Initialload.Provider>
+      </AuthProvider>
     </Fragment>
   )
 }

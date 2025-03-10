@@ -1,18 +1,19 @@
 
-import  { Fragment, useContext, useEffect } from "react";
+import  { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import Themeprimarycolor, * as landingswitcherdata from "../../ui/data/switcherdata/landingswitcherdata";
 import { ThemeChanger } from "../../../redux/action";
 import store from "../../../redux/store";
 import SpkButton from "../../../@spk/uielements/spk-button";
-import { Initialload } from "../contextapi";
+import { useAuth } from "../contextapi";
 
 const Landingswitcher = ({ local_varaiable, ThemeChanger }:any) => {
 
-  const theme :any= useContext(Initialload);
+ // const theme :any= useContext(Initialload);
+ const {setpageloading}=useAuth()
   
   useEffect(() => {
-    landingswitcherdata.LocalStorageBackup1(ThemeChanger,theme.setpageloading)
+    landingswitcherdata.LocalStorageBackup1(ThemeChanger,setpageloading)
   }, [])
 
   useEffect(() => {
