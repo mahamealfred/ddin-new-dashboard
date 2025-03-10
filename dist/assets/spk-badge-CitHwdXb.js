@@ -1,0 +1,1 @@
+import{j as s,r as n}from"./index-Cwgo8lsz.js";const p=({variant:r,children:a,customClass:e,Id:t})=>s.jsx(n.Fragment,{children:s.jsx("span",{className:`badge bg-${r} ${e}`,id:t,children:a})});export{p as S};

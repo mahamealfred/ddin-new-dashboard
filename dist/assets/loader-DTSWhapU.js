@@ -1,0 +1,1 @@
+import{j as r,r as s}from"./index-Cwgo8lsz.js";const e="/assets/loader-UudAubPR.svg",a=()=>r.jsx(s.Fragment,{children:r.jsx("div",{id:"loader",children:r.jsx("img",{src:e,alt:""})})});export{a as default};

@@ -1,0 +1,1 @@
+import{j as t,r as a}from"./index-Cwgo8lsz.js";const i=({customClass:r,children:s,Popover:o})=>t.jsx(a.Fragment,{children:t.jsx("div",{className:`hs-tooltip ti-main-tooltip ${r} ${o}`,children:s})});export{i as S};
