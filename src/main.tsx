@@ -189,8 +189,9 @@ import RootWrapper from './pages/Rootwrapper.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.Fragment>
      <Provider store={store}>
+     <BrowserRouter future={{v7_startTransition: true,   v7_relativeSplatPath: true,}}>
         <RootWrapper>
-            <BrowserRouter future={{v7_startTransition: true,   v7_relativeSplatPath: true,}}>
+          
               <React.Suspense fallback={<Loader/>}>
                 <Routes>
                   <Route path={`${import.meta.env.BASE_URL}`} element={<Auth />}>
@@ -416,8 +417,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   </Route>
                 </Routes>
               </React.Suspense>
+              </RootWrapper>
             </BrowserRouter>
-        </RootWrapper>
+      
       </Provider>
   </React.Fragment>
 )

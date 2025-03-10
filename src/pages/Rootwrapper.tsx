@@ -1,6 +1,7 @@
-import  { Fragment } from "react";
+import  { Fragment, useEffect } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { createSelector } from "reselect";
 
 // Create a memoized selector
@@ -34,8 +35,19 @@ const selectRelevantState = createSelector(
 );
 
 function RootWrapper({ children }:any) {
+  const navigate = useNavigate();
   // Use the memoized selector
   const local_variable = useSelector(selectRelevantState);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setTimeout(() => {
+        navigate('/firebase/login'); 
+      }, 0);
+    }
+  }, [navigate]);
+  
+
 
   // Generate dynamic styles as CSS variables
   const customStyles = `
