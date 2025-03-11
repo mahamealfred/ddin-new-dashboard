@@ -1,1 +1,0 @@
-import{j as r,r as i}from"./index-Cazq70Hf.js";const o=({children:s,customClass:a,Label:e,Hidden:t})=>r.jsx(i.Fragment,{children:r.jsx("div",{className:`ti-spinner ${a}`,role:"status","aria-label":e,"aria-hidden":t,children:s})});export{o as S};
