@@ -5,10 +5,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: 'dashboardapi.ddin.rw',
     port: 6000,
     strictPort: true,
   },
   preview: {
+    host: 'dashboardapi.ddin.rw',
     port: 6000,
     strictPort: true,
   },
