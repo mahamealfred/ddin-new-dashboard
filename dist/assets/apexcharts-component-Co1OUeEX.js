@@ -1,0 +1,1 @@
+import{j as p}from"./index-BUkCxukg.js";import{C as m}from"./react-apexcharts.min-a9V5CpPp.js";const i=({chartOptions:o,chartSeries:r,height:s,width:t,type:e})=>p.jsx(m,{options:o,series:r,height:s,width:t,type:e});export{i as A};

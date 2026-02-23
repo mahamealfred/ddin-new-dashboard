@@ -1,5 +1,4 @@
 import  {FC, Fragment, useEffect, useMemo, useState } from 'react'
-import { Earoptions, Earseries } from '../../../components/ui/data/dashboards/ecommercedata';
 import { Link } from 'react-router-dom';
 import Pageheader from '../../../components/common/page-header/pageheader';
 import ecommerce35 from "../../../assets/images/ecommerce/png/35.png";
@@ -41,12 +40,25 @@ interface OverviewRow {
     text: string;
 }
 
+type PeriodFilter = 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly';
+
 const Ecommerce: FC<EcommerceProps> = () => {
+
+    const MAX_STATUS_ROWS = 20;
+    const OVERVIEW_PAGE_SIZE = 10;
 
     const [transactions, setTransactions] = useState<CollectionTransaction[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [selectedCollection, setSelectedCollection] = useState<OverviewRow | null>(null);
+    const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('monthly');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [appliedStartDate, setAppliedStartDate] = useState('');
+    const [appliedEndDate, setAppliedEndDate] = useState('');
+    const [dateFilterError, setDateFilterError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -82,9 +94,20 @@ const Ecommerce: FC<EcommerceProps> = () => {
     }, []);
 
     const parseAmount = (amount?: string | number) => Number(amount || 0);
-    const isSuccessStatus = (status?: string) => String(status || '').toLowerCase().includes('success');
-    const getStatusCategory = (status?: string): 'active' | 'completed' | 'cancelled' => {
+    const getStatusCategory = (status?: string, message?: string): 'active' | 'completed' | 'cancelled' => {
         const normalizedStatus = String(status || '').toLowerCase();
+        const normalizedMessage = String(message || '').toLowerCase();
+
+        if (
+            normalizedStatus.includes('pending') ||
+            normalizedStatus.includes('process') ||
+            normalizedStatus.includes('initiated') ||
+            normalizedStatus.includes('queue') ||
+            normalizedMessage.includes('pending') ||
+            normalizedMessage.includes('processing')
+        ) {
+            return 'active';
+        }
 
         if (normalizedStatus.includes('success') || normalizedStatus.includes('complete') || normalizedStatus.includes('delivered')) {
             return 'completed';
@@ -96,6 +119,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
 
         return 'active';
     };
+    const isSuccessStatus = (status?: string, message?: string) => getStatusCategory(status, message) === 'completed';
 
     const getInitial = (value?: string) => {
         const cleaned = value?.trim();
@@ -104,14 +128,82 @@ const Ecommerce: FC<EcommerceProps> = () => {
 
     const formatTransactionDate = (value?: string) => (value ? new Date(value).toLocaleDateString() : '-');
 
+    const parseInputDate = (value: string, endOfDay = false) => {
+        const parts = value.split('-').map(Number);
+        if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
+
+        const [year, month, day] = parts;
+        const date = new Date(year, month - 1, day);
+
+        if (endOfDay) {
+            date.setHours(23, 59, 59, 999);
+        } else {
+            date.setHours(0, 0, 0, 0);
+        }
+
+        return Number.isNaN(date.getTime()) ? null : date;
+    };
+
+    const getPeriodRange = (period: PeriodFilter) => {
+        const now = new Date();
+        const end = new Date(now);
+        end.setHours(23, 59, 59, 999);
+
+        const getRollingStart = (daysBack: number) => {
+            const date = new Date(now);
+            date.setDate(now.getDate() - daysBack);
+            date.setHours(0, 0, 0, 0);
+            return date;
+        };
+
+        if (period === 'daily') {
+            return { start: getRollingStart(0), end };
+        } else if (period === 'weekly') {
+            return { start: getRollingStart(6), end };
+        } else if (period === 'monthly') {
+            return { start: getRollingStart(29), end };
+        } else if (period === 'quarterly') {
+            return { start: getRollingStart(89), end };
+        } else {
+            return { start: getRollingStart(364), end };
+        }
+    };
+
+    const filteredTransactions = useMemo(() => {
+        const hasCustomRange = appliedStartDate && appliedEndDate;
+        const customStart = hasCustomRange ? parseInputDate(appliedStartDate) : null;
+        const customEnd = hasCustomRange ? parseInputDate(appliedEndDate, true) : null;
+
+        return transactions.filter((transaction) => {
+            if (!transaction.createdAt) {
+                return false;
+            }
+
+            const transactionDate = new Date(transaction.createdAt);
+            if (Number.isNaN(transactionDate.getTime())) {
+                return false;
+            }
+
+            if (hasCustomRange && customStart && customEnd) {
+                return transactionDate >= customStart && transactionDate <= customEnd;
+            }
+
+            const periodRange = getPeriodRange(periodFilter);
+            return transactionDate >= periodRange.start && transactionDate <= periodRange.end;
+        });
+    }, [transactions, periodFilter, appliedStartDate, appliedEndDate]);
+
     const analytics = useMemo(() => {
-        const totalOrders = transactions.length;
-        const totalSalesValue = transactions.reduce((sum, transaction) => sum + parseAmount(transaction.amount), 0);
-        const failedValue = transactions
-            .filter((transaction) => !isSuccessStatus(transaction.status))
+        const totalOrders = filteredTransactions.length;
+        const totalSalesValue = filteredTransactions.reduce((sum, transaction) => sum + parseAmount(transaction.amount), 0);
+        const failedValue = filteredTransactions
+            .filter((transaction) => getStatusCategory(transaction.status, transaction.message) === 'cancelled')
             .reduce((sum, transaction) => sum + parseAmount(transaction.amount), 0);
-        const uniqueCustomers = new Set(transactions.map((transaction) => transaction.customerAccountNumber || transaction.customerName || transaction.id)).size;
-        const successfulOrders = transactions.filter((transaction) => isSuccessStatus(transaction.status)).length;
+        const uniqueCustomers = new Set(filteredTransactions.map((transaction) => transaction.customerAccountNumber || transaction.customerName || transaction.id)).size;
+        const successfulOrders = filteredTransactions.filter((transaction) => getStatusCategory(transaction.status, transaction.message) === 'completed').length;
+        const failedOrders = filteredTransactions.filter((transaction) => getStatusCategory(transaction.status, transaction.message) === 'cancelled').length;
+        const pendingOrders = filteredTransactions.filter((transaction) => getStatusCategory(transaction.status, transaction.message) === 'active').length;
+        const successRate = totalOrders > 0 ? (successfulOrders / totalOrders) * 100 : 0;
 
         return {
             totalOrders,
@@ -119,19 +211,22 @@ const Ecommerce: FC<EcommerceProps> = () => {
             failedValue,
             uniqueCustomers,
             successfulOrders,
+            failedOrders,
+            pendingOrders,
+            successRate,
         };
-    }, [transactions]);
+    }, [filteredTransactions]);
 
     const recentTransactions = useMemo(() => {
-        return [...transactions]
+        return [...filteredTransactions]
             .sort((a, b) => new Date(b.createdAt || '').getTime() - new Date(a.createdAt || '').getTime())
             .slice(0, 5);
-    }, [transactions]);
+    }, [filteredTransactions]);
 
     const providerStats = useMemo(() => {
         const grouped = new Map<string, { provider: string; amount: number; count: number }>();
 
-        transactions.forEach((transaction) => {
+        filteredTransactions.forEach((transaction) => {
             const provider = (transaction.provider || 'Unknown').toUpperCase();
             const current = grouped.get(provider) || { provider, amount: 0, count: 0 };
             current.amount += parseAmount(transaction.amount);
@@ -140,12 +235,12 @@ const Ecommerce: FC<EcommerceProps> = () => {
         });
 
         return Array.from(grouped.values()).sort((a, b) => b.amount - a.amount).slice(0, 5);
-    }, [transactions]);
+    }, [filteredTransactions]);
 
     const topCustomers = useMemo(() => {
         const grouped = new Map<string, { name: string; amount: number; count: number; account: string }>();
 
-        transactions.forEach((transaction) => {
+        filteredTransactions.forEach((transaction) => {
             const key = transaction.customerAccountNumber || transaction.customerName || String(transaction.id);
             const current = grouped.get(key) || {
                 name: transaction.customerName || 'Unknown Customer',
@@ -159,23 +254,25 @@ const Ecommerce: FC<EcommerceProps> = () => {
         });
 
         return Array.from(grouped.values()).sort((a, b) => b.amount - a.amount).slice(0, 5);
-    }, [transactions]);
+    }, [filteredTransactions]);
 
     const tableRows = useMemo<OverviewRow[]>(() => {
-        return transactions.map((transaction) => {
-            const success = isSuccessStatus(transaction.status);
+        return filteredTransactions.map((transaction) => {
+            const category = getStatusCategory(transaction.status);
+            const statusLabel = category === 'completed' ? 'Success' : category === 'cancelled' ? 'Failed' : 'Pending';
+            const statusColor = category === 'completed' ? 'success' : category === 'cancelled' ? 'danger' : 'warning';
             return {
                 id: transaction.id,
                 name: transaction.customerName || 'Unknown Customer',
                 productid: transaction.transactionId || transaction.referenceId || String(transaction.id),
                 price: `${transaction.currencyCode || 'RWF'} ${parseAmount(transaction.amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-                status: success ? 'Success' : 'Failed',
-                color: success ? 'success' : 'danger',
+                status: statusLabel,
+                color: statusColor,
                 sales: transaction.provider?.toUpperCase() || 'N/A',
                 text: transaction.message || '-',
             };
         });
-    }, [transactions]);
+    }, [filteredTransactions]);
 
     const filteredTableRows = useMemo(() => {
         const query = searchTerm.trim().toLowerCase();
@@ -188,14 +285,43 @@ const Ecommerce: FC<EcommerceProps> = () => {
         );
     }, [tableRows, searchTerm]);
 
+    const totalPages = Math.max(1, Math.ceil(filteredTableRows.length / OVERVIEW_PAGE_SIZE));
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, periodFilter, appliedStartDate, appliedEndDate]);
+
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(totalPages);
+        }
+    }, [currentPage, totalPages]);
+
+    const paginatedTableRows = useMemo(() => {
+        const startIndex = (currentPage - 1) * OVERVIEW_PAGE_SIZE;
+        return filteredTableRows.slice(startIndex, startIndex + OVERVIEW_PAGE_SIZE);
+    }, [filteredTableRows, currentPage]);
+
+    const visiblePages = useMemo(() => {
+        if (totalPages <= 5) {
+            return Array.from({ length: totalPages }, (_, index) => index + 1);
+        }
+
+        const start = Math.max(1, currentPage - 2);
+        const end = Math.min(totalPages, start + 4);
+        const adjustedStart = Math.max(1, end - 4);
+
+        return Array.from({ length: end - adjustedStart + 1 }, (_, index) => adjustedStart + index);
+    }, [currentPage, totalPages]);
+
     const orderGroups = useMemo(() => {
-        const sortedTransactions = [...transactions].sort(
+        const sortedTransactions = [...filteredTransactions].sort(
             (a, b) => new Date(b.createdAt || '').getTime() - new Date(a.createdAt || '').getTime()
         );
 
         return sortedTransactions.reduce(
             (accumulator, transaction) => {
-                const category = getStatusCategory(transaction.status);
+                const category = getStatusCategory(transaction.status, transaction.message);
                 accumulator[category].push(transaction);
                 return accumulator;
             },
@@ -205,33 +331,89 @@ const Ecommerce: FC<EcommerceProps> = () => {
                 cancelled: [] as CollectionTransaction[],
             }
         );
-    }, [transactions]);
+    }, [filteredTransactions]);
+
+    const statusRows = useMemo(() => {
+        return {
+            active: orderGroups.active.slice(0, MAX_STATUS_ROWS),
+            completed: orderGroups.completed.slice(0, MAX_STATUS_ROWS),
+            cancelled: orderGroups.cancelled.slice(0, MAX_STATUS_ROWS),
+        };
+    }, [orderGroups]);
 
     const collectionBreakdown = useMemo(() => {
-        const firstHalf = transactions
-            .filter((transaction) => {
-                const date = transaction.createdAt ? new Date(transaction.createdAt) : null;
-                return date ? date.getDate() <= 15 : false;
-            })
-            .reduce((sum, transaction) => sum + parseAmount(transaction.amount), 0);
-
-        const secondHalf = transactions
-            .filter((transaction) => {
-                const date = transaction.createdAt ? new Date(transaction.createdAt) : null;
-                return date ? date.getDate() > 15 : false;
-            })
-            .reduce((sum, transaction) => sum + parseAmount(transaction.amount), 0);
-
-        const topProvider = providerStats[0]?.provider || 'N/A';
-        const topProviderAmount = providerStats[0]?.amount || 0;
+        const successfulTransactions = filteredTransactions.filter((transaction) => getStatusCategory(transaction.status, transaction.message) === 'completed');
+        const failedTransactions = filteredTransactions.filter((transaction) => getStatusCategory(transaction.status, transaction.message) === 'cancelled');
+        const pendingTransactions = filteredTransactions.filter((transaction) => getStatusCategory(transaction.status, transaction.message) === 'active');
 
         return {
-            firstHalf,
-            secondHalf,
-            topProvider,
-            topProviderAmount,
+            successfulAmount: successfulTransactions.reduce((sum, transaction) => sum + parseAmount(transaction.amount), 0),
+            failedAmount: failedTransactions.reduce((sum, transaction) => sum + parseAmount(transaction.amount), 0),
+            pendingAmount: pendingTransactions.reduce((sum, transaction) => sum + parseAmount(transaction.amount), 0),
         };
-    }, [transactions, providerStats]);
+    }, [filteredTransactions]);
+
+    const statusChartSeries = useMemo(() => {
+        return [
+            {
+                name: 'Transactions',
+                data: [analytics.successfulOrders, analytics.failedOrders, analytics.pendingOrders],
+            },
+        ];
+    }, [analytics]);
+
+    const statusChartOptions = useMemo(() => {
+        return {
+            chart: {
+                type: 'bar' as const,
+                toolbar: { show: false },
+            },
+            xaxis: {
+                categories: ['Successful', 'Failed', 'Pending'],
+            },
+            yaxis: {
+                title: { text: 'Transactions' },
+            },
+            colors: ['rgba(132, 90, 223, 0.3)', 'rgb(132, 90, 223)', 'rgba(132, 90, 223, 0.3)'],
+            dataLabels: { enabled: false },
+            plotOptions: {
+                bar: { borderRadius: 6, columnWidth: '45%', distributed: true },
+            },
+            legend: { show: false },
+        };
+    }, []);
+
+    const applyDateRange = () => {
+        if (!startDate || !endDate) {
+            setDateFilterError('Select both start and end dates.');
+            return;
+        }
+
+        const parsedStart = parseInputDate(startDate);
+        const parsedEnd = parseInputDate(endDate, true);
+
+        if (!parsedStart || !parsedEnd) {
+            setDateFilterError('Invalid date selection.');
+            return;
+        }
+
+        if (parsedStart > parsedEnd) {
+            setDateFilterError('Start date cannot be after end date.');
+            return;
+        }
+
+        setAppliedStartDate(startDate);
+        setAppliedEndDate(endDate);
+        setDateFilterError(null);
+    };
+
+    const clearDateRange = () => {
+        setStartDate('');
+        setEndDate('');
+        setAppliedStartDate('');
+        setAppliedEndDate('');
+        setDateFilterError(null);
+    };
 
     const myfunction = (idx: string) => {
         setSearchTerm(idx);
@@ -250,6 +432,49 @@ const Ecommerce: FC<EcommerceProps> = () => {
                     Loading collection analytics...
                 </div>
             )}
+            <div className="box mb-4">
+                <div className="box-body">
+                    <div className="flex flex-wrap items-end gap-3">
+                        <div>
+                            <label className="block text-[0.75rem] text-[#8c9097] dark:text-white/50 mb-1">Period Filter</label>
+                            <select
+                                className="ti-form-control"
+                                value={periodFilter}
+                                onChange={(e) => {
+                                    setPeriodFilter(e.target.value as PeriodFilter);
+                                    setAppliedStartDate('');
+                                    setAppliedEndDate('');
+                                    setDateFilterError(null);
+                                }}
+                            >
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="quarterly">Quarterly</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-[0.75rem] text-[#8c9097] dark:text-white/50 mb-1">Start Date</label>
+                            <input type="date" className="ti-form-control" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                        </div>
+                        <div>
+                            <label className="block text-[0.75rem] text-[#8c9097] dark:text-white/50 mb-1">End Date</label>
+                            <input type="date" className="ti-form-control" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                        </div>
+                        <SpkButton buttontype="button" variant="primary" customClass="ti-btn" onclickfunc={applyDateRange}>Apply Range</SpkButton>
+                        <SpkButton buttontype="button" variant="light" customClass="ti-btn" onclickfunc={clearDateRange}>Clear</SpkButton>
+                        {dateFilterError && (
+                            <div className="w-full text-danger text-[0.75rem]">{dateFilterError}</div>
+                        )}
+                        <div className="ms-auto text-[0.75rem] text-[#8c9097] dark:text-white/50">
+                            {appliedStartDate && appliedEndDate
+                                ? `Active range: ${appliedStartDate} to ${appliedEndDate}`
+                                : `Active period: ${periodFilter}`}
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="grid grid-cols-12 gap-x-6">
                 <div className="xxl:col-span-6 col-span-12">
                     <div className="grid grid-cols-12 gap-x-6">
@@ -262,8 +487,8 @@ const Ecommerce: FC<EcommerceProps> = () => {
                             ratio={`${analytics.failedValue.toLocaleString(undefined, { maximumFractionDigits: 2 })} RWF`} text={`+${Math.max(analytics.totalOrders - analytics.successfulOrders, 0)} failed`} color="secondary" />
                         </div>
                         <div className="lg:col-span-6 md:col-span-6 xl:col-span-6 col-span-12">
-                            <SpkEcommerceCards title="Unique Customers" svg={<><svg xmlns="http://www.w3.org/2000/svg" className="svg-white success" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg></>} 
-                            ratio={analytics.uniqueCustomers.toLocaleString()} text={`+${analytics.uniqueCustomers} customers`} color="success" />
+                            <SpkEcommerceCards title="Success Rate" svg={<><svg xmlns="http://www.w3.org/2000/svg" className="svg-white success" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg></>} 
+                            ratio={`${analytics.successRate.toFixed(1)}%`} text={`+${analytics.successfulOrders} successful`} color="success" />
                         </div>
                         <div className="lg:col-span-6 md:col-span-6 xl:col-span-6 col-span-12">
                             <SpkEcommerceCards title="Total Collections" svg={<><svg xmlns="http://www.w3.org/2000/svg" className="svg-white warning" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" /></svg></>} 
@@ -325,7 +550,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                                             </p>
                                                         </div>
                                                         <div>
-                                                            <span className={`font-semibold ${isSuccessStatus(transaction.status) ? 'text-success' : 'text-danger'}`}>
+                                                            <span className={`font-semibold ${isSuccessStatus(transaction.status, transaction.message) ? 'text-success' : getStatusCategory(transaction.status, transaction.message) === 'active' ? 'text-warning' : 'text-danger'}`}>
                                                                 {parseAmount(transaction.amount).toLocaleString(undefined, { maximumFractionDigits: 2 })} {transaction.currencyCode || 'RWF'}
                                                             </span>
                                                         </div>
@@ -346,13 +571,13 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                     <div>
                                         <nav className="sm:flex block sm:mt-0 mt-2" aria-label="Tabs" role="tablist">
                                             <SpkButton customClass="block w-full sm:w-auto hs-tab-active:bg-primary/10 hs-tab-active:text-primary cursor-pointer text-defaulttextcolor dark:text-defaulttextcolor/70 py-2 px-4  text-[0.8rem] font-medium text-center rounded-md hover:text-primary active" Id="active-item" Tab="#taskactive" Controls="taskactive">
-                                                Active Orders
+                                                Active Collections
                                             </SpkButton>
                                             <SpkButton customClass="block w-full sm:w-auto hs-tab-active:bg-primary/10 hs-tab-active:text-primary cursor-pointer text-defaulttextcolor dark:text-defaulttextcolor/70 py-2 px-4 text-[0.8rem] font-medium text-center  rounded-md hover:text-primary " Id="completed-item" Tab="#completed" Controls="completed">
-                                                Completed
+                                                Successful
                                             </SpkButton>
                                             <SpkButton customClass="block w-full sm:w-auto hs-tab-active:bg-primary/10 hs-tab-active:text-primary cursor-pointer text-defaulttextcolor dark:text-defaulttextcolor/70 py-2 px-4 text-[0.8rem] font-medium text-center  rounded-md hover:text-primary " Id="cancelled-item" Tab="#cancelled" Controls="cancelled">
-                                                Cancelled
+                                                Failed
                                             </SpkButton>
                                         </nav>
                                     </div>
@@ -361,9 +586,12 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                     <div className="tab-content">
                                         <div className="tab-pane show active text-[#8c9097] dark:text-white/50 !border-0 !p-0" id="taskactive"
                                             role="tabpanel">
+                                            <div className="px-4 py-2 text-[0.75rem] text-[#8c9097] dark:text-white/50">
+                                                Showing first {statusRows.active.length} of {orderGroups.active.length} active collections
+                                            </div>
                                             <div className="table-responsive overflow-auto">
                                                 <Spktables tableClass="table box-table table-vcenter whitespace-nowrap mb-0 min-w-full" tBodyClass='active-tab'>
-                                                        {orderGroups.active.map((transaction) => (
+                                                        {statusRows.active.map((transaction) => (
                                                             <tr key={`${transaction.id}-${transaction.createdAt || ''}`}>
                                                                 <td>
                                                                     <div className="flex items-center">
@@ -380,7 +608,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                                                 </td>
                                                                 <td>
                                                                     <div className="items-center">
-                                                                        <span className="text-[0.75rem] text-[#8c9097] dark:text-white/50">Price</span>
+                                                                        <span className="text-[0.75rem] text-[#8c9097] dark:text-white/50">Amount</span>
                                                                         <p className="mb-0 font-semibold">
                                                                             {parseAmount(transaction.amount).toLocaleString(undefined, { maximumFractionDigits: 2 })} {transaction.currencyCode || 'RWF'}
                                                                         </p>
@@ -388,7 +616,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                                                 </td>
                                                                 <td>
                                                                     <div className="items-center">
-                                                                        <span className="text-[0.75rem] text-[#8c9097] dark:text-white/50">Delivery Date</span>
+                                                                        <span className="text-[0.75rem] text-[#8c9097] dark:text-white/50">Collection Date</span>
                                                                         <p className="mb-0">{formatTransactionDate(transaction.createdAt)}</p>
                                                                     </div>
                                                                 </td>
@@ -408,9 +636,12 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                             </div>
                                         </div>
                                         <div className="tab-pane text-[#8c9097] dark:text-white/50 !border-0 !p-0 hidden" id="completed" role="tabpanel" aria-labelledby="completed-item">
+                                            <div className="px-4 py-2 text-[0.75rem] text-[#8c9097] dark:text-white/50">
+                                                Showing first {statusRows.completed.length} of {orderGroups.completed.length} successful collections
+                                            </div>
                                             <div className="table-responsive overflow-auto">
                                                 <Spktables tableClass="table box-table table-vcenter whitespace-nowrap mb-0 min-w-full" tBodyClass='active-tab'>
-                                                        {orderGroups.completed.map((transaction) => (
+                                                        {statusRows.completed.map((transaction) => (
                                                             <tr key={`${transaction.id}-${transaction.createdAt || ''}`}>
                                                                 <td>
                                                                     <div className="flex items-center">
@@ -427,7 +658,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                                                 </td>
                                                                 <td>
                                                                     <div className="items-center">
-                                                                        <span className="text-[0.75rem] text-[#8c9097] dark:text-white/50">Price</span>
+                                                                        <span className="text-[0.75rem] text-[#8c9097] dark:text-white/50">Amount</span>
                                                                         <p className="mb-0 fw-semibold">
                                                                             {parseAmount(transaction.amount).toLocaleString(undefined, { maximumFractionDigits: 2 })} {transaction.currencyCode || 'RWF'}
                                                                         </p>
@@ -435,7 +666,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                                                 </td>
                                                                 <td>
                                                                     <div className="items-center">
-                                                                        <span className="text-[0.75rem] text-success">Delivered On</span>
+                                                                        <span className="text-[0.75rem] text-success">Collection Date</span>
                                                                         <p className="mb-0">{formatTransactionDate(transaction.updatedAt || transaction.createdAt)}</p>
                                                                     </div>
                                                                 </td>
@@ -455,9 +686,12 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                             </div>
                                         </div>
                                         <div className="tab-pane text-[#8c9097] dark:text-white/50 !border-0 !p-0 hidden" id="cancelled" role="tabpanel" aria-labelledby="cancelled-item">
+                                            <div className="px-4 py-2 text-[0.75rem] text-[#8c9097] dark:text-white/50">
+                                                Showing first {statusRows.cancelled.length} of {orderGroups.cancelled.length} failed collections
+                                            </div>
                                             <div className="table-responsive overflow-auto">
                                                 <Spktables tableClass="table box-table table-vcenter whitespace-nowrap mb-0 min-w-full" tBodyClass='active-tab'>
-                                                        {orderGroups.cancelled.map((transaction) => (
+                                                        {statusRows.cancelled.map((transaction) => (
                                                             <tr key={`${transaction.id}-${transaction.createdAt || ''}`}>
                                                                 <td>
                                                                     <div className="flex items-center">
@@ -474,7 +708,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                                                 </td>
                                                                 <td>
                                                                     <div className="items-center">
-                                                                        <span className="text-[0.75rem] text-[#8c9097] dark:text-white/50">Price</span>
+                                                                        <span className="text-[0.75rem] text-[#8c9097] dark:text-white/50">Amount</span>
                                                                         <p className="mb-0 fw-semibold">
                                                                             {parseAmount(transaction.amount).toLocaleString(undefined, { maximumFractionDigits: 2 })} {transaction.currencyCode || 'RWF'}
                                                                         </p>
@@ -482,7 +716,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                                                 </td>
                                                                 <td>
                                                                     <div className="items-center">
-                                                                        <span className="text-[0.75rem] text-danger">Cancelled Date</span>
+                                                                        <span className="text-[0.75rem] text-danger">Collection Date</span>
                                                                         <p className="mb-0">{formatTransactionDate(transaction.updatedAt || transaction.createdAt)}</p>
                                                                     </div>
                                                                 </td>
@@ -526,32 +760,32 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                 <div className="box-body">
                                     <div className="sm:grid sm:grid-cols-12 lg:ps-[3rem] mb-6 pb-6 sm:gap-0 gap-y-3">
                                         <div className="xl:col-span-4 lg:col-span-4 md:col-span-4 sm:col-span-4">
-                                            <div className="mb-1 earning first-half ms-4">Day 1-15</div>
+                                            <div className="mb-1 earning first-half ms-4">Successful Transactions</div>
                                             <div className="mb-0">
-                                                <span className="mt-1 text-[1rem] font-semibold">{collectionBreakdown.firstHalf.toLocaleString(undefined, { maximumFractionDigits: 2 })} RWF</span>
+                                                <span className="mt-1 text-[1rem] font-semibold">{analytics.successfulOrders}</span>
                                                 <span className="text-success"><i className="fa fa-caret-up mx-1"></i>
-                                                    <SpkBadge variant="success/10" customClass="text-success !px-1 !py-2 text-[0.625rem]">{orderGroups.completed.length} completed</SpkBadge></span>
+                                                    <SpkBadge variant="success/10" customClass="text-success !px-1 !py-2 text-[0.625rem]">{collectionBreakdown.successfulAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })} RWF</SpkBadge></span>
                                             </div>
                                         </div>
                                         <div className="xl:col-span-4 lg:col-span-4 md:col-span-4 sm:col-span-4">
-                                            <div className="mb-1 earning top-gross ms-4">Top Provider</div>
+                                            <div className="mb-1 earning top-gross ms-4">Failed Transactions</div>
                                             <div className="mb-0">
-                                                <span className="mt-1 text-[1rem] font-semibold">{collectionBreakdown.topProviderAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })} RWF</span>
-                                                <span className="text-success"><i className="fa fa-caret-up mx-1"></i>
-                                                    <SpkBadge variant="success/10" customClass="text-success !px-1 !py-2 text-[0.625rem]">{collectionBreakdown.topProvider}</SpkBadge></span>
-                                            </div>
-                                        </div>
-                                        <div className="xl:col-span-4 lg:col-span-4 md:col-span-4 sm:col-span-4">
-                                            <div className="mb-1 earning second-half ms-3">Day 16-31</div>
-                                            <div className="mb-0">
-                                                <span className="mt-1 text-[1rem] font-semibold">{collectionBreakdown.secondHalf.toLocaleString(undefined, { maximumFractionDigits: 2 })} RWF</span>
+                                                <span className="mt-1 text-[1rem] font-semibold">{analytics.failedOrders}</span>
                                                 <span className="text-danger"><i className="fa fa-caret-up mx-1"></i>
-                                                    <SpkBadge variant="danger/10" customClass="text-danger !px-1 !py-2 text-[0.625rem]">{orderGroups.cancelled.length} failed</SpkBadge></span>
+                                                    <SpkBadge variant="danger/10" customClass="text-danger !px-1 !py-2 text-[0.625rem]">{collectionBreakdown.failedAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })} RWF</SpkBadge></span>
+                                            </div>
+                                        </div>
+                                        <div className="xl:col-span-4 lg:col-span-4 md:col-span-4 sm:col-span-4">
+                                            <div className="mb-1 earning second-half ms-3">Pending Transactions</div>
+                                            <div className="mb-0">
+                                                <span className="mt-1 text-[1rem] font-semibold">{analytics.pendingOrders}</span>
+                                                <span className="text-warning"><i className="fa fa-caret-up mx-1"></i>
+                                                    <SpkBadge variant="warning/10" customClass="text-warning !px-1 !py-2 text-[0.625rem]">{collectionBreakdown.pendingAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })} RWF</SpkBadge></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div id="earnings">
-                                        <ApexchartsComponent chartOptions={Earoptions} chartSeries={Earseries} type="bar" height={200} />
+                                        <ApexchartsComponent chartOptions={statusChartOptions} chartSeries={statusChartSeries} type="bar" height={200} />
                                     </div>
                                 </div>
                             </div>
@@ -673,7 +907,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
                             </div>
                             <div className="flex flex-wrap gap-2">
                                 <div>
-                                    <input className="ti-form-control form-control-sm" type="text" placeholder="Search Here" onChange={(ele) => { myfunction(ele.target.value); }}
+                                    <input className="ti-form-control form-control-sm min-w-[14rem]" type="text" placeholder="Search customer, reference, provider" onChange={(ele) => { myfunction(ele.target.value); }}
                                         aria-label=".form-control-sm example" />
                                 </div>
                                 <SpkDropdown Arrowicon={true} Linktag={true}  arialexpand={false} Customclass=""   Toggletext="Sort By"
@@ -689,11 +923,11 @@ const Ecommerce: FC<EcommerceProps> = () => {
                         </div>
                         <div className="box-body">
                             <div className="overflow-x-auto">
-                                <Spktables tableClass="table min-w-full whitespace-nowrap table-hover border table-bordered" tableRowclass="border border-inherit border-solid  dark:border-defaultborder/10" 
+                                <Spktables tableClass="table min-w-full whitespace-nowrap table-hover border table-bordered text-[0.8125rem]" tableRowclass="border border-inherit border-solid  dark:border-defaultborder/10" 
                                             header={[{title:'Customer', headerClassname:'!text-start'}, {title:'Reference', headerClassname:'!text-start'}, 
                                                 {title:'Amount', headerClassname:'!text-start'}, {title:'Status', headerClassname:'!text-start'},{title:'Provider', headerClassname:'!text-start'},
-                                                {title:'Message', headerClassname:'!text-start'} ]}>
-                                        {filteredTableRows.map((idx) => (
+                                        {title:'Message', headerClassname:'!text-start'}, {title:'Action', headerClassname:'!text-start'} ]}>
+                                    {paginatedTableRows.map((idx) => (
                                             <tr className="border-y border-inherit border-solid dark:border-defaultborder/10" key={idx.id}>
                                                 <td>
                                                     <div className="flex items-center">
@@ -718,32 +952,73 @@ const Ecommerce: FC<EcommerceProps> = () => {
                                                     <span className="">{idx.sales}</span>
                                                 </td>
                                                 <td>
-                                                    <span className="">{idx.text}</span>
+                                                    <span className="max-w-[22rem] block truncate" title={idx.text}>{idx.text}</span>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        type="button"
+                                                        className="ti-btn ti-btn-sm bg-primary/10 text-primary border border-primary/20 hover:bg-primary/15"
+                                                        onClick={() => setSelectedCollection(idx)}
+                                                    >
+                                                        View
+                                                    </button>
                                                 </td>
                                             </tr>
                                         ))}
                                 </Spktables>
                             </div>
+                            {selectedCollection && (
+                                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 backdrop-blur-[2px] p-4" onClick={() => setSelectedCollection(null)}>
+                                    <div className="w-full max-w-3xl rounded-xl bg-white dark:bg-bodybg shadow-2xl border border-defaultborder/10" onClick={(event) => event.stopPropagation()}>
+                                        <div className="flex items-center justify-between border-b border-defaultborder/10 px-5 py-4">
+                                            <div>
+                                                <h6 className="mb-0 font-semibold">Collection Details</h6>
+                                                <p className="mb-0 text-[0.75rem] text-[#8c9097] dark:text-white/50">Reference #{selectedCollection.productid}</p>
+                                            </div>
+                                            <button type="button" className="text-[0.75rem] text-primary font-medium" onClick={() => setSelectedCollection(null)}>
+                                                Close
+                                            </button>
+                                        </div>
+                                        <div className="p-5">
+                                            <div className="grid grid-cols-12 gap-3 text-[0.8125rem]">
+                                                <div className="col-span-12 md:col-span-6 rounded-md border border-defaultborder/10 p-3"><span className="text-[#8c9097] dark:text-white/50">Customer</span><p className="mb-0 mt-1 font-semibold text-defaulttextcolor dark:text-white">{selectedCollection.name}</p></div>
+                                                <div className="col-span-12 md:col-span-6 rounded-md border border-defaultborder/10 p-3"><span className="text-[#8c9097] dark:text-white/50">Provider</span><p className="mb-0 mt-1 font-semibold text-defaulttextcolor dark:text-white">{selectedCollection.sales}</p></div>
+                                                <div className="col-span-12 md:col-span-6 rounded-md border border-defaultborder/10 p-3"><span className="text-[#8c9097] dark:text-white/50">Amount</span><p className="mb-0 mt-1 font-semibold text-defaulttextcolor dark:text-white">{selectedCollection.price}</p></div>
+                                                <div className="col-span-12 md:col-span-6 rounded-md border border-defaultborder/10 p-3"><span className="text-[#8c9097] dark:text-white/50">Status</span><p className="mb-0 mt-1 font-semibold text-defaulttextcolor dark:text-white">{selectedCollection.status}</p></div>
+                                                <div className="col-span-12 rounded-md border border-defaultborder/10 p-3"><span className="text-[#8c9097] dark:text-white/50">Message</span><p className="mb-0 mt-1 leading-relaxed text-defaulttextcolor dark:text-white">{selectedCollection.text}</p></div>
+                                            </div>
+                                            <div className="mt-5 flex justify-end">
+                                                <button type="button" className="ti-btn bg-primary text-white" onClick={() => setSelectedCollection(null)}>Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                         <div className="box-footer">
                             <div className="sm:flex items-center">
                                 <div>
-                                    Showing {filteredTableRows.length} Entries <i className="bi bi-arrow-right ms-2 font-semibold"></i>
+                                    Showing {filteredTableRows.length === 0 ? 0 : (currentPage - 1) * OVERVIEW_PAGE_SIZE + 1} to {Math.min(currentPage * OVERVIEW_PAGE_SIZE, filteredTableRows.length)} of {filteredTableRows.length} Entries <i className="bi bi-arrow-right ms-2 font-semibold"></i>
                                 </div>
                                 <div className="ms-auto">
                                     <nav aria-label="Page navigation" className="pagination-style-4">
                                         <ul className="ti-pagination mb-0">
-                                            <li className="page-item disabled">
-                                                <Link className="page-link" to="#">
+                                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                                <button className="page-link" type="button" onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}>
                                                     Prev
-                                                </Link>
+                                                </button>
                                             </li>
-                                            <li className="page-item"><Link className="page-link active" to="#">1</Link></li>
-                                            <li className="page-item"><Link className="page-link" to="#">2</Link></li>
-                                            <li className="page-item">
-                                                <Link className="page-link !text-primary" to="#">
+                                            {visiblePages.map((page) => (
+                                                <li className="page-item" key={page}>
+                                                    <button className={`page-link ${currentPage === page ? 'active' : ''}`} type="button" onClick={() => setCurrentPage(page)}>
+                                                        {page}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                                <button className="page-link !text-primary" type="button" onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}>
                                                     next
-                                                </Link>
+                                                </button>
                                             </li>
                                         </ul>
                                     </nav>

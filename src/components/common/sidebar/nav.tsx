@@ -113,24 +113,6 @@ export const MenuItems: any = [
       //   dirchange: false, 
       //   title: "NFT",
       // },
-      {
-        path: `${import.meta.env.BASE_URL}dashboards/analytics`,
-        type: "link",
-        active: false,
-        selected: false,
-        dirchange: false, 
-        title: "Daily Analytics",
-        roles: ["Staff"]
-      },
-      {
-        path: `${import.meta.env.BASE_URL}dashboards/corporate`,
-        type: "link",
-        active: false,
-        selected: false,
-        dirchange: false, 
-        title: "Analytics",
-        roles: ["Agent","Corporate"]
-      },
     
       // {
       //   path: `${import.meta.env.BASE_URL}dashboards/projects`,
@@ -148,15 +130,6 @@ export const MenuItems: any = [
       //   dirchange: false, 
       //   title: "HRM",
       // },
-      {
-        path: `${import.meta.env.BASE_URL}dashboards/crm`,
-        type: "link",
-        active: false,
-        selected: false,
-        dirchange: false, 
-        title: "Monthly Analytics",
-        roles:["Staff"]
-      },
       // {
       //   path: `${import.meta.env.BASE_URL}dashboards/courses`,
       //   type: "link",

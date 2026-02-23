@@ -17,6 +17,23 @@ const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 	const normalizedRole = (userRole || "").toLowerCase();
 	const isStaffRole = normalizedRole === "staff" || normalizedRole === "stuff";
 	const isCorporateRole = normalizedRole === "corporate";
+	const staffHiddenMenuTitles = new Set([
+		"Moola Plus",
+		"Transaction Details",
+		"Register Application",
+		"Auto Settlement",
+		"Report",
+		"User Management",
+		"Dispute Page",
+		"My Account",
+		"LOGS & CHARTS",
+		"Transactions",
+		"Charts",
+	]);
+	const isStaffDisabledItem = (title?: string, menutitle?: string) => {
+		if (!isStaffRole) return false;
+		return staffHiddenMenuTitles.has(title || menutitle || "");
+	};
 	const corporateMenuWhitelist = new Set([
 		"Dashboards",
 		"MOOLA",
@@ -744,9 +761,16 @@ let filteredMenuItems = MenuItems.map((item: any) => {
           {/* Link Menu Item */}
           {levelone.type === "link" && (
             <Link
-              to={levelone.path + "/"}
+							to={isStaffDisabledItem(levelone.title, levelone.menutitle) ? "#" : levelone.path + "/"}
+							onClick={(event) => {
+								if (isStaffDisabledItem(levelone.title, levelone.menutitle)) {
+									event.preventDefault();
+								}
+							}}
               className={`side-menu__item flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 dark:text-white/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-purple-600/10 hover:text-primary dark:hover:text-primary transition-all group ${
                 levelone.selected ? "bg-gradient-to-r from-primary via-purple-600 to-pink-600 text-white shadow-md" : ""
+							} ${
+								isStaffDisabledItem(levelone.title, levelone.menutitle) ? "opacity-50 pointer-events-none cursor-not-allowed" : ""
               }`}
             >
               <span className={`text-lg ${levelone.selected ? "text-white" : "text-gray-500 group-hover:text-primary dark:group-hover:text-primary transition-colors"}`}>
@@ -767,8 +791,14 @@ let filteredMenuItems = MenuItems.map((item: any) => {
               <button
                 className={`side-menu__item w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-gray-700 dark:text-white/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-purple-600/10 hover:text-primary dark:hover:text-primary transition-all group ${
                   levelone.selected ? "bg-gradient-to-r from-primary/20 to-purple-600/20 text-primary" : ""
+								} ${
+									isStaffDisabledItem(levelone.title, levelone.menutitle) ? "opacity-50 cursor-not-allowed" : ""
                 }`}
-                onClick={() => toggleMenu(index)}
+								onClick={() => {
+									if (isStaffDisabledItem(levelone.title, levelone.menutitle)) return;
+									toggleMenu(index);
+								}}
+								disabled={isStaffDisabledItem(levelone.title, levelone.menutitle)}
               >
                 <div className="flex items-center gap-3">
                   <span className={`text-lg ${levelone.selected ? "text-primary" : "text-gray-500 group-hover:text-primary dark:group-hover:text-primary transition-colors"}`}>
