@@ -5,10 +5,6 @@ import { ThemeChanger } from '../../../redux/action';
 import { Link } from 'react-router-dom';
 import jobslanding8 from "../../../assets/images/media/jobs-landing/8.png";
 import jobslanding7 from "../../../assets/images/media/jobs-landing/7.png";
-import togglelogo from "../../../assets/images/brand-logos/toggle-logo.png";
-import toggledark from "../../../assets/images/brand-logos/toggle-dark.png";
-import desktoplogo from "../../../assets/images/brand-logos/desktop-logo.png";
-import desktopwhitelogo from "../../../assets/images/brand-logos/desktop-white.png";
 import SwiperComponent from '../../../@spk/spk-packages/swiper-component';
 import { Accountdata, categorydata, Jobdata, Jobsdata, Questionsdata, slide, Updatedblog } from '../../../components/ui/data/pages/landingdata';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -172,8 +168,8 @@ const breakpoint = {
                             <div className="header-element">
                                 <div className="horizontal-logo">
                                     <Link to={`${import.meta.env.BASE_URL}dashboards/crm/`} className="header-logo">
-                                        <img src={togglelogo} alt="logo" className="toggle-logo" />
-                                        <img src={toggledark} alt="logo" className="toggle-dark" /> </Link>
+                                        <span className="toggle-logo inline-flex w-8 h-8 bg-gradient-to-br from-primary via-purple-600 to-pink-600 rounded-lg items-center justify-center text-white text-lg font-extrabold leading-none">M</span>
+                                        <span className="toggle-dark inline-flex w-8 h-8 bg-gradient-to-br from-primary via-purple-600 to-pink-600 rounded-lg items-center justify-center text-white text-lg font-extrabold leading-none">M</span> </Link>
                                 </div> </div>
 
                             <div className="header-element">
@@ -198,10 +194,8 @@ const breakpoint = {
                             <nav className="main-menu-container nav nav-pills sub-open">
                                 <div className="landing-logo-container my-auto hidden lg:block">
                                     <div className="responsive-logo">
-                                        <Link className="responsive-logo-light" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand"><img
-                                            src={desktoplogo} alt="logo" className="mx-auto hidden h-8 leading-8" /></Link>
-                                        <Link className="responsive-logo-dark" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand"><img
-                                            src={desktopwhitelogo} alt="logo" className="mx-auto h-8 leading-8" /></Link>
+                                        <Link className="responsive-logo-light" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand"><span className="inline-flex w-10 h-10 bg-gradient-to-br from-primary via-purple-600 to-pink-600 rounded-xl items-center justify-center text-white text-xl font-extrabold leading-none mx-auto">M</span></Link>
+                                        <Link className="responsive-logo-dark" to={`${import.meta.env.BASE_URL}dashboards/crm/`} aria-label="Brand"><span className="inline-flex w-10 h-10 bg-gradient-to-br from-primary via-purple-600 to-pink-600 rounded-xl items-center justify-center text-white text-xl font-extrabold leading-none mx-auto">M</span></Link>
                                     </div>
                                 </div>
                                 <div className="slide-left" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path> </svg></div>

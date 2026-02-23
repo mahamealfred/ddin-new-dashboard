@@ -50,11 +50,11 @@ const App = () => {
     <AuthProvider >
             <div style={{display: `${lateLoad ? 'block' : 'none'}`}}>
                     <Switcher/>
-                  <div className='page'>
+                  <div className='page bg-gray-50 dark:bg-bodybg min-h-screen'>
                     <Header/> 
                     <Sidebar/>
-                    <div className='content'>
-                      <div className='main-content'  onClick={Bodyclickk}>
+                    <div className='content mt-[4.5rem]'>
+                      <div className='main-content p-6'  onClick={Bodyclickk}>
                       <Outlet/>
                       </div>
                     </div>

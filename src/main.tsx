@@ -11,7 +11,9 @@ const Crypto = lazy(()=> import( './container/dashboards/crypto/crypto.tsx'))
 const Jobs = lazy(()=> import( './container/dashboards/jobs/jobs.tsx'))
 const Nft = lazy(()=> import( './container/dashboards/nft/nft.tsx'))
 const Sales = lazy(()=> import( './container/dashboards/sales/sales.tsx'))
-const Analytics = lazy(()=> import( './container/dashboards/analytics/analytics.tsx'))
+const CompletedTrasactions = lazy(()=> import( './container/dashboards/transactions/completedTransactions.tsx'))
+const IncompleteTrasactions = lazy(()=> import( './container/dashboards/transactions/incompleteTransactions.tsx'))
+const Analytics = lazy(()=> import( './pages/analytics.tsx'))
 const Projects = lazy(()=> import( './container/dashboards/projects/projects.tsx'))
 const Hrm = lazy(()=> import( './container/dashboards/hrm/hrm.tsx'))
 const Stocks = lazy(()=> import( './container/dashboards/stocks/stocks.tsx'))
@@ -179,12 +181,22 @@ const Leafletmaps = lazy(()=> import( './container/maps/leaflet-map/leaflet-map.
 const Googlemaps = lazy(()=> import( './container/maps/google-map/googlemaps.tsx'))
 const Bubblechart = lazy(()=> import( './container/charts/apexcharts/bubble-chart/bubble-chart.tsx'))
 const Suneditor = lazy(()=> import( './container/forms/formeditors/formeditor/formeditor.tsx'))
+const TransactionDetails = lazy(()=> import( './container/moola/transaction-details.tsx'))
+const RegisterApplication = lazy(()=> import( './container/moola/register-application.tsx'))
+const AutoSettlement = lazy(()=> import( './container/moola/auto-settlement.tsx'))
+const Settlement = lazy(()=> import( './container/moola/settlement.tsx'))
+const Report = lazy(()=> import( './container/moola/report.tsx'))
+const UserManagement = lazy(()=> import( './container/moola/user-management.tsx'))
+const DisputePage = lazy(()=> import( './container/moola/dispute-page.tsx'))
+const MyAccount = lazy(()=> import( './container/moola/my-account.tsx'))
 const Loader =lazy(()=>import( './components/common/loader/loader.tsx'))
 import "../src/assets/scss/tailwind/_tailwind.scss"
 import './index.scss'
 import { Provider } from 'react-redux'
 import store from './redux/store.tsx'
 import RootWrapper from './pages/Rootwrapper.tsx'
+
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.Fragment>
@@ -202,17 +214,30 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   </Route>
                   <Route path={`${import.meta.env.BASE_URL}`} element={<App />}>
                     <Route path={`${import.meta.env.BASE_URL}dashboards/crm`} element={<Crm/>} />
+                    <Route path={`${import.meta.env.BASE_URL}dashboards/collections`} element={<Ecommerce />} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/ecommerce`} element={<Ecommerce />} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/crypto`} element={<Crypto/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/jobs`} element={<Jobs/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/nft`} element={<Nft/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/corporate`} element={<Sales/>} />
+                    <Route path={`${import.meta.env.BASE_URL}dashboards/completed/transactions`} element={<CompletedTrasactions/>} />
+                    <Route path={`${import.meta.env.BASE_URL}dashboards/incomplete/transactions`} element={<IncompleteTrasactions/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/analytics`} element={<Analytics/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/projects`} element={<Projects/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/hrm`} element={<Hrm/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/stocks`} element={<Stocks/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/courses`} element={<Courses/>} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/personal`} element={<Personal/>} />
+
+                    <Route path={`${import.meta.env.BASE_URL}moola/transactions`} element={<TransactionDetails/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/register-application`} element={<RegisterApplication/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/auto-settlement`} element={<AutoSettlement/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/bank-details`} element={<AutoSettlement/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/settlement`} element={<Settlement/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/report`} element={<Report/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/user-management`} element={<UserManagement/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/disputes`} element={<DisputePage/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/my-account`} element={<MyAccount/>} />
 
                     <Route path={`${import.meta.env.BASE_URL}pages/about-us`} element={<AboutUs/>} />
 

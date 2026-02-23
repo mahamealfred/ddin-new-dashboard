@@ -1,4 +1,4 @@
-import  { FC, Fragment, useState } from 'react';
+import  { FC, Fragment, useState, useMemo } from 'react';
 import { Tabledata,  Transactionoptions, Transactionseries } from '../../../../components/ui/data/apps/crypto/transactiondata'
 import CountUp from "react-countup";
 import Pageheader from '../../../../components/common/page-header/pageheader';
@@ -9,6 +9,9 @@ import SpkDropdown from '../../../../@spk/uielements/spk-dropdown';
 import SpkBadge from '../../../../@spk/uielements/spk-badge';
 import SpkButton from '../../../../@spk/uielements/spk-button';
 import SpkOverlay from '../../../../@spk/uielements/spk-overlay';
+import DateRangeFilter from '../../../../components/common/date-range-filter/DateRangeFilter';
+import SpkEcharts from '../../../../@spk/spk-packages/spk-echart';
+import { EChartsOption } from 'echarts';
 
 interface TransactionsProps {}
 
@@ -16,6 +19,9 @@ const Transactions: FC<TransactionsProps> = () => {
 
     const [allData, setAllData] = useState(Tabledata);
     const [originalData, setOriginalData] = useState(Tabledata); // Store original data
+    const [startDate, setStartDate] = useState<string>('');
+    const [, setEndDate] = useState<string>('');
+    const [selectedPeriod, setSelectedPeriod] = useState<string>('month');
 
     function handleRemove(id: number) {
         const newList = allData.filter((item) => item.id !== id);
@@ -41,9 +47,325 @@ const Transactions: FC<TransactionsProps> = () => {
             setAllData(originalData); // Revert to original data if search input is empty
         }
     };
+
+    // Generate transaction analytics
+    const transactionAnalytics = useMemo(() => {
+        const days = selectedPeriod === 'today' ? 1 : selectedPeriod === 'week' ? 7 : 30;
+        const data = [];
+        const today = new Date();
+        
+        for (let i = days - 1; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
+            
+            data.push({
+                date: date.toISOString().split('T')[0],
+                completed: Math.floor(Math.random() * 50) + 10,
+                pending: Math.floor(Math.random() * 20) + 5,
+                failed: Math.floor(Math.random() * 15) + 2,
+                amount: Math.floor(Math.random() * 100000) + 20000,
+            });
+        }
+        
+        return data;
+    }, [selectedPeriod]);
+
+    // Calculate summary
+    const summary = useMemo(() => ({
+        totalTransactions: transactionAnalytics.reduce((sum, d) => sum + d.completed + d.pending + d.failed, 0),
+        completedCount: transactionAnalytics.reduce((sum, d) => sum + d.completed, 0),
+        pendingCount: transactionAnalytics.reduce((sum, d) => sum + d.pending, 0),
+        failedCount: transactionAnalytics.reduce((sum, d) => sum + d.failed, 0),
+        totalAmount: transactionAnalytics.reduce((sum, d) => sum + d.amount, 0),
+        successRate: ((transactionAnalytics.reduce((sum, d) => sum + d.completed, 0) / transactionAnalytics.reduce((sum, d) => sum + d.completed + d.pending + d.failed, 0)) * 100).toFixed(2),
+    }), [transactionAnalytics]);
+
+    // Chart: Transaction Status Overview
+    const statusChartOptions: EChartsOption = {
+        tooltip: {
+            trigger: 'axis',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            textStyle: { color: '#fff' },
+        },
+        xAxis: {
+            type: 'category',
+            data: transactionAnalytics.map(d => d.date),
+            axisLine: { lineStyle: { color: '#e0e6ed' } },
+            axisLabel: { fontSize: 11, color: '#8c9097' },
+        },
+        yAxis: {
+            type: 'value',
+            name: 'Transactions',
+            axisLine: { lineStyle: { color: '#e0e6ed' } },
+            splitLine: { lineStyle: { color: '#f0f0f0' } },
+            axisLabel: { fontSize: 11, color: '#8c9097' },
+        },
+        grid: { left: '3%', right: '4%', bottom: '12%', top: '10%', containLabel: true },
+        series: [
+            {
+                name: 'Completed',
+                data: transactionAnalytics.map(d => d.completed),
+                type: 'bar',
+                itemStyle: { color: '#00ba34' },
+                stack: 'transactions',
+            },
+            {
+                name: 'Pending',
+                data: transactionAnalytics.map(d => d.pending),
+                type: 'bar',
+                itemStyle: { color: '#ffc233' },
+                stack: 'transactions',
+            },
+            {
+                name: 'Failed',
+                data: transactionAnalytics.map(d => d.failed),
+                type: 'bar',
+                itemStyle: { color: '#dc3545' },
+                stack: 'transactions',
+            },
+        ],
+        legend: {
+            data: ['Completed', 'Pending', 'Failed'],
+            bottom: 0,
+            textStyle: { color: '#8c9097' },
+        },
+    };
+
+    // Chart: Transaction Amount Trend
+    const amountChartOptions: EChartsOption = {
+        tooltip: {
+            trigger: 'axis',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            textStyle: { color: '#fff' },
+        },
+        xAxis: {
+            type: 'category',
+            data: transactionAnalytics.map(d => d.date),
+            axisLine: { lineStyle: { color: '#e0e6ed' } },
+            axisLabel: { fontSize: 11, color: '#8c9097' },
+        },
+        yAxis: {
+            type: 'value',
+            name: 'Amount (RWF)',
+            axisLine: { lineStyle: { color: '#e0e6ed' } },
+            splitLine: { lineStyle: { color: '#f0f0f0' } },
+            axisLabel: { fontSize: 11, color: '#8c9097' },
+        },
+        grid: { left: '3%', right: '4%', bottom: '12%', top: '10%', containLabel: true },
+        series: [
+            {
+                data: transactionAnalytics.map(d => d.amount),
+                type: 'line',
+                smooth: true,
+                lineStyle: { width: 2, color: '#3563eb' },
+                itemStyle: { color: '#3563eb' },
+                areaStyle: { color: 'rgba(53, 99, 235, 0.1)' },
+            },
+        ],
+    };
+
+    // Chart: Success Rate Pie
+    const successRateData = [
+        { value: summary.completedCount, name: 'Completed' },
+        { value: summary.pendingCount, name: 'Pending' },
+        { value: summary.failedCount, name: 'Failed' },
+    ];
+
+    const successRateChartOptions: EChartsOption = {
+        tooltip: {
+            trigger: 'item',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            textStyle: { color: '#fff' },
+            formatter: '{a} <br/>{b}: {c} ({d}%)',
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            textStyle: { color: '#8c9097' },
+        },
+        series: [
+            {
+                name: 'Transaction Status',
+                type: 'pie',
+                radius: '70%',
+                data: successRateData,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)',
+                    },
+                },
+                itemStyle: {
+                    borderColor: '#fff',
+                    borderWidth: 2,
+                },
+            },
+        ],
+    };
+
+    const handleDateChange = (start: string, end: string) => {
+        setStartDate(start);
+        setEndDate(end);
+    };
+
+    const handlePeriodChange = (period: string) => {
+        setSelectedPeriod(period);
+    };
     return (
         <Fragment>
             <Pageheader currentpage="Transactions" activepage="Crypto" mainpage="Transactions" />
+            
+            {/* Date Range Filter */}
+            <DateRangeFilter
+                onDateChange={handleDateChange}
+                onPeriodChange={handlePeriodChange}
+            />
+
+            {/* Transaction Analytics Summary Cards */}
+            <div className="grid grid-cols-12 gap-x-6 mb-6">
+                <div className="xl:col-span-3 lg:col-span-6 col-span-12">
+                    <div className="box">
+                        <div className="box-body">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">Total Transactions</p>
+                                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                        {summary.totalTransactions.toLocaleString()}
+                                    </h4>
+                                    <p className="text-xs text-success mt-2">
+                                        <i className="ri-arrow-up-line"></i> All Periods
+                                    </p>
+                                </div>
+                                <div className="text-3xl text-primary opacity-20">
+                                    <i className="ri-exchange-line"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="xl:col-span-3 lg:col-span-6 col-span-12">
+                    <div className="box">
+                        <div className="box-body">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">Completed</p>
+                                    <h4 className="text-2xl font-bold text-success">
+                                        {summary.completedCount.toLocaleString()}
+                                    </h4>
+                                    <p className="text-xs text-success mt-2">
+                                        <i className="ri-check-line"></i> Success Rate: {summary.successRate}%
+                                    </p>
+                                </div>
+                                <div className="text-3xl text-success opacity-20">
+                                    <i className="ri-checkbox-circle-line"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="xl:col-span-3 lg:col-span-6 col-span-12">
+                    <div className="box">
+                        <div className="box-body">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">Pending</p>
+                                    <h4 className="text-2xl font-bold text-warning">
+                                        {summary.pendingCount.toLocaleString()}
+                                    </h4>
+                                    <p className="text-xs text-warning mt-2">
+                                        <i className="ri-time-line"></i> Waiting
+                                    </p>
+                                </div>
+                                <div className="text-3xl text-warning opacity-20">
+                                    <i className="ri-timer-line"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="xl:col-span-3 lg:col-span-6 col-span-12">
+                    <div className="box">
+                        <div className="box-body">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">Failed</p>
+                                    <h4 className="text-2xl font-bold text-danger">
+                                        {summary.failedCount.toLocaleString()}
+                                    </h4>
+                                    <p className="text-xs text-danger mt-2">
+                                        <i className="ri-close-line"></i> Requires Action
+                                    </p>
+                                </div>
+                                <div className="text-3xl text-danger opacity-20">
+                                    <i className="ri-close-circle-line"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Advanced Analytics Charts */}
+            <div className="grid grid-cols-12 gap-x-6 mb-6">
+                <div className="xl:col-span-8 col-span-12">
+                    <div className="box">
+                        <div className="box-header justify-between">
+                            <div className="box-title">Transaction Status Overview</div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">Period: {startDate || 'Last 30 days'}</div>
+                        </div>
+                        <div className="box-body">
+                            <SpkEcharts
+                                chartOptions={statusChartOptions}
+                                chartSeries={[]}
+                                height={300}
+                                mainClass="w-full"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="xl:col-span-4 col-span-12">
+                    <div className="box">
+                        <div className="box-header justify-between">
+                            <div className="box-title">Status Distribution</div>
+                        </div>
+                        <div className="box-body">
+                            <SpkEcharts
+                                chartOptions={successRateChartOptions}
+                                chartSeries={[]}
+                                height={300}
+                                mainClass="w-full"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Transaction Amount Trend */}
+            <div className="grid grid-cols-12 gap-x-6 mb-6">
+                <div className="col-span-12">
+                    <div className="box">
+                        <div className="box-header justify-between">
+                            <div className="box-title">Transaction Amount Trend</div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">Period: {startDate || 'Last 30 days'}</div>
+                        </div>
+                        <div className="box-body">
+                            <SpkEcharts
+                                chartOptions={amountChartOptions}
+                                chartSeries={[]}
+                                height={300}
+                                mainClass="w-full"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Original Transaction Table and Sidebar */}
             <div className="grid grid-cols-12 gap-6">
                 <div className="xl:col-span-9 col-span-12">
                     <div className="box custom-box">

@@ -22,19 +22,12 @@ import us from "../../../assets/images/flags/us_flag.jpg";
 // import translate from "../../../assets/images/apps/translate.png";
 // import googlesheets from "../../../assets/images/apps/google-sheets.png";
 import face9 from "../../../assets/images/faces/9.jpg";
-import desktoplogo from "../../../assets/images/brand-logos/desktop-logo.png";
-import togglelogo from "../../../assets/images/brand-logos/toggle-logo.png";
-import desktopdark from "../../../assets/images/brand-logos/ddinlogoT.png";
-import toggledark from "../../../assets/images/brand-logos/toggle-dark.png";
-import desktopwhite from "../../../assets/images/brand-logos/ddinlogoT.png";
-import togglewhite from "../../../assets/images/brand-logos/toggle-white.png";
 // import product1 from "../../../assets/images/ecommerce/jpg/1.jpg";
 // import product3 from "../../../assets/images/ecommerce/jpg/3.jpg";
 // import product5 from "../../../assets/images/ecommerce/jpg/5.jpg";
 // import product4 from "../../../assets/images/ecommerce/jpg/4.jpg";
 // import product6 from "../../../assets/images/ecommerce/jpg/6.jpg";
 import SpkDropdown from '../../../@spk/uielements/spk-dropdown';
-import SpkButton from '../../../@spk/uielements/spk-button';
 import { auth } from '../../../firebase/firebaseapi';
 
 interface HeaderProps { }
@@ -441,34 +434,50 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
   };
   return (
     <Fragment>
-      <div className="app-header">
-        <nav className="main-header !h-[3.75rem]" aria-label="Global">
-          <div className="main-header-container ps-[0.725rem] pe-[1rem] ">
+      <div className="app-header sticky top-0 z-50 shadow-sm bg-white dark:bg-bodybg border-b border-gray-200 dark:border-defaultborder/10">
+        <nav className="main-header !h-[4.5rem]" aria-label="Global">
+          <div className="main-header-container ps-4 pe-6">
 
-            <div className="header-content-left">
+            <div className="header-content-left flex items-center gap-4">
               <div className="header-element">
-                <div className="horizontal-logo">
-                  <Link to={`${import.meta.env.BASE_URL}dashboards/corporate`} className="header-logo">
-                    <img src={desktoplogo} alt="logo" className="desktop-logo" />
-                    <img src={togglelogo} alt="logo" className="toggle-logo" />
-                    <img src={desktopdark} alt="logo" className="desktop-dark" />
-                    <img src={toggledark} alt="logo" className="toggle-dark" />
-                    <img src={desktopwhite} alt="logo" className="desktop-white" />
-                    <img src={togglewhite} alt="logo" className="toggle-white" />
+                <div className="horizontal-logo flex items-center gap-3">
+                  <Link to={`${import.meta.env.BASE_URL}dashboards/corporate`} className="header-logo flex items-center gap-3 group">
+                    <div className="w-10 h-10 bg-gradient-to-br from-primary via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-all">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="hidden lg:block">
+                      <h1 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">MoolaCore</h1>
+                      <p className="text-xs text-gray-500 dark:text-white/50 -mt-0.5">Financial Dashboard</p>
+                    </div>
                   </Link>
                 </div>
               </div>
-              <div className="header-element md:px-[0.325rem] !items-center" onClick={() => toggleSidebar()}>
-                <Link aria-label="Hide Sidebar"
-                  className="sidemenu-toggle animated-arrow  hor-toggle horizontal-navtoggle inline-flex items-center" to="#"><span></span></Link>
+              <div className="header-element md:px-2 !items-center" onClick={() => toggleSidebar()}>
+                <button
+                  aria-label="Toggle Sidebar"
+                  className="sidemenu-toggle p-2 hover:bg-gray-100 dark:hover:bg-black/20 rounded-lg transition-all inline-flex items-center"
+                >
+                  <svg className="w-6 h-6 text-gray-600 dark:text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
               </div>
             </div>
-            <div className="header-content-right">
+            <div className="header-content-right flex items-center gap-2">
 
-              <div className="header-element py-[1rem] md:px-[0.65rem] px-2 header-search">
-                <SpkButton disabled Label="button" buttontype="button" Overlay="#search-modal" customClass="inline-flex flex-shrink-0 justify-center items-center gap-2  rounded-full font-medium focus:ring-offset-0 focus:ring-offset-white transition-all text-xs dark:bg-bgdark dark:hover:bg-black/20 dark:text-[#8c9097] dark:text-white/50 dark:hover:text-white dark:focus:ring-white/10 dark:focus:ring-offset-white/10">
-                    <i className="bx bx-search-alt-2 header-link-icon"></i>
-                </SpkButton>
+              <div className="header-element hidden md:block">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className="w-64 pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-defaultborder/20 bg-gray-50 dark:bg-black/20 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                  />
+                  <svg className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
               </div>
               <SpkDropdown Customclass="header-element py-[1rem] md:px-[0.65rem] px-2  header-country hidden sm:block [--placement:bottom-left]" 
                       buttonid="dropdown-flag" CustomToggleclass="hs-dropdown-toggle !p-0 flex-shrink-0 !m-0 !border-0 !rounded-full !shadow-none"  
@@ -505,17 +514,11 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                       </div>
                     </div>
               </SpkDropdown>
-              <div className="header-element header-theme-mode hidden !items-center sm:block !py-[1rem] md:!px-[0.65rem] px-2" onClick={() => ToggleDark()}>
-                <SpkButton Label="anchor"
-                  customClass="hs-dark-mode-active:hidden flex hs-dark-mode group flex-shrink-0 justify-center items-center gap-2  rounded-full font-medium transition-all text-xs dark:hover:bg-black/20 dark:text-[#8c9097] dark:text-white/50 dark:hover:text-white dark:focus:ring-white/10 dark:focus:ring-offset-white/10"
-                   Themevalue="dark">
-                  <i className="bx bx-moon header-link-icon"></i>
-                </SpkButton>
-                <SpkButton Label="anchor"
-                  customClass="hs-dark-mode-active:flex hidden hs-dark-mode group flex-shrink-0 justify-center items-center gap-2  rounded-full font-medium text-defaulttextcolor  transition-all text-xs  dark:hover:bg-black/20 dark:text-[#8c9097] dark:text-white/50 dark:hover:text-white dark:focus:ring-white/10 dark:focus:ring-offset-white/10"
-                  Themevalue="light">
-                  <i className="bx bx-sun header-link-icon"></i>
-                </SpkButton>
+              <div className="header-element header-theme-mode hidden !items-center sm:block" onClick={() => ToggleDark()}>
+                <button className="p-2.5 hover:bg-gray-100 dark:hover:bg-black/20 rounded-xl transition-all group">
+                  <i className="bx bx-moon text-xl text-gray-600 dark:text-white/70 group-hover:text-primary dark:group-hover:text-primary transition-colors hs-dark-mode-active:hidden"></i>
+                  <i className="bx bx-sun text-xl text-gray-600 dark:text-white/70 group-hover:text-primary dark:group-hover:text-primary transition-colors hs-dark-mode-active:block hidden"></i>
+                </button>
               </div>
                 {/* <SpkDropdown Customclass="header-element cart-dropdown  md:!block !hidden py-[1rem] md:px-[0.65rem] px-2 [--placement:bottom-right] rtl:[--placement:bottom-left]" 
                    Custommenuclass="main-header-dropdown bg-white !-mt-3 !p-0 w-[22rem] border-0 border-defaultborder " Icon={true} Badgetext={cartItemCount} Badgetag={true}
@@ -580,10 +583,14 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                       </div>
                     </div>
                 </SpkDropdown> */}
-              <div className="hs-dropdown ti-dropdown  header-element py-[1rem] md:px-[0.65rem] px-2 notifications-dropdown header-notification  !hidden md:!block [--placement:bottom-right]">
-                <SpkButton Id="dropdown-notification" buttontype="button"
-                  customClass="hs-dropdown-toggle relative ti-dropdown-toggle !p-0 !border-0 flex-shrink-0  !rounded-full !shadow-none align-middle text-xs">
-                  <i className="bx bx-bell header-link-icon  text-[1.125rem]"></i>
+              <div className="hs-dropdown ti-dropdown header-element !hidden md:!block [--placement:bottom-right]">
+                <button
+                  id="dropdown-notification"
+                  type="button"
+                  className="hs-dropdown-toggle relative p-2.5 hover:bg-gray-100 dark:hover:bg-black/20 rounded-xl transition-all group"
+                >
+                  <i className="bx bx-bell text-xl text-gray-600 dark:text-white/70 group-hover:text-primary transition-colors"></i>
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-bodybg"></span>
                   {/* <span className="flex absolute h-5 w-5 -top-[0.25rem] end-0  -me-[0.6rem]">
                     <span
                       className="animate-slow-ping absolute inline-flex -top-[2px] -start-[2px] h-full w-full rounded-full bg-secondary/40 opacity-75"></span>
@@ -591,7 +598,7 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                       className="relative inline-flex justify-center items-center rounded-full  h-[14.7px] w-[14px] bg-secondary text-[0.625rem] text-white"
                       id="notification-icon-badge">{notifications.length}</span>
                   </span> */}
-                </SpkButton>
+                </button>
                 <div className="main-header-dropdown !-mt-3 !p-0 hs-dropdown-menu ti-dropdown-menu bg-white !w-[22rem] border-0 border-defaultborder hidden !m-0"
                   aria-labelledby="dropdown-notification">
 
@@ -727,29 +734,33 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                   </div> */}
               </SpkDropdown>
 
-              <div className="header-element header-fullscreen py-[1rem] md:px-[0.65rem] px-2">
-              <SpkButton
-                  Label="anchor"
-                  onclickfunc={() => toggleFullscreen()}
-                  customClass="inline-flex flex-shrink-0 justify-center items-center gap-2  !rounded-full font-medium dark:hover:bg-black/20 dark:text-[#8c9097] dark:text-white/50 dark:hover:text-white dark:focus:ring-white/10 dark:focus:ring-offset-white/10"
+              <div className="header-element header-fullscreen">
+                <button
+                  onClick={() => toggleFullscreen()}
+                  className="p-2.5 hover:bg-gray-100 dark:hover:bg-black/20 rounded-xl transition-all group"
                 >
                   {isFullscreen ? (
-                    <i className="bx bx-exit-fullscreen full-screen-close header-link-icon"></i>
+                    <i className="bx bx-exit-fullscreen text-xl text-gray-600 dark:text-white/70 group-hover:text-primary transition-colors"></i>
                   ) : (
-                    <i className="bx bx-fullscreen full-screen-open header-link-icon"></i>
+                    <i className="bx bx-fullscreen text-xl text-gray-600 dark:text-white/70 group-hover:text-primary transition-colors"></i>
                   )}
-                </SpkButton>
+                </button>
               </div>
-              <div className="header-element md:!px-[0.65rem] px-2 hs-dropdown !items-center ti-dropdown [--placement:bottom-left]">
-
-                <SpkButton Id="dropdown-profile" buttontype="button"
-                  customClass="hs-dropdown-toggle ti-dropdown-toggle !gap-2 !p-0 flex-shrink-0 sm:me-2 me-0 !rounded-full !shadow-none text-xs align-middle !border-0 !shadow-transparent ">
-                  <img className="inline-block rounded-full " src={face9} width="32" height="32" alt="Image Description" />
-                </SpkButton>
-                <div className="md:block hidden dropdown-profile">
-                  <p className="font-semibold mb-0 leading-none text-[#536485] text-[0.813rem] ">{name}</p>
-                  <span className="opacity-[0.7] font-normal text-[#536485] block text-[0.6875rem] ">{role}</span>
-                </div>
+              <div className="header-element hs-dropdown !items-center ti-dropdown [--placement:bottom-left]">
+                <button
+                  id="dropdown-profile"
+                  type="button"
+                  className="hs-dropdown-toggle flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-black/20 rounded-xl transition-all"
+                >
+                  <div className="md:block hidden text-right">
+                    <p className="font-semibold text-sm text-gray-900 dark:text-white leading-tight">{name}</p>
+                    <span className="text-xs text-gray-500 dark:text-white/50 capitalize">{role}</span>
+                  </div>
+                  <div className="relative">
+                    <img className="w-10 h-10 rounded-full border-2 border-gray-200 dark:border-defaultborder/20" src={face9} alt="Profile" />
+                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-bodybg"></span>
+                  </div>
+                </button>
                 <div
                   className="hs-dropdown-menu ti-dropdown-menu !-mt-3 border-0 w-[11rem] !p-0 border-defaultborder hidden main-header-dropdown  pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end"
                   aria-labelledby="dropdown-profile">
@@ -783,12 +794,14 @@ const Header: FC<HeaderProps> = ({ local_varaiable, ThemeChanger }: any) => {
                   </ul>
                 </div>
               </div>
-              <div className="header-element md:px-[0.48rem]">
-                <SpkButton Label="button" buttontype="button"
-                  customClass="hs-dropdown-toggle switcher-icon inline-flex flex-shrink-0 justify-center items-center gap-2  rounded-full font-medium  align-middle transition-all text-xs dark:text-[#8c9097] dark:text-white/50 dark:hover:text-white dark:focus:ring-white/10 dark:focus:ring-offset-white/10"
-                   Overlay="#hs-overlay-switcher">
-                  <i className="bx bx-cog header-link-icon animate-spin-slow"></i>
-                </SpkButton>
+              <div className="header-element">
+                <button
+                  type="button"
+                  className="hs-dropdown-toggle switcher-icon p-2.5 hover:bg-gray-100 dark:hover:bg-black/20 rounded-xl transition-all group"
+                  data-hs-overlay="#hs-overlay-switcher"
+                >
+                  <i className="bx bx-cog text-xl text-gray-600 dark:text-white/70 group-hover:text-primary group-hover:rotate-90 transition-all duration-300"></i>
+                </button>
               </div>
             </div>
           </div>

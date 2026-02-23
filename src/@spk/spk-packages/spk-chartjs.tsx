@@ -1,5 +1,8 @@
 import React from 'react';
 import { Bar, Bubble, Doughnut, Line, Pie, PolarArea, Radar, Scatter } from "react-chartjs-2";
+import { Chart, registerables } from 'chart.js';
+
+Chart.register(...registerables);
 
 interface ChartJsComponentProps {
   chartOptions: any;

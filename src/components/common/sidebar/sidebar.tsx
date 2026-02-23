@@ -1,18 +1,10 @@
 import  { Fragment, useState, useEffect, FC } from "react";
 import { connect } from "react-redux";
 import SimpleBar from 'simplebar-react';
-import Menuloop from "./menuloop";
 import { MenuItems } from "./nav";
 import store from "../../../redux/store";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeChanger } from "../../../redux/action";
-import logo1 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
-import logo2 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
-import logo3 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
-import logo4 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
-import logo5 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
-import logo6 from "../../../assets/images/brand-logos/ddinLogoWhite.png";
-import SpkButton from "../../../@spk/uielements/spk-button";
 // import SpkButton from "../../../@spk/uielements/spk-button";
 // import SpkOverlay from "../../../@spk/uielements/spk-overlay";
 
@@ -20,7 +12,80 @@ interface SidebarProps { }
 
 const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 	const [menuitems, setMenuitems] = useState(MenuItems);
+	const [userRole, setUserRole] = useState("");
+	const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
+	const normalizedRole = (userRole || "").toLowerCase();
+	const isStaffRole = normalizedRole === "staff" || normalizedRole === "stuff";
+	const isCorporateRole = normalizedRole === "corporate";
+	const corporateMenuWhitelist = new Set([
+		"Dashboards",
+		"MOOLA",
+		"Dashboard",
+		"Transaction Details",
+		"Register Application",
+		"Auto Settlement",
+		"Report",
+		"Dispute Page",
+		"My Account",
+	]);
 
+const toggleMenu = (index: number) => {
+  setOpenMenus((prev) => ({
+    ...prev,
+    [index]: !prev[index], // Toggle the submenu open/close
+  }));
+};
+	// const [role, setRole] = useState("");
+  // Declare filtered menu items once
+// Filter the menu items based on user role
+let filteredMenuItems = MenuItems.map((item: any) => {
+	if (isStaffRole) {
+		return item;
+	}
+
+	if (isCorporateRole && !corporateMenuWhitelist.has(item.title || item.menutitle)) {
+		return null;
+	}
+
+	if (item.type === "sub") {
+		const filteredChildren = item.children?.filter((child: any) => {
+			if (isStaffRole) {
+				return true;
+			}
+
+			if (isCorporateRole) {
+				return !child.roles || child.roles.some((role: string) => role.toLowerCase() === "corporate");
+			}
+
+			return !child.roles || child.roles.some((role: string) => role.toLowerCase() === normalizedRole);
+		});
+
+		if (!filteredChildren || filteredChildren.length === 0) return null;
+
+		return { ...item, children: filteredChildren };
+	}
+
+	if (isCorporateRole) {
+		return !item.roles || item.roles.some((role: string) => role.toLowerCase() === "corporate") ? item : null;
+	}
+
+	return !item.roles || item.roles.some((role: string) => role.toLowerCase() === normalizedRole) ? item : null;
+}).filter(Boolean); // Remove null values
+	useEffect(() => {
+		
+		const storedData = localStorage.getItem("userData");
+  
+		if (storedData) {
+			const parsedData = JSON.parse(storedData);
+			const role = String(parsedData?.role || "").toLowerCase();
+  
+			//setData(JSON.parse(storedData));
+		  
+			
+		    setUserRole(role === "stuff" ? "Staff" : parsedData.role)
+		}
+		
+	}, []);
 
 	function closeMenu() {
 		const closeMenudata = (items: any) => {
@@ -335,7 +400,6 @@ const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 	}
 
 
-	const level = 0;
 	let hasParent = false;
 	let hasParentLevel = 0;
 
@@ -605,13 +669,15 @@ const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 			}
 		}
 	}
+	void HoverToggleInnerMenuFn;
+	void toggleSidemenu;
 	function handleAttributeChange(mutationsList: any) {
 		for (const mutation of mutationsList) {
 			if (mutation.type === 'attributes' && mutation.attributeName === 'data-nav-layout') {
 				const newValue = mutation.target.getAttribute('data-nav-layout');
 				if (newValue == 'vertical') {
 					let currentPath = location.pathname.endsWith("/") ? location.pathname.slice(0, -1) : location.pathname;
-					currentPath = !currentPath ? '/dashboard/ecommerce' : currentPath;
+					currentPath = !currentPath ? '/dashboards/collections' : currentPath;
 					setMenuUsingUrl(currentPath);
 				} else {
 					closeMenu();
@@ -619,87 +685,129 @@ const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 			}
 		}
 	}
-	const handleClick = (event:any) => {
-		// Your logic here
-		event.preventDefault(); // Prevents the default anchor behavior (navigation)
-		// ... other logic you want to perform on click
-	};
+	// const handleClick = (event:any) => {
+	// 	// Your logic here
+	// 	event.preventDefault(); // Prevents the default anchor behavior (navigation)
+	// 	// ... other logic you want to perform on click
+	// };
+
+
+
 	return (
 
 		<Fragment>
 			 
 			<div id="responsive-overlay"
 				onClick={() => { menuClose(); }}></div>
-			<aside className="app-sidebar" id="sidebar" onMouseOver={() => Onhover()}
+			<aside className="app-sidebar border-r border-gray-200 dark:border-defaultborder/10 bg-white dark:!bg-bodybg" id="sidebar" onMouseOver={() => Onhover()}
 				onMouseLeave={() => Outhover()}>
-				<div className="main-sidebar-header">
-					<Link to={`${import.meta.env.BASE_URL}dashboards/corporate/`} className="header-logo">
-					<img src={logo1} alt="logo" className="desktop-logo" />
-					<img src={logo2} alt="logo" className="toggle-logo" />
-					<img src={logo3} alt="logo" className="desktop-dark" />
-					<img src={logo4} alt="logo" className="toggle-dark" />
-					<img src={logo5} alt="logo" className="desktop-white" />
-					<img src={logo6} alt="logo" className="toggle-white" />
-
+				<div className="main-sidebar-header px-6 py-6 border-b border-gray-200 dark:border-defaultborder/10">
+					<Link to={`${import.meta.env.BASE_URL}dashboards/corporate/`} className="header-logo sidebar-brand-link flex items-center gap-3 group">
+						<div className="w-10 h-10 bg-gradient-to-br from-primary via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-all">
+							<span className="text-white text-xl font-extrabold leading-none tracking-tight">M</span>
+						</div>
+						<div className="min-w-0 sidebar-brand-text">
+							<h1 className="text-sm sm:text-lg font-bold text-primary dark:text-white tracking-tight leading-tight truncate">MoolaCore</h1>
+							<p className="text-[10px] sm:text-xs text-gray-500 dark:text-white/50 -mt-0.5 truncate">Financial Dashboard</p>
+						</div>
 					</Link>
 				</div>
 
-				<SimpleBar className="main-sidebar " id="sidebar-scroll">
+				<SimpleBar className="main-sidebar px-3 py-4" id="sidebar-scroll">
 						<nav className="main-menu-container nav nav-pills flex-column sub-open">
 							<div className="slide-left" id="slide-left" onClick={() => { slideLeft(); }}><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24"
 								height="24" viewBox="0 0 24 24">
 								<path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
 							</svg></div>
+						<ul className="main-menu space-y-1">
+    {filteredMenuItems.map((levelone: any, index: number) => (
+      <Fragment key={index}>
+        <li
+          className={`${
+            levelone.menutitle ? "slide__category" : ""
+          } ${
+            levelone.type === "link" ? "slide" : ""
+          } ${
+            levelone.type === "sub" ? "slide has-sub" : ""
+          } ${
+            openMenus[index] ? "open" : ""
+          } ${
+            levelone.selected ? "active" : ""
+          }`}
+        >
+          {levelone.menutitle && (
+            <span className="category-name text-xs font-semibold text-gray-400 dark:text-white/40 uppercase tracking-wider px-4 py-3 block">
+              {levelone.menutitle}
+            </span>
+          )}
 
-							<ul className="main-menu">
-								{MenuItems.map((levelone: any, index:any) => (
-									<Fragment key={index}>
-										<li className={`${levelone.menutitle ? 'slide__category' : ''} ${levelone.type === 'link' ? 'slide' : ''}
-                                           ${levelone.type === 'sub' ? 'slide has-sub' : ''} ${levelone?.active ? 'open' : ''} ${levelone?.selected ? 'active' : ''}`}>
-											{levelone.menutitle ?
-												<span className='category-name'>
-													{levelone.menutitle}
-												</span>
-												: ""}
-											{levelone.type === "link" ?
-												<Link to={levelone.path +"/"} className={`side-menu__item ${levelone.selected ? 'active' : ''}`} >
-												<span className={`hs-tooltip inline-block [--placement:right] leading-none ${local_varaiable?.dataVerticalStyle == 'doublemenu' ? '' : 'hidden'}`}>
-													<SpkButton buttontype="button" customClass="hs-tooltip-toggle  inline-flex justify-center items-center">
-														{levelone.icon}
-														<span className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 !py-2 !px-3 !rounded-md bg-black text-xs font-medium text-white shadow-sm dark:bg-neutral-700" role="tooltip">
-															{levelone.title}
-														</span>
-													</SpkButton>
-												</span>
+          {/* Link Menu Item */}
+          {levelone.type === "link" && (
+            <Link
+              to={levelone.path + "/"}
+              className={`side-menu__item flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 dark:text-white/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-purple-600/10 hover:text-primary dark:hover:text-primary transition-all group ${
+                levelone.selected ? "bg-gradient-to-r from-primary via-purple-600 to-pink-600 text-white shadow-md" : ""
+              }`}
+            >
+              <span className={`text-lg ${levelone.selected ? "text-white" : "text-gray-500 group-hover:text-primary dark:group-hover:text-primary transition-colors"}`}>
+                {levelone.icon}
+              </span>
+              <span className="side-menu__label font-medium">{levelone.title}</span>
+              {levelone.badge && (
+                <span className="ml-auto px-2 py-0.5 text-xs font-semibold rounded-full bg-primary/10 text-primary">
+                  {levelone.badge}
+                </span>
+              )}
+            </Link>
+          )}
 
-												{local_varaiable.dataVerticalStyle != "doublemenu" ? levelone.icon :""}
-
-												<span className="side-menu__label">{levelone.title} {levelone.badgetxt ? (<span className={levelone.class}> {levelone.badgetxt}</span>
-													) : (
-														""
-													)}
-													</span>
-												</Link>
-												: ""}
-											{levelone.type === "empty" ?
-												<Link to="#" className='side-menu__item'
-												 onClick={handleClick}
-												>{levelone.icon}<span className=""> {levelone.title} {levelone.badgetxt ? (
-													<span className={levelone.class}>{levelone.badgetxt} </span>
-												) : (
-													""
-												)}
-												</span>
-												</Link>
-												: ""}
-											{levelone.type === "sub" ?
-												<Menuloop MenuItems={levelone} level={level + 1} toggleSidemenu={toggleSidemenu} HoverToggleInnerMenuFn={HoverToggleInnerMenuFn} />
-												: ''}
-										</li>
-									</Fragment>
-								))}
-							</ul>
-
+          {/* Submenu Toggle */}
+          {levelone.type === "sub" && (
+            <>
+              <button
+                className={`side-menu__item w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-gray-700 dark:text-white/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-purple-600/10 hover:text-primary dark:hover:text-primary transition-all group ${
+                  levelone.selected ? "bg-gradient-to-r from-primary/20 to-purple-600/20 text-primary" : ""
+                }`}
+                onClick={() => toggleMenu(index)}
+              >
+                <div className="flex items-center gap-3">
+                  <span className={`text-lg ${levelone.selected ? "text-primary" : "text-gray-500 group-hover:text-primary dark:group-hover:text-primary transition-colors"}`}>
+                    {levelone.icon}
+                  </span>
+                  <span className="side-menu__label font-medium">{levelone.title}</span>
+                </div>
+                <svg
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    openMenus[index] ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openMenus[index] && (
+                <ul className="sub-menu pl-4 mt-1 space-y-1">
+                  {levelone.children.map((child: any, subIndex: number) => (
+                    <li key={subIndex}>
+                      <Link
+                        to={child.path + "/"}
+                        className="side-menu__item flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-600 dark:text-white/60 hover:bg-primary/5 hover:text-primary dark:hover:text-primary transition-all"
+                      >
+                        {child.icon && <span className="text-base">{child.icon}</span>}
+                        <span className="side-menu__label">{child.title}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+        </li>
+      </Fragment>
+    ))}
+  </ul>
 							<div className="slide-right" onClick={() => { slideRight(); }} id="slide-right">
 								<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
 							</div>

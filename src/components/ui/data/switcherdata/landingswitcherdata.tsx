@@ -172,11 +172,11 @@ export const LocalStorageBackup1 = (actionfunction: any ,setpageloading:any) => 
   
     // Theme Primary: Colors: Start
     switch (localStorage.primaryRGB) {
-        case '78, 172, 76':
+        case '58, 88, 146':
             primaryColor1(actionfunction);
 
             break;
-        case '92, 144, 1633':
+        case '92, 144, 163':
             primaryColor2(actionfunction);
 
             break;

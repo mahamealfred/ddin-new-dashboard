@@ -1,0 +1,1 @@
+import{a as o,r as s,j as t,P as a,s as e,O as i}from"./index-D_l-1JBt.js";import{A as n}from"./contextapi-9za7ONEn.js";import"./preline-CebrZH6F.js";const m=()=>{const r=o();return s.useEffect(()=>{window.HSStaticMethods.autoInit()},[r.pathname]),t.jsx(s.Fragment,{children:t.jsx(n,{children:t.jsx(a,{store:e,children:t.jsx(i,{})})})})};export{m as default};

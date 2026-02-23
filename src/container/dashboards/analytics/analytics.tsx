@@ -1,18 +1,46 @@
 
-import  { FC, Fragment } from 'react'
-import Pageheader from '../../../components/common/page-header/pageheader';
-import { Link } from 'react-router-dom';
-import { Visitorsbychannel ,Bounceoptions, Bounceseries, Clickoptions, Clickseries, Deviceoptions, Deviceseries, Impressoptions, Impressseries, Newoptions, Newseries, Rateoptions, Rateseries, Reportoptions, Reportseries, Totaloptions, Totalseries, Visitorsbycountries, } from '../../../components/ui/data/dashboards/analyticsdata';
-import media84 from "../../../assets/images/media/media-84.png";
-import ApexchartsComponent from '../../../@spk/spk-packages/apexcharts-component';
-import SpkDropdown from '../../../@spk/uielements/spk-dropdown';
-import SpkBadge from '../../../@spk/uielements/spk-badge';
-import Spktables from '../../../@spk/tables/spk-tables';
-import { Trafficdata } from '../../../components/ui/data/widgets/widgetsdata';
-import SpkButton from '../../../@spk/uielements/spk-button';
+import { FC, Fragment } from "react";
+import Pageheader from "../../../components/common/page-header/pageheader";
+import ApexchartsComponent from "../../../@spk/spk-packages/apexcharts-component";
+import { useCollectionTransactions } from "../../../hooks/useCollectionTransactions";
+import AdvancedAnalytics from "../../../components/common/advanced-analytics/AdvancedAnalytics";
+import { Link } from "react-router-dom";
+import SpkButton from "../../../@spk/uielements/spk-button";
+import SpkDropdown from "../../../@spk/uielements/spk-dropdown";
+import SpkBadge from "../../../@spk/uielements/spk-badge";
+import Spktables from "../../../@spk/tables/spk-tables";
+import {
+    Totaloptions,
+    Totalseries,
+    Bounceoptions,
+    Bounceseries,
+    Deviceoptions,
+    Deviceseries,
+    Rateoptions,
+    Rateseries,
+    Reportoptions,
+    Reportseries,
+    Impressoptions,
+    Impressseries,
+    Clickoptions,
+    Clickseries,
+    Newoptions,
+    Newseries,
+    Visitorsbychannel,
+    Visitorsbycountries
+} from "../../../components/ui/data/dashboards/analyticsdata";
+import { Trafficdata } from "../../../components/ui/data/widgets/widgetsdata";
+
 interface AnalyticsProps {}
 
 const Analytics: FC<AnalyticsProps> = () => {
+    // Fetch real transaction data
+    const { data: transactions, loading, error } = useCollectionTransactions({ 
+        status: "all", 
+        limit: 1000, 
+        offset: 0 
+    });
+
     return (
         <Fragment>
             <Pageheader currentpage="Analytics" activepage="Dashboards" mainpage="Analytics" />
@@ -24,7 +52,7 @@ const Analytics: FC<AnalyticsProps> = () => {
                                 <div className="box-body">
                                     <div className="flex flex-wrap items-center justify-between">
                                         <div>
-                                            <h6 className="font-semibold mb-3 text-[1rem]">Total Users</h6>
+                                            <h6 className="font-semibold mb-3 text-[1rem]">Today's Transaction</h6>
                                             <span className="text-[1.5625rem] font-semibold">9,789</span>
                                             <span className="block text-success text-[0.75rem]">+0.892 <i className="ti ti-trending-up ms-1"></i></span>
                                         </div>
@@ -40,8 +68,8 @@ const Analytics: FC<AnalyticsProps> = () => {
                                 <div className="box-body">
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <h6 className="font-semibold mb-3 text-[1rem]">Live Visitors</h6>
-                                            <span className="text-[1.5625rem] font-semibold">12,240</span>
+                                            <h6 className="font-semibold mb-3 text-[1rem]">Completed</h6>
+                                            <span className="text-[1.5625rem] font-semibold">1,240</span>
                                             <span className="block text-danger text-[0.75rem]">-0.59<i className="ti ti-trending-down ms-1 inline-flex"></i></span>
                                         </div>
                                         <div>
@@ -58,8 +86,8 @@ const Analytics: FC<AnalyticsProps> = () => {
                                 <div className="box-body mb-3">
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <h6 className="font-semibold text-primary mb-4 text-[1rem]">Bounce Rate</h6>
-                                            <span className="text-[1.5625rem] flex items-center">77.3% <span className=" text-[0.75rem] text-warning opacity-[0.7] ms-2">+0.59<i className="ti ti-arrow-big-up-line ms-1 inline-flex"></i></span></span>
+                                            <h6 className="font-semibold text-primary mb-4 text-[1rem]">Failed Rate</h6>
+                                            <span className="text-[1.5625rem] flex items-center">12 <span className=" text-[0.75rem] text-warning opacity-[0.7] ms-2">+0.59<i className="ti ti-arrow-big-up-line ms-1 inline-flex"></i></span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +100,7 @@ const Analytics: FC<AnalyticsProps> = () => {
                             <div className="box">
                                 <div className="box-header justify-between">
                                     <div className="box-title">
-                                        Audience Report
+                                         Report
                                     </div>
                                     <div>
                                         <SpkButton butttontype="button" variant="primary" customClass="ti-btn ti-btn-wave !font-medium"><i className="ri-share-forward-line me-1 align-middle inline-block"></i>Export</SpkButton>
@@ -89,7 +117,7 @@ const Analytics: FC<AnalyticsProps> = () => {
                             <div className="box">
                                 <div className="box-header justify-between">
                                     <div className="box-title">
-                                        Top Countries Sessions vs Bounce Rate
+                                        Top Service 
                                     </div>
                                     <SpkDropdown Icon={true} Linktag={true} IconPosition="before"  arialexpand={false} Toggletext="View All"
                                         Linkclass="px-2 font-normal text-[0.75rem] text-[#8c9097] dark:text-white/50" IconClass="ri-arrow-down-s-line align-middle ms-1 inline-block">
@@ -160,7 +188,7 @@ const Analytics: FC<AnalyticsProps> = () => {
                 <div className="xl:col-span-5 col-span-12">
                     <div className="grid grid-cols-12 gap-x-6">
                         <div className="xxl:col-span-5 cxl:ol-span-12 col-span-12">
-                            <div className="box custom-card upgrade-card text-white">
+                            {/* <div className="box custom-card upgrade-card text-white">
                                 <div className="box-body text-white">
                                     <span className="avatar avatar-xxl !border-0">
                                         <img src={media84} alt="" />
@@ -171,7 +199,7 @@ const Analytics: FC<AnalyticsProps> = () => {
                                         <SpkButton buttontype="button" customClass="ti-btn !py-1 !px-2 bg-light text-defaulttextcolor !text-[0.75rem] font-medium ti-btn-wave">Upgrade Now</SpkButton>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="box">
                                 <div className="box-body !p-1">
                                     <div className="flex items-center flex-wrap">
@@ -393,6 +421,26 @@ const Analytics: FC<AnalyticsProps> = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            {/* Advanced Analytics Section */}
+            <div className="mt-10 border-t pt-8">
+                {loading ? (
+                    <div className="flex items-center justify-center py-8">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+                        <span className="ml-3 text-gray-600">Loading analytics data...</span>
+                    </div>
+                ) : error ? (
+                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                        {error}
+                    </div>
+                ) : (
+                    <AdvancedAnalytics 
+                        title="Transaction Status Overview" 
+                        showDateRange={false} 
+                        transactions={transactions}
+                    />
+                )}
             </div>
         </Fragment>
     )

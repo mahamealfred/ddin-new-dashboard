@@ -1,6 +1,13 @@
 import SpkBadge from "../../../@spk/uielements/spk-badge";
 
 const DashboardIcon = <i className="bx bx-home side-menu__icon"></i>;
+const TransactionIcon = <i className="bx bx-receipt side-menu__icon"></i>;
+const RegisterIcon = <i className="bx bx-user-plus side-menu__icon"></i>;
+const SettlementIcon = <i className="bx bx-transfer-alt side-menu__icon"></i>;
+const ReportIcon = <i className="bx bx-bar-chart-alt-2 side-menu__icon"></i>;
+const UserManagementIcon = <i className="bx bx-group side-menu__icon"></i>;
+const DisputeIcon = <i className="bx bx-error-circle side-menu__icon"></i>;
+const AccountIcon = <i className="bx bx-id-card side-menu__icon"></i>;
 
 // const PagesIcon = <i className="bx bx-file-blank side-menu__icon"></i>;
 
@@ -12,10 +19,6 @@ const DashboardIcon = <i className="bx bx-home side-menu__icon"></i>;
 
 // const ErrorIcon = <i className="bx bx-error side-menu__icon"></i>;
 
-// const UiElementsIcon = <i className="bx bx-box side-menu__icon"></i>;
-
-// const Utilities = <i className="bx bx-medal side-menu__icon"></i>;
-
 // const FormsIcon = <i className="bx bx-file  side-menu__icon"></i>;
 
 // const AdvancedUiIcon = <i className="bx bx-party side-menu__icon"></i>;
@@ -26,9 +29,9 @@ const DashboardIcon = <i className="bx bx-home side-menu__icon"></i>;
 
 // const NestedmenuIcon = <i className="bx bx-layer side-menu__icon"></i>;
 
-// const TablesIcon = <i className="bx bx-table side-menu__icon"></i>;
+const TablesIcon = <i className="bx bx-table side-menu__icon"></i>;
 
-// const ChartsIcon = <i className="bx bx-bar-chart-square side-menu__icon"></i>;
+ const ChartsIcon = <i className="bx bx-bar-chart-square side-menu__icon"></i>;
 
 // const MapsIcon = <i className="bx bx-map side-menu__icon"></i>;
 
@@ -49,16 +52,16 @@ const badge = (
 //     Hot
 //   </span>
 // );
-// const badge4 = (
-//   <span className="text-success text-[0.75em] badge !py-[0.25rem] !px-[0.45rem] rounded-sm bg-success/10 ms-1">
-//     3
-//   </span>
-// );
+const badge4 = (
+  <span className="text-success text-[0.75em] badge !py-[0.25rem] !px-[0.45rem] rounded-sm bg-success/10 ms-1">
+    3
+  </span>
+);
 
 export const MenuItems: any = [
-  {
-    menutitle: "MAIN",
-  },
+  // {
+  //   menutitle: "MAIN",
+  // },
 
   {
     icon: DashboardIcon,
@@ -68,22 +71,24 @@ export const MenuItems: any = [
     active: false,
     selected: false,
     children: [
-      // {
-      //   path: `${import.meta.env.BASE_URL}dashboards/crm`,
-      //   type: "link",
-      //   active: false,
-      //   selected: false,
-      //   dirchange: false, 
-      //   title: "CRM",
-      // },
-      // {
-      //   path:`${import.meta.env.BASE_URL}dashboards/ecommerce`,
-      //   type: "link",
-      //   active: false,
-      //   selected: false,
-      //   dirchange: false, 
-      //   title: "Ecommerce",
-      // },
+      {
+        path: `${import.meta.env.BASE_URL}dashboards/crm`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false, 
+        title: "General Analytics",
+        roles: ["Staff"]
+      },
+      {
+        path:`${import.meta.env.BASE_URL}dashboards/collections`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false, 
+        title: "Collection Analytics",
+        roles: ["Staff"]
+      },
       // {
       //   path: `${import.meta.env.BASE_URL}dashboards/crypto`,
       //   type: "link",
@@ -109,21 +114,24 @@ export const MenuItems: any = [
       //   title: "NFT",
       // },
       {
+        path: `${import.meta.env.BASE_URL}dashboards/analytics`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false, 
+        title: "Daily Analytics",
+        roles: ["Staff"]
+      },
+      {
         path: `${import.meta.env.BASE_URL}dashboards/corporate`,
         type: "link",
         active: false,
         selected: false,
         dirchange: false, 
         title: "Analytics",
+        roles: ["Agent","Corporate"]
       },
-      // {
-      //   path: `${import.meta.env.BASE_URL}dashboards/analytics`,
-      //   type: "link",
-      //   active: false,
-      //   selected: false,
-      //   dirchange: false, 
-      //   title: "Analytics",
-      // },
+    
       // {
       //   path: `${import.meta.env.BASE_URL}dashboards/projects`,
       //   type: "link",
@@ -140,14 +148,15 @@ export const MenuItems: any = [
       //   dirchange: false, 
       //   title: "HRM",
       // },
-      // {
-      //   path: `${import.meta.env.BASE_URL}dashboards/stocks`,
-      //   type: "link",
-      //   active: false,
-      //   selected: false,
-      //   dirchange: false, 
-      //   title: "Stocks",
-      // },
+      {
+        path: `${import.meta.env.BASE_URL}dashboards/crm`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false, 
+        title: "Monthly Analytics",
+        roles:["Staff"]
+      },
       // {
       //   path: `${import.meta.env.BASE_URL}dashboards/courses`,
       //   type: "link",
@@ -156,19 +165,106 @@ export const MenuItems: any = [
       //   dirchange: false, 
       //   title: "Courses",
       // },
-      // {
+      //  {
       //   path: `${import.meta.env.BASE_URL}dashboards/personal`,
       //   type: "link",
       //   active: false,
       //   selected: false,
       //   dirchange: false, 
       //   title: "Personal",
+      //   role:["Staff"]
       // },
     ],
   },
 
+  {
+    menutitle: "Moola Plus",
+  },
+  {
+    icon: TransactionIcon,
+    title: "Transaction Details",
+    type: "link",
+    active: false,
+    selected: false,
+    path: `${import.meta.env.BASE_URL}moola/transactions`,
+    roles: ["Staff", "Agent", "Corporate"],
+  },
+  {
+    icon: RegisterIcon,
+    title: "Register Application",
+    type: "link",
+    active: false,
+    selected: false,
+    path: `${import.meta.env.BASE_URL}moola/register-application`,
+    roles: ["Staff", "Agent", "Corporate"],
+  },
+  {
+    icon: SettlementIcon,
+    title: "Auto Settlement",
+    type: "sub",
+    active: false,
+    selected: false,
+    children: [
+      {
+        path: `${import.meta.env.BASE_URL}moola/bank-details`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Bank Details",
+        roles: ["Staff", "Agent", "Corporate"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/settlement`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Settlement",
+        roles: ["Staff", "Agent", "Corporate"],
+      },
+    ],
+    roles: ["Staff", "Agent", "Corporate"],
+  },
+  {
+    icon: ReportIcon,
+    title: "Report",
+    type: "link",
+    active: false,
+    selected: false,
+    path: `${import.meta.env.BASE_URL}moola/report`,
+    roles: ["Staff", "Agent", "Corporate"],
+  },
+  {
+    icon: UserManagementIcon,
+    title: "User Management",
+    type: "link",
+    active: false,
+    selected: false,
+    path: `${import.meta.env.BASE_URL}moola/user-management`,
+    roles: ["Staff"],
+  },
+  {
+    icon: DisputeIcon,
+    title: "Dispute Page",
+    type: "link",
+    active: false,
+    selected: false,
+    path: `${import.meta.env.BASE_URL}moola/disputes`,
+    roles: ["Staff", "Agent", "Corporate"],
+  },
+  {
+    icon: AccountIcon,
+    title: "My Account",
+    type: "link",
+    active: false,
+    selected: false,
+    path: `${import.meta.env.BASE_URL}moola/my-account`,
+    roles: ["Staff", "Agent", "Corporate"],
+  },
+
   // {
-  //   menutitle: "PAGES",
+  //   menutitle: "TRANSACTIONS LOGS",
   // },
 
   // {
@@ -774,6 +870,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Alerts",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/badge`,
@@ -782,6 +879,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Badge",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/breadcrumb`,
@@ -790,6 +888,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Breadcrumb",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/buttons`,
@@ -798,6 +897,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Buttons",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/button-group`,
@@ -806,6 +906,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Button Group",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/blockquotes`,
@@ -814,6 +915,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Blockquotes",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/cards`,
@@ -822,6 +924,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Cards",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/dropdowns`,
@@ -830,6 +933,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Dropdowns",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/images-figures`,
@@ -838,6 +942,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Images & Figures",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/list-group`,
@@ -846,6 +951,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "List Group",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/navs-tabs`,
@@ -854,6 +960,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Navs & Tabs",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/object-fit`,
@@ -862,6 +969,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Object Fit",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/pagination`,
@@ -870,6 +978,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Pagination",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/popovers`,
@@ -878,6 +987,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Popovers",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/progress`,
@@ -886,6 +996,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Progress",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/indicators`,
@@ -894,6 +1005,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Indicators",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/spinners`,
@@ -902,6 +1014,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Spinners",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/toasts`,
@@ -910,6 +1023,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Toasts",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}ui-elements/tooltips`,
@@ -918,6 +1032,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Tooltips",
+  //       roles: ["Staff"]
   //     },
   //   ],
   // },
@@ -936,6 +1051,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Avatars",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}utilities/borders`,
@@ -944,6 +1060,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Borders",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}utilities/colors`,
@@ -952,6 +1069,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Colors",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}utilities/grids`,
@@ -960,6 +1078,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Grids",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}utilities/flex`,
@@ -968,6 +1087,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Flex",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}utilities/columns`,
@@ -976,6 +1096,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Columns",
+  //       roles: ["Staff"]
   //     },
   //     {
   //       path: `${import.meta.env.BASE_URL}utilities/typography`,
@@ -984,6 +1105,7 @@ export const MenuItems: any = [
   //       selected: false,
   //       dirchange: false, 
   //       title: "Typography",
+  //       roles:["Staff"]
   //     },
   //   ],
   // },
@@ -1570,19 +1692,20 @@ export const MenuItems: any = [
   //   ],
   // },
 
-  // {
-  //   menutitle: "TABLES & CHARTS",
-  // },
-  // {
-  //   title: "Tables",
-  //   icon: TablesIcon,
-  //   type: "sub",
-  //   menutitle: "",
-  //   badgetxt: badge4,
-  //   active: false,
-  //   selected: false,
-  //   dirchange: false, 
-  //   children: [
+  {
+    menutitle: "LOGS & CHARTS",
+  },
+  {
+    title: "Transactions",
+    icon: TablesIcon,
+    type: "sub",
+    menutitle: "",
+    badgetxt: badge4,
+    active: false,
+    selected: false,
+    dirchange: false, 
+    
+    children: [
       // {
       //   path: `${import.meta.env.BASE_URL}tables/table`,
       //   type: "link",
@@ -1590,6 +1713,7 @@ export const MenuItems: any = [
       //   selected: false,
       //   dirchange: false, 
       //   title: "Tables",
+      //   roles: ["Staff"]
       // },
       // {
       //   path: `${import.meta.env.BASE_URL}tables/gridjs-table`,
@@ -1598,199 +1722,222 @@ export const MenuItems: any = [
       //   selected: false,
       //   dirchange: false, 
       //   title: "Grid JS Tables",
+      //   roles: ["Staff"]
       // },
-    //   {
-    //     path: `${import.meta.env.BASE_URL}tables/data-table`,
-    //     type: "link",
-    //     active: false,
-    //     selected: false,
-    //     dirchange: false, 
-    //     title: "Completed Tranactions",
-    //   },
-    //   {
-    //     path: `${import.meta.env.BASE_URL}tables/data-table`,
-    //     type: "link",
-    //     active: false,
-    //     selected: false,
-    //     dirchange: false, 
-    //     title: "Failed Tranactions",
-    //   },
-    // ],
- //},
+      {
+        path: `${import.meta.env.BASE_URL}dashboards/completed/transactions`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false, 
+        title: "Completed Tranactions",
+        roles: ["Staff"]
+      },
+      {
+        path: `${import.meta.env.BASE_URL}dashboards/incomplete/transactions`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false, 
+        title: "Failed Tranactions",
+        roles: ["Staff"]
+      },
+    ],
+ },
 
-  // {
-  //   title: "Charts",
-  //   icon: ChartsIcon,
-  //   type: "sub",
-  //   selected: false,
-  //   active: false,
-  //   children: [
-  //     {
-  //       title: "Apex Charts",
-  //       type: "sub",
-  //       menusub: true,
-  //       active: false,
-  //       selected: false,
-  //       dirchange: false, 
-  //       children: [
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/line-charts`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Line Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/area-charts`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Area Charts ",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/column-charts`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Column Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/bar-charts`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Bar Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/mixed-charts`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Mixed Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/range-area-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Range Area Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/timeline-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Timeline Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/candlestick-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "CandleStick Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/boxplot-charts`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Boxplot Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/bubble-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Bubble Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/scatter-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Scatter Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/heatmap-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Heatmap Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/treemap-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Treemap Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/pie-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Pie Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/radialbar-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Radialbar Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/radar-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Radar Charts",
-  //         },
-  //         {
-  //           path: `${import.meta.env.BASE_URL}apexcharts/polararea-chart`,
-  //           type: "link",
-  //           active: false,
-  //           selected: false,
-  //           dirchange: false, 
-  //           title: "Polararea Charts",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       path: `${import.meta.env.BASE_URL}charts/chartjs`,
-  //       type: "link",
-  //       active: false,
-  //       selected: false,
-  //       dirchange: false, 
-  //       title: "ChartJS Charts",
-  //     },
-  //     {
-  //       path: `${import.meta.env.BASE_URL}charts/echart`,
-  //       type: "link",
-  //       active: false,
-  //       selected: false,
-  //       dirchange: false, 
-  //       title: "Echart Charts",
-  //     },
-  //   ],
-  // },
+  {
+    title: "Charts",
+    icon: ChartsIcon,
+    type: "sub",
+    selected: false,
+    active: false,
+    children: [
+      // {
+      //   title: "Apex Charts",
+      //   type: "sub",
+      //   menusub: true,
+      //   active: false,
+      //   selected: false,
+      //   dirchange: false, 
+      //   roles: ["Staff"],
+      //   children: [
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/line-charts`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Line Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/area-charts`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Area Charts ",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/column-charts`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Column Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/bar-charts`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Bar Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/mixed-charts`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Mixed Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/range-area-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Range Area Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/timeline-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Timeline Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/candlestick-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "CandleStick Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/boxplot-charts`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Boxplot Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/bubble-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Bubble Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/scatter-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Scatter Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/heatmap-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Heatmap Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/treemap-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Treemap Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/pie-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Pie Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/radialbar-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Radialbar Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/radar-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Radar Charts",
+      //       roles: ["Staff"]
+      //     },
+      //     {
+      //       path: `${import.meta.env.BASE_URL}apexcharts/polararea-chart`,
+      //       type: "link",
+      //       active: false,
+      //       selected: false,
+      //       dirchange: false, 
+      //       title: "Polararea Charts",
+      //       roles: ["Staff"]
+      //     },
+      //   ],
+      // },
+      {
+        path: `${import.meta.env.BASE_URL}charts/chartjs`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false, 
+        title: "Transactions Charts",
+        roles: ["Staff"]
+      },
+      // {
+      //   path: `${import.meta.env.BASE_URL}charts/echart`,
+      //   type: "link",
+      //   active: false,
+      //   selected: false,
+      //   dirchange: false, 
+      //   title: "Echart Charts",
+      //   roles: ["Staff"]
+      // },
+    ],
+  },
 
-  // { menutitle: "MAPS & ICONS" },
+  { menutitle: "Reconciliation" },
   // {
   //   title: "Maps",
   //   icon: MapsIcon,

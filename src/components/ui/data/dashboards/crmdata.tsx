@@ -553,7 +553,7 @@ export const Prooptions:any = {
         }
     },
     xaxis: {
-        categories: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         axisBorder: {
             show: true,
             color: 'rgba(119, 119, 142, 0.05)',
@@ -579,7 +579,7 @@ export const Prooptions:any = {
 export const Sourceseries = [32, 27, 25, 16]
 export const Sourceoptions:any = {
 
-    labels: ["Mobile","Desktop", "Laptop", "Tablet" ],
+    labels: ["Complete","Incomplete" ],
     chart: {
         events: {
             mounted: (chart:any) => {
