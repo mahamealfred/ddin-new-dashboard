@@ -2,6 +2,7 @@ import SpkBadge from "../../../@spk/uielements/spk-badge";
 
 const DashboardIcon = <i className="bx bx-home side-menu__icon"></i>;
 const TransactionIcon = <i className="bx bx-receipt side-menu__icon"></i>;
+const AqsIcon = <i className="bx bx-task-x side-menu__icon"></i>;
 const RegisterIcon = <i className="bx bx-user-plus side-menu__icon"></i>;
 const SettlementIcon = <i className="bx bx-transfer-alt side-menu__icon"></i>;
 const ReportIcon = <i className="bx bx-bar-chart-alt-2 side-menu__icon"></i>;
@@ -160,7 +161,35 @@ export const MenuItems: any = [
     active: false,
     selected: false,
     path: `${import.meta.env.BASE_URL}moola/transactions`,
-    roles: ["Staff", "Agent", "Corporate"],
+    roles: ["Staff"],
+  },
+  {
+    icon: AqsIcon,
+    title: "Data Collections",
+    type: "sub",
+    active: false,
+    selected: false,
+    children: [
+      {
+        path: `${import.meta.env.BASE_URL}moola/data-collections/form-list`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Form List",
+        roles: ["Staff"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/data-collections/data-collectors`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Data Collectors",
+        roles: ["Staff"],
+      },
+    ],
+    roles: ["Staff"],
   },
   {
     icon: RegisterIcon,

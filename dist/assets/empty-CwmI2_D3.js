@@ -1,1 +1,0 @@
-import{j as e,r}from"./index-BUkCxukg.js";import{P as t}from"./pageheader-_Z-5MgNB.js";const s=()=>e.jsx(r.Fragment,{children:e.jsx(t,{currentpage:"Empty",activepage:"Pages",mainpage:"Empty"})});export{s as default};

@@ -182,6 +182,7 @@ const Googlemaps = lazy(()=> import( './container/maps/google-map/googlemaps.tsx
 const Bubblechart = lazy(()=> import( './container/charts/apexcharts/bubble-chart/bubble-chart.tsx'))
 const Suneditor = lazy(()=> import( './container/forms/formeditors/formeditor/formeditor.tsx'))
 const TransactionDetails = lazy(()=> import( './container/moola/transaction-details.tsx'))
+const AqsTransactions = lazy(()=> import( './container/moola/aqs-transactions.tsx'))
 const RegisterApplication = lazy(()=> import( './container/moola/register-application.tsx'))
 const AutoSettlement = lazy(()=> import( './container/moola/auto-settlement.tsx'))
 const Settlement = lazy(()=> import( './container/moola/settlement.tsx'))
@@ -230,6 +231,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     <Route path={`${import.meta.env.BASE_URL}dashboards/personal`} element={<Personal/>} />
 
                     <Route path={`${import.meta.env.BASE_URL}moola/transactions`} element={<TransactionDetails/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/data-collections/transaction-details`} element={<TransactionDetails/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/aqs-transactions`} element={<AqsTransactions/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/data-collections/form-list`} element={<AqsTransactions/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/data-collections/data-collectors`} element={<AqsTransactions/>} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/data-collections/add-data-collectors`} element={<AqsTransactions/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/register-application`} element={<RegisterApplication/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/auto-settlement`} element={<AutoSettlement/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/bank-details`} element={<AutoSettlement/>} />
