@@ -13,7 +13,7 @@ interface UserData {
 
 const MyAccount: FC = () => {
   const [user, setUser] = useState<UserData>({});
-  const [balance, setBalance] = useState<string>("-");
+  const [accounts, setAccounts] = useState<any[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem("userData");
@@ -27,63 +27,75 @@ const MyAccount: FC = () => {
     const storedToken = localStorage.getItem("token");
     if (!storedToken) return;
 
-    const fetchBalance = async () => {
+    const fetchAccounts = async () => {
       try {
         const token = JSON.parse(storedToken);
-        const response = await axios.get(`${apiBaseUrl}/v1/agency/accounts/main/balance`, {
+        const response = await axios.get(`${apiBaseUrl}/v1/agency/accounts/all/accounts/info/balance`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
         if (response.data?.success) {
-          const amount = response.data?.data?.mainBalance?.availableBalance ?? response.data?.data?.mainBalance?.balance ?? 0;
-          setBalance(Number(amount).toLocaleString());
+          // Prefer response.data.accounts, fallback to response.data.data.accounts
+          const allAccounts = response.data.accounts || response.data.data?.accounts || [];
+          // Filter for Agent Business Account and Agent Float A/C
+          const filtered = allAccounts.filter((acc: any) =>
+            acc.accountName === "Agent Business Account" || acc.accountName === "Agent Float A/C"
+          );
+          setAccounts(filtered);
         }
       } catch (error) {
-        setBalance("-");
+        setAccounts([]);
       }
     };
 
-    fetchBalance();
+    fetchAccounts();
   }, []);
 
   return (
     <Fragment>
       <Pageheader currentpage="My Account" activepage="Dashboard" mainpage="Account" />
       
-      {/* Balance Card */}
-      <div className="mb-6">
-        <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 rounded-xl shadow-xl p-8 text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
-          <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="bg-white bg-opacity-20 rounded-lg p-3">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm opacity-90">Available Balance</p>
-                <p className="text-4xl font-bold mt-1">{balance} RWF</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-white border-opacity-20">
-              <div className="bg-white bg-opacity-10 rounded-lg p-4">
-                <p className="text-xs opacity-75 mb-1">Account Status</p>
-                <p className="text-sm font-semibold flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                  Active
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-10 rounded-lg p-4">
-                <p className="text-xs opacity-75 mb-1">Account Type</p>
-                <p className="text-sm font-semibold">{user.role || "Standard"}</p>
-              </div>
+      {/* Accounts Card */}
+      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {accounts.length === 0 ? (
+          <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 rounded-xl shadow-xl p-8 text-white relative overflow-hidden">
+            <div className="relative z-10">
+              <p className="text-lg font-semibold">No account data found.</p>
             </div>
           </div>
-        </div>
+        ) : (
+          accounts.map((acc) => (
+            <div key={acc.accountId} className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 rounded-xl shadow-xl p-8 text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-white bg-opacity-20 rounded-lg p-3">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm opacity-90">{acc.accountName}</p>
+                    <p className="text-4xl font-bold mt-1">{acc.formattedAvailableBalance || acc.formattedBalance}</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-white border-opacity-20">
+                  <div className="bg-white bg-opacity-10 rounded-lg p-4">
+                    <p className="text-xs opacity-75 mb-1">Currency</p>
+                    <p className="text-sm font-semibold">{acc.currencySymbol} ({acc.currency})</p>
+                  </div>
+                  <div className="bg-white bg-opacity-10 rounded-lg p-4">
+                    <p className="text-xs opacity-75 mb-1">Account ID</p>
+                    <p className="text-sm font-semibold">{acc.accountId}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Profile Section */}

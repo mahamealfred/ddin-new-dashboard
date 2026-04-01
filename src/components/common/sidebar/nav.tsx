@@ -1,3 +1,4 @@
+const AnalyticsIcon = <i className="bx bx-analyse side-menu__icon"></i>;
 import SpkBadge from "../../../@spk/uielements/spk-badge";
 
 const DashboardIcon = <i className="bx bx-home side-menu__icon"></i>;
@@ -63,6 +64,17 @@ export const MenuItems: any = [
   // {
   //   menutitle: "MAIN",
   // },
+
+  // Analytics for Corporate
+  {
+    icon: AnalyticsIcon,
+    title: "Analytics",
+    type: "link",
+    active: false,
+    selected: false,
+    path: `${import.meta.env.BASE_URL}dashboards/corporate`,
+    roles: ["Corporate"],
+  },
 
   {
     icon: DashboardIcon,

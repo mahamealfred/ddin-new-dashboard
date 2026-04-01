@@ -35,6 +35,7 @@ const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 		return staffHiddenMenuTitles.has(title || menutitle || "");
 	};
 	const corporateMenuWhitelist = new Set([
+		"Analytics",
 		"Dashboards",
 		"MOOLA",
 		"Dashboard",

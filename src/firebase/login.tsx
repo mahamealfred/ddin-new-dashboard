@@ -85,7 +85,7 @@ const Login: FC<LoginProps> = ({ ThemeChanger }: any) => {
                 const category = String(userData.category || "").toLowerCase();
                 if (category === "corporate") {
                     routeChangeToCorporate();
-                } else if (category === "staff" || category === "stuff") {
+                } else if (category === "staff" ) {
                     routeChange();
                 } else if (category === "agent") {
                     routeChange();
@@ -123,58 +123,16 @@ const Login: FC<LoginProps> = ({ ThemeChanger }: any) => {
                     {/* Content */}
                     <div className="relative z-10 flex flex-col justify-center items-center w-full p-12 text-white">
                         <div className="max-w-md text-center">
-                            {/* Logo */}
-                            <div className="mb-8">
+                            {/* Minimal Branding */}
+                            <div className="mb-8 text-center">
                                 <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-lg rounded-xl mb-6 shadow-2xl">
                                     <span className="text-white text-5xl font-extrabold leading-none tracking-tight">M</span>
                                 </div>
-                                <h1 className="text-5xl font-bold mb-3 tracking-tight">MoolaCore</h1>
-                                <div className="h-1 w-24 bg-white/70 mx-auto rounded-full mb-6"></div>
-                            </div>
-                            
-                            {/* Marketing Text */}
-                            <h2 className="text-3xl font-semibold mb-4 leading-tight">
-                                Financial Management Made Simple
-                            </h2>
-                            <p className="text-lg text-white/90 leading-relaxed mb-8">
-                                Track transactions, manage collections, and gain powerful insights into your financial operations—all in one place.
-                            </p>
-                            
-                            {/* Features */}
-                            <div className="space-y-4 text-left">
-                                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                                    <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold">Real-time Analytics</p>
-                                        <p className="text-sm text-white/80">Monitor your finances as they happen</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                                    <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold">Secure & Reliable</p>
-                                        <p className="text-sm text-white/80">Bank-level security for your data</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                                    <div className="flex-shrink-0 w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold">Lightning Fast</p>
-                                        <p className="text-sm text-white/80">Optimized for performance</p>
-                                    </div>
-                                </div>
+                                <h1 className="text-4xl font-bold mb-3 tracking-tight">Welcome to MoolaCore</h1>
+                                <div className="h-1 w-16 bg-white/70 mx-auto rounded-full mb-6"></div>
+                                <p className="text-lg text-white/90 leading-relaxed">
+                                    Your secure portal for smart financial management.
+                                </p>
                             </div>
                         </div>
                     </div>
