@@ -1,14 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import Pageheader from "../../components/common/page-header/pageheader";
 
-interface UserItem {
-  id: string | number;
-  name: string;
-  phone: string;
-  email: string;
-  status: string;
-  role: string;
-}
 
 const RegisterApplication: FC = () => {
   // Removed unused searchTerm state
@@ -31,16 +23,6 @@ const RegisterApplication: FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newItem: UserItem = {
-      id: `local-${Date.now()}`,
-      name: formData.name,
-      phone: formData.phone,
-      email: formData.email,
-      status: "success",
-      role: formData.role,
-    };
-    setLocalUsers((prev) => [newItem, ...prev]);
-    setRoleById((prev) => ({ ...prev, [String(newItem.id)]: newItem.role }));
     setSavedMessage(true);
     setTimeout(() => {
       setSavedMessage(false);
