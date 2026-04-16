@@ -204,6 +204,53 @@ export const MenuItems: any = [
     roles: ["Staff"],
   },
   {
+    icon: AqsIcon,
+    title: "Momo Collections",
+    type: "sub",
+    active: false,
+    selected: false,
+    children: [
+      {
+        path: `${import.meta.env.BASE_URL}moola/momo-collections/transactions`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Transactions",
+        roles: ["Staff"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/momo-collections/report-and-analytics`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Report and Analytics",
+        roles: ["Staff"],
+      },
+    ],
+    roles: ["Staff"],
+  },
+  {
+    icon: AqsIcon,
+    title: "Service Management",
+    type: "sub",
+    active: false,
+    selected: false,
+    children: [
+      {
+        path: `${import.meta.env.BASE_URL}moola/service-management/service-fees`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Service Fees",
+        roles: ["Staff"],
+      }
+    ],
+    roles: ["Staff"],
+  },
+  {
     icon: RegisterIcon,
     title: "Register Application",
     type: "link",

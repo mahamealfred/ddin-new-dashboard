@@ -1,4 +1,7 @@
 import React, { lazy } from 'react'
+const ServiceFeeManagement = lazy(()=> import('./pages/moola/service-management/service-fees.tsx'));
+const MomoCollectionsReportAnalytics = lazy(()=> import('./pages/moola/MomoCollectionsReportAnalytics.tsx'));
+const MomoCollectionsTransactions = lazy(()=> import('./pages/moola/MomoCollectionsTransactions.tsx'));
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 const App = lazy(()=> import( './pages/App.tsx'))
@@ -244,6 +247,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     <Route path={`${import.meta.env.BASE_URL}moola/user-management`} element={<UserManagement/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/disputes`} element={<DisputePage/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/my-account`} element={<MyAccount/>} />
+
+                    <Route path={`${import.meta.env.BASE_URL}moola/momo-collections/transactions`} element={<MomoCollectionsTransactions />} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/momo-collections/report-and-analytics`} element={<MomoCollectionsReportAnalytics />} />
+
+                      <Route path={`${import.meta.env.BASE_URL}moola/service-management/service-fees`} element={<ServiceFeeManagement />} />
 
                     <Route path={`${import.meta.env.BASE_URL}pages/about-us`} element={<AboutUs/>} />
 
