@@ -69,7 +69,7 @@ export const useCollectionTransactions = (options: UseCollectionTransactionsOpti
     const token = JSON.parse(storedToken);
     const userData = storedUser ? JSON.parse(storedUser) : {};
     const role = String(userData?.role || "").toLowerCase();
-    const isCorporate = role === "corporate";
+    const isCorporate = role === "Corporate";
 
     const endpoint = isCorporate
       ? `${apiBaseUrl}/v1/thirdparty/collection`

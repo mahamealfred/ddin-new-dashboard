@@ -5,12 +5,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: 'moolacore.ddin.rw',
+    host: 'localhost',
     port: 6006,
     strictPort: false,
   },
   preview: {
-    host: 'moolacore.ddin.rw',
+    host: 'localhost',
     port: 6006,
     strictPort: false,
   },

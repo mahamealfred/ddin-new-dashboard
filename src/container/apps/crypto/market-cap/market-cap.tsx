@@ -3,7 +3,7 @@ import {Cryptocurrencies, CurrenctTable } from "../../../../components/ui/data/a
 import Pageheader from '../../../../components/common/page-header/pageheader';
 import { Link } from 'react-router-dom';
 import bitcoin from "../../../../assets/images/crypto-currencies/regular/Bitcoin.svg";
-import litecoin from "../../../../assets/images/crypto-currencies/regular/Litecoin.svg";
+import litecoin from "../../../../assets/images/crypto-currencies/regular/litecoin.svg";
 import ethereum from "../../../../assets/images/crypto-currencies/regular/Ethereum.svg";
 import ApexchartsComponent from '../../../../@spk/spk-packages/apexcharts-component';
 import SpkDropdown from '../../../../@spk/uielements/spk-dropdown';
