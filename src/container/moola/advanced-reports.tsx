@@ -75,7 +75,7 @@ const AdvancedReportPage: FC<AdvancedReportPageProps> = () => {
             <div className="box-body">
               <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-12 md:col-span-6 lg:col-span-3">
-                  <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-md border border-blue-200 dark:border-blue-700">
+                  <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-md border border-indigo-200 dark:border-indigo-700">
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       <i className="ri-lightbulb-line text-primary me-2"></i>
                       Top Insight
@@ -86,7 +86,7 @@ const AdvancedReportPage: FC<AdvancedReportPageProps> = () => {
                   </div>
                 </div>
                 <div className="col-span-12 md:col-span-6 lg:col-span-3">
-                  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-md border border-green-200 dark:border-green-700">
+                  <div className="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-md border border-emerald-200 dark:border-emerald-700">
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       <i className="ri-check-line text-success me-2"></i>
                       Success Rate
@@ -97,7 +97,7 @@ const AdvancedReportPage: FC<AdvancedReportPageProps> = () => {
                   </div>
                 </div>
                 <div className="col-span-12 md:col-span-6 lg:col-span-3">
-                  <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-md border border-yellow-200 dark:border-yellow-700">
+                  <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-md border border-amber-200 dark:border-amber-700">
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       <i className="ri-alert-line text-warning me-2"></i>
                       Attention Needed
@@ -108,7 +108,7 @@ const AdvancedReportPage: FC<AdvancedReportPageProps> = () => {
                   </div>
                 </div>
                 <div className="col-span-12 md:col-span-6 lg:col-span-3">
-                  <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-md border border-purple-200 dark:border-purple-700">
+                  <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-md border border-indigo-200 dark:border-indigo-700">
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       <i className="ri-trending-up-line text-danger me-2"></i>
                       Growth Rate

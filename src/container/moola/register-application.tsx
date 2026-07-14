@@ -43,7 +43,7 @@ const RegisterApplication: FC = () => {
           <div className="box">
             <div className="box-header border-b border-gray-200 dark:border-defaultborder/10 pb-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                   </svg>
@@ -56,14 +56,14 @@ const RegisterApplication: FC = () => {
             </div>
             <div className="box-body">
               {savedMessage && (
-                <div className="mb-6 p-4 bg-green-100 dark:bg-green-500/10 border-l-4 border-green-500 rounded-lg">
+                <div className="mb-6 p-4 bg-emerald-100 dark:bg-emerald-500/10 border-l-4 border-emerald-500 rounded-lg">
                   <div className="flex items-center gap-3">
-                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
-                      <p className="font-semibold text-green-700 dark:text-green-400">User Created!</p>
-                      <p className="text-sm text-green-600 dark:text-green-400/80">User has been added and role assigned.</p>
+                      <p className="font-semibold text-emerald-700 dark:text-emerald-400">User Created!</p>
+                      <p className="text-sm text-emerald-600 dark:text-emerald-400/80">User has been added and role assigned.</p>
                     </div>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ const RegisterApplication: FC = () => {
                 <button
                   type="submit"
                   disabled={true}
-                  className="w-full bg-gradient-to-r from-primary via-purple-600 to-pink-600 text-white font-semibold py-3.5 px-4 rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="w-full bg-gradient-to-r from-primary via-indigo-600 to-indigo-600 text-white font-semibold py-3.5 px-4 rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50"
                 >
                   Add User
                 </button>

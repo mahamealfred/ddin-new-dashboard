@@ -1,9 +1,18 @@
-import { FC, Fragment, useEffect, useState } from "react";
-import Pageheader from "../../components/common/page-header/pageheader";
-import axios from "axios";
+import { FC, useEffect, useState } from 'react';
+import axios from 'axios';
+import Pageheader from '../../components/common/page-header/pageheader';
+import { API } from '../../config/api';
+
+const authHeaders = () => {
+  try {
+    const raw = localStorage.getItem('token');
+    const token = raw ? JSON.parse(raw) : null;
+    return token ? { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } : {};
+  } catch { return {}; }
+};
 
 interface UserData {
-  id?: string;
+  id?: string | number;
   name?: string;
   email?: string;
   username?: string;
@@ -11,213 +20,254 @@ interface UserData {
   phoneNumber?: string;
 }
 
+const avatarColors = [
+  'from-indigo-500 to-indigo-600',
+  'from-emerald-500 to-indigo-600',
+  'from-red-500 to-indigo-600',
+  'from-amber-500 to-amber-600',
+];
+
+const getAvatarColor = (name: string) => avatarColors[(name.charCodeAt(0) || 0) % avatarColors.length];
+
+const roleColor = (role?: string) => {
+  switch ((role || '').toLowerCase()) {
+    case 'staff':    return 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300';
+    case 'agent':    return 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300';
+    case 'corporate': return 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300';
+    default:          return 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300';
+  }
+};
+
 const MyAccount: FC = () => {
-  const [user, setUser] = useState<UserData>({});
+  const [user, setUser]         = useState<UserData>({});
   const [accounts, setAccounts] = useState<any[]>([]);
+  const [accsLoading, setAccsLoading] = useState(true);
+  const [copied, setCopied]     = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("userData");
-    if (stored) {
-      setUser(JSON.parse(stored));
-    }
+    const stored = localStorage.getItem('userData');
+    if (stored) setUser(JSON.parse(stored));
   }, []);
 
   useEffect(() => {
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
-    const storedToken = localStorage.getItem("token");
-    if (!storedToken) return;
-
     const fetchAccounts = async () => {
+      setAccsLoading(true);
       try {
-        const token = JSON.parse(storedToken);
-        const response = await axios.get(`${apiBaseUrl}/v1/agency/accounts/all/accounts/info/balance`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        if (response.data?.success) {
-          // Prefer response.data.accounts, fallback to response.data.data.accounts
-          const allAccounts = response.data.accounts || response.data.data?.accounts || [];
-          // Filter for Agent Business Account and Agent Float A/C
-          const filtered = allAccounts.filter((acc: any) =>
-            acc.accountName === "Agent Business Account" || acc.accountName === "Agent Float A/C"
-          );
-          setAccounts(filtered);
+        const res = await axios.get(`${API()}/v1/agency/accounts/all/accounts/info/balance`, { headers: authHeaders() });
+        if (res.data?.success) {
+          const all = res.data.accounts || res.data.data?.accounts || [];
+          setAccounts(all.filter((a: any) =>
+            a.accountName === 'Agent Business Account' || a.accountName === 'Agent Float A/C'
+          ));
         }
-      } catch (error) {
-        setAccounts([]);
-      }
+      } catch { setAccounts([]); }
+      finally { setAccsLoading(false); }
     };
-
     fetchAccounts();
   }, []);
 
+  const copyId = () => {
+    if (!user.id) return;
+    navigator.clipboard.writeText(String(user.id));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const initials = (user.name || user.username || 'U').charAt(0).toUpperCase();
+  const avatarGrad = getAvatarColor(user.name || user.username || 'U');
+
+  const profileFields = [
+    { icon: 'bx-user', label: 'Username',     value: user.username,    color: 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' },
+    { icon: 'bx-envelope', label: 'Email',    value: user.email,       color: 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' },
+    { icon: 'bx-phone', label: 'Phone',       value: user.phoneNumber, color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' },
+    { icon: 'bx-shield-alt-2', label: 'Role', value: user.role,        color: 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' },
+  ];
+
+  const accCardColors = [
+    'from-indigo-600 via-indigo-700 to-indigo-800',
+    'from-emerald-600 via-emerald-700 to-indigo-800',
+  ];
+
   return (
-    <Fragment>
+    <>
       <Pageheader currentpage="My Account" activepage="Dashboard" mainpage="Account" />
-      
-      {/* Accounts Card */}
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {accounts.length === 0 ? (
-          <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 rounded-xl shadow-xl p-8 text-white relative overflow-hidden">
-            <div className="relative z-10">
-              <p className="text-lg font-semibold">No account data found.</p>
+
+      <div className="space-y-5">
+
+        {/* ── Hero Profile Card ── */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-800 rounded-2xl p-6 text-white shadow-lg">
+          <div className="absolute -top-10 -right-10 w-48 h-48 bg-white/5 rounded-full" />
+          <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-white/5 rounded-full" />
+          <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+            {/* Avatar */}
+            <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${avatarGrad} flex items-center justify-center text-white text-3xl font-extrabold shadow-lg flex-shrink-0 border-2 border-white/30`}>
+              {initials}
             </div>
-          </div>
-        ) : (
-          accounts.map((acc) => (
-            <div key={acc.accountId} className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 rounded-xl shadow-xl p-8 text-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="bg-white bg-opacity-20 rounded-lg p-3">
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm opacity-90">{acc.accountName}</p>
-                    <p className="text-4xl font-bold mt-1">{acc.formattedAvailableBalance || acc.formattedBalance}</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-white border-opacity-20">
-                  <div className="bg-white bg-opacity-10 rounded-lg p-4">
-                    <p className="text-xs opacity-75 mb-1">Currency</p>
-                    <p className="text-sm font-semibold">{acc.currencySymbol} ({acc.currency})</p>
-                  </div>
-                  <div className="bg-white bg-opacity-10 rounded-lg p-4">
-                    <p className="text-xs opacity-75 mb-1">Account ID</p>
-                    <p className="text-sm font-semibold">{acc.accountId}</p>
-                  </div>
-                </div>
+
+            {/* Info */}
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <h2 className="text-xl font-bold">{user.name || 'User'}</h2>
+                <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold bg-white/20`}>
+                  {user.role || 'User'}
+                </span>
+              </div>
+              <p className="text-white/70 text-sm">{user.email || '—'}</p>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-xs text-white/60">Agent ID:</span>
+                <span className="font-mono text-xs text-white/90 bg-white/10 px-2 py-0.5 rounded">{user.id || '—'}</span>
+                <button
+                  onClick={copyId}
+                  className="text-white/60 hover:text-white transition-colors"
+                  title="Copy ID"
+                >
+                  <i className={`bx ${copied ? 'bx-check' : 'bx-copy'} text-sm`} />
+                </button>
               </div>
             </div>
-          ))
-        )}
-      </div>
 
-      {/* Profile Section */}
-      <div className="grid grid-cols-12 gap-6">
-        <div className="xl:col-span-8 col-span-12">
-          <div className="box">
-            <div className="box-header">
-              <div className="box-title">Profile Information</div>
+            {/* Status badge */}
+            <div className="flex flex-col items-end gap-2 flex-shrink-0">
+              <div className="flex items-center gap-1.5 bg-white/15 px-3 py-1.5 rounded-full">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-xs font-medium">Active</span>
+              </div>
             </div>
-            <div className="box-body">
-              <div className="flex items-center gap-6 mb-8 pb-6 border-b border-gray-200">
-                <div className="w-24 h-24 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg">
-                  {(user.name || "U")[0].toUpperCase()}
+          </div>
+        </div>
+
+        {/* ── Balance Cards ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {accsLoading ? (
+            [0, 1].map(i => (
+              <div key={i} className="rounded-2xl h-36 bg-gray-200 dark:bg-gray-700 animate-pulse" />
+            ))
+          ) : accounts.length === 0 ? (
+            <div className="sm:col-span-2 flex items-center justify-center gap-3 p-8 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <i className="bx bx-wallet text-3xl text-gray-300 dark:text-gray-600" />
+              <p className="text-sm text-gray-500 dark:text-gray-400">No account balances found</p>
+            </div>
+          ) : (
+            accounts.map((acc, i) => (
+              <div key={acc.accountId} className={`relative overflow-hidden bg-gradient-to-br ${accCardColors[i % accCardColors.length]} rounded-2xl p-5 text-white shadow-lg`}>
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-white/5 rounded-full" />
+                <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-white/5 rounded-full" />
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                      <i className="bx bx-credit-card text-xl" />
+                    </div>
+                    <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full font-semibold">
+                      {acc.currency || 'RWF'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-white/70 mb-1">{acc.accountName}</p>
+                  <p className="text-2xl font-extrabold tracking-tight">
+                    {acc.formattedAvailableBalance || acc.formattedBalance || '0'}
+                  </p>
+                  <p className="text-xs text-white/60 mt-1.5">ID: {acc.accountId}</p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
+
+          {/* ── Profile Details (2/3) ── */}
+          <div className="xl:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-3">
+              <div className="w-9 h-9 bg-indigo-100 dark:bg-indigo-900/40 rounded-xl flex items-center justify-center">
+                <i className="bx bx-id-card text-indigo-600 dark:text-indigo-400 text-lg" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-gray-900 dark:text-white">Profile Information</h3>
+                <p className="text-xs text-gray-400">Your account details from the system</p>
+              </div>
+            </div>
+
+            <div className="p-6">
+              {/* Avatar + name row */}
+              <div className="flex items-center gap-4 mb-6 pb-5 border-b border-gray-100 dark:border-gray-700">
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${avatarGrad} flex items-center justify-center text-white text-2xl font-extrabold flex-shrink-0`}>
+                  {initials}
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-800">{user.name || "User"}</h3>
-                  <p className="text-gray-500">{user.email || "-"}</p>
-                  <span className="inline-block mt-2 px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 rounded-full text-xs font-medium">
-                    {user.role || "User"}
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">{user.name || 'User'}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{user.email || '—'}</p>
+                  <span className={`inline-block mt-1.5 text-xs px-2.5 py-0.5 rounded-full font-semibold ${roleColor(user.role)}`}>
+                    {user.role || 'User'}
                   </span>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Username</p>
-                      <p className="font-semibold text-gray-800">{user.username || "-"}</p>
-                    </div>
-                  </div>
-                </div>
 
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
+              {/* Info grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {profileFields.map(f => (
+                  <div key={f.label} className="flex items-center gap-3 p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/40">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${f.color}`}>
+                      <i className={`bx ${f.icon} text-lg`} />
                     </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Email Address</p>
-                      <p className="font-semibold text-gray-800 truncate">{user.email || "-"}</p>
+                    <div className="min-w-0">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">{f.label}</p>
+                      <p className="text-sm font-semibold text-gray-800 dark:text-gray-100 truncate">{f.value || '—'}</p>
                     </div>
                   </div>
-                </div>
+                ))}
 
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Phone Number</p>
-                      <p className="font-semibold text-gray-800">{user.phoneNumber || "-"}</p>
-                    </div>
+                {/* Agent ID full-width */}
+                <div className="sm:col-span-2 flex items-center gap-3 p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/40">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400">
+                    <i className="bx bx-fingerprint text-lg" />
                   </div>
-                </div>
-
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500">User ID</p>
-                      <p className="font-mono text-sm font-semibold text-gray-800">{user.id || "-"}</p>
-                    </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Agent / User ID</p>
+                    <p className="font-mono text-sm font-semibold text-gray-800 dark:text-gray-100">{user.id || '—'}</p>
                   </div>
+                  <button
+                    onClick={copyId}
+                    className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-colors ${copied ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600' : 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-500'}`}
+                  >
+                    <i className={`bx ${copied ? 'bx-check' : 'bx-copy'} text-sm`} />
+                    {copied ? 'Copied!' : 'Copy'}
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="xl:col-span-4 col-span-12">
-          <div className="box">
-            <div className="box-header">
-              <div className="box-title">Quick Actions</div>
-            </div>
-            <div className="box-body space-y-3">
-              <button className="w-full flex items-center gap-3 p-4 bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 rounded-lg transition-all duration-300 group">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                  </svg>
-                </div>
-                <span className="font-semibold text-gray-700">Edit Profile</span>
-              </button>
+          {/* ── Right panel (1/3) ── */}
+          <div className="xl:col-span-1 space-y-5">
 
-              <button className="w-full flex items-center gap-3 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 rounded-lg transition-all duration-300 group">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
+            {/* Account summary */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-3">
+                <div className="w-9 h-9 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center">
+                  <i className="bx bx-bar-chart-alt-2 text-emerald-600 dark:text-emerald-400 text-lg" />
                 </div>
-                <span className="font-semibold text-gray-700">Change Password</span>
-              </button>
-
-              <button className="w-full flex items-center gap-3 p-4 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 rounded-lg transition-all duration-300 group">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <span className="font-semibold text-gray-700">Settings</span>
-              </button>
+                <h3 className="text-sm font-bold text-gray-900 dark:text-white">Account Summary</h3>
+              </div>
+              <div className="p-5 space-y-3">
+                {[
+                  { label: 'Linked Accounts', value: accsLoading ? '…' : String(accounts.length) },
+                  { label: 'Account Status',  value: 'Active' },
+                  { label: 'Settlement Currency', value: 'RWF' },
+                  { label: 'Member Since',    value: '—' },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex items-center justify-between py-1.5 border-b border-gray-100 dark:border-gray-700 last:border-0">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{label}</span>
+                    <span className={`text-xs font-semibold ${value === 'Active' ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-800 dark:text-gray-200'}`}>
+                      {value === 'Active' && <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 mb-0.5" />}
+                      {value}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

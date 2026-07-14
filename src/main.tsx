@@ -2,13 +2,18 @@ import React, { lazy } from 'react'
 const ServiceFeeManagement = lazy(()=> import('./pages/moola/service-management/service-fees.tsx'));
 const MomoCollectionsReportAnalytics = lazy(()=> import('./pages/moola/MomoCollectionsReportAnalytics.tsx'));
 const MomoCollectionsTransactions = lazy(()=> import('./pages/moola/MomoCollectionsTransactions.tsx'));
+const NewMomoCollectionsDashboard = lazy(()=> import('./container/moola/newmomo-dashboard.tsx'));
+const NewMomoCollectionForm = lazy(()=> import('./container/moola/newmomo-collection-form.tsx'));
+const NewMomoAgentTransactions = lazy(()=> import('./container/moola/newmomo-transactions.tsx'));
+const NewMomoWebhooks = lazy(()=> import('./container/moola/newmomo-webhooks.tsx'));
+const ApiDocs = lazy(()=> import('./container/moola/api-docs.tsx'));
+const CentrikaAdminDashboard = lazy(()=> import('./container/moola/centrika-admin-dashboard.tsx'));
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 const App = lazy(()=> import( './pages/App.tsx'))
 const Auth = lazy(()=> import( './firebase/auth.tsx'))
 const Login = lazy(()=> import( './firebase/login.tsx'))
 const Signup = lazy(()=> import( './firebase/signup.tsx'))
-const Crm = lazy(()=> import( './container/dashboards/crm/crm.tsx'))
 const Ecommerce = lazy(()=> import( './container/dashboards/ecommerce/ecommerce.tsx'))
 const Crypto = lazy(()=> import( './container/dashboards/crypto/crypto.tsx'))
 const Jobs = lazy(()=> import( './container/dashboards/jobs/jobs.tsx'))
@@ -186,12 +191,12 @@ const Bubblechart = lazy(()=> import( './container/charts/apexcharts/bubble-char
 const Suneditor = lazy(()=> import( './container/forms/formeditors/formeditor/formeditor.tsx'))
 const TransactionDetails = lazy(()=> import( './container/moola/transaction-details.tsx'))
 const AqsTransactions = lazy(()=> import( './container/moola/aqs-transactions.tsx'))
-const RegisterApplication = lazy(()=> import( './container/moola/register-application.tsx'))
 const AutoSettlement = lazy(()=> import( './container/moola/auto-settlement.tsx'))
 const Settlement = lazy(()=> import( './container/moola/settlement.tsx'))
-const Report = lazy(()=> import( './container/moola/report.tsx'))
+const NewMomoBankDetails = lazy(()=> import( './container/moola/newmomo-bank-details.tsx'))
+const NewMomoDisbursementForm = lazy(()=> import( './container/moola/newmomo-disbursement-form.tsx'))
+const NewMomoDisbursementTransactions = lazy(()=> import( './container/moola/newmomo-disbursement-transactions.tsx'))
 const UserManagement = lazy(()=> import( './container/moola/user-management.tsx'))
-const DisputePage = lazy(()=> import( './container/moola/dispute-page.tsx'))
 const MyAccount = lazy(()=> import( './container/moola/my-account.tsx'))
 const Loader =lazy(()=>import( './components/common/loader/loader.tsx'))
 import "../src/assets/scss/tailwind/_tailwind.scss"
@@ -217,7 +222,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     <Route path={`${import.meta.env.BASE_URL}firebase/signup`} element={<Signup />} />
                   </Route>
                   <Route path={`${import.meta.env.BASE_URL}`} element={<App />}>
-                    <Route path={`${import.meta.env.BASE_URL}dashboards/crm`} element={<Crm/>} />
+
                     <Route path={`${import.meta.env.BASE_URL}dashboards/collections`} element={<Ecommerce />} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/ecommerce`} element={<Ecommerce />} />
                     <Route path={`${import.meta.env.BASE_URL}dashboards/crypto`} element={<Crypto/>} />
@@ -239,19 +244,29 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     <Route path={`${import.meta.env.BASE_URL}moola/data-collections/form-list`} element={<AqsTransactions/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/data-collections/data-collectors`} element={<AqsTransactions/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/data-collections/add-data-collectors`} element={<AqsTransactions/>} />
-                    <Route path={`${import.meta.env.BASE_URL}moola/register-application`} element={<RegisterApplication/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/auto-settlement`} element={<AutoSettlement/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/bank-details`} element={<AutoSettlement/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/settlement`} element={<Settlement/>} />
-                    <Route path={`${import.meta.env.BASE_URL}moola/report`} element={<Report/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/user-management`} element={<UserManagement/>} />
-                    <Route path={`${import.meta.env.BASE_URL}moola/disputes`} element={<DisputePage/>} />
                     <Route path={`${import.meta.env.BASE_URL}moola/my-account`} element={<MyAccount/>} />
 
                     <Route path={`${import.meta.env.BASE_URL}moola/momo-collections/transactions`} element={<MomoCollectionsTransactions />} />
                     <Route path={`${import.meta.env.BASE_URL}moola/momo-collections/report-and-analytics`} element={<MomoCollectionsReportAnalytics />} />
 
-                      <Route path={`${import.meta.env.BASE_URL}moola/service-management/service-fees`} element={<ServiceFeeManagement />} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/service-management/service-fees`} element={<ServiceFeeManagement />} />
+
+                    {/* Centrika Admin */}
+                    <Route path={`${import.meta.env.BASE_URL}centrika/momo/dashboard`} element={<CentrikaAdminDashboard />} />
+
+                    {/* New MoMo Collections */}
+                    <Route path={`${import.meta.env.BASE_URL}moola/new-momo/dashboard`} element={<NewMomoCollectionsDashboard />} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/new-momo/collect`} element={<NewMomoCollectionForm />} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/new-momo/transactions`} element={<NewMomoAgentTransactions />} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/new-momo/webhooks`} element={<NewMomoWebhooks />} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/new-momo/bank-details`} element={<NewMomoBankDetails />} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/new-momo/disbursement`} element={<NewMomoDisbursementForm />} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/new-momo/disbursement-history`} element={<NewMomoDisbursementTransactions />} />
+                    <Route path={`${import.meta.env.BASE_URL}moola/api-docs`} element={<ApiDocs />} />
 
                     <Route path={`${import.meta.env.BASE_URL}pages/about-us`} element={<AboutUs/>} />
 

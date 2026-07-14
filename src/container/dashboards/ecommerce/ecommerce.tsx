@@ -8,6 +8,7 @@ import SpkDropdown from '../../../@spk/uielements/spk-dropdown';
 import SpkBadge from '../../../@spk/uielements/spk-badge';
 import Spktables from '../../../@spk/tables/spk-tables';
 import SpkButton from '../../../@spk/uielements/spk-button';
+import { API_BASE_URL } from '../../../config/api';
 
 interface EcommerceProps { }
 
@@ -66,7 +67,7 @@ const Ecommerce: FC<EcommerceProps> = () => {
                 setLoading(true);
                 setError(null);
 
-                const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+                const apiBaseUrl = API_BASE_URL;
                 const storedToken = localStorage.getItem('token');
                 const token = storedToken ? JSON.parse(storedToken) : null;
 

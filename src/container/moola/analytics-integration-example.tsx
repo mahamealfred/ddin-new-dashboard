@@ -112,9 +112,9 @@ const AnalyticsIntegrationExample: FC<IntegrationExampleProps> = () => {
 
       {/* Loading State */}
       {loading && (
-        <div className="box mb-6 border-yellow-200 bg-yellow-50 dark:bg-yellow-900/20">
+        <div className="box mb-6 border-amber-200 bg-amber-50 dark:bg-amber-900/20">
           <div className="box-body">
-            <p className="text-sm text-yellow-700 dark:text-yellow-300">
+            <p className="text-sm text-amber-700 dark:text-amber-300">
               <i className="ri-loader-4-line animate-spin me-2"></i>
               Loading analytics data...
             </p>
@@ -262,7 +262,7 @@ const AnalyticsIntegrationExample: FC<IntegrationExampleProps> = () => {
       {summary.peakDay && summary.lowestDay && (
         <div className="grid grid-cols-12 gap-x-6 mt-6">
           <div className="lg:col-span-6 col-span-12">
-            <div className="box border-green-200 dark:border-green-800">
+            <div className="box border-emerald-200 dark:border-emerald-800">
               <div className="box-body">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                   <i className="ri-trending-up-line text-success me-2"></i>

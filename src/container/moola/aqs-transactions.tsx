@@ -2,6 +2,7 @@ import { ChangeEvent, FC, Fragment, useEffect, useMemo, useState, useCallback, u
 import axios from "axios";
 import Pageheader from "../../components/common/page-header/pageheader";
 import { useLocation } from "react-router-dom";
+import { API_BASE_URL } from "../../config/api";
 
 // ==================== Types ====================
 interface ExternalForm {
@@ -69,12 +70,10 @@ interface ApiResponse<T> {
 }
 
 // ==================== Constants ====================
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:4000").replace(/\/+$/, "");
-
 const API_ENDPOINTS = {
-  FORMS: `${API_BASE_URL}/v1/collection/external/forms`,
-  COLLECTORS: `${API_BASE_URL}/v1/collection/datacollectors`,
-  BULK_COLLECTORS: `${API_BASE_URL}/v1/collection/datacollectors/bulk`,
+  FORMS: `${API_BASE_URL}/v1/momo/external/forms`,
+  COLLECTORS: `${API_BASE_URL}/v1/momo/datacollectors`,
+  BULK_COLLECTORS: `${API_BASE_URL}/v1/momo/datacollectors/bulk`,
 } as const;
 
 const CSV_TEMPLATE = [
@@ -183,7 +182,7 @@ interface StatusBadgeProps {
 }
 
 const StatusBadge: FC<StatusBadgeProps> = ({ status }) => (
-  <span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400">
+  <span className="px-2 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
     {status || "unknown"}
   </span>
 );
@@ -684,7 +683,7 @@ const AqsTransactions: FC = () => {
             className={`pointer-events-auto ti-toast shadow-lg border rounded-lg ${
               toast.type === "error"
                 ? "bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/30 dark:text-red-300"
-                : "bg-green-50 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/30 dark:text-green-300"
+                : "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/30 dark:text-emerald-300"
             }`}
             role="alert"
           >
@@ -790,17 +789,17 @@ const AqsTransactions: FC = () => {
                     <p className="text-xs text-gray-500 dark:text-white/60">Total Collectors</p>
                     <p className="text-2xl font-bold mt-1">{collectorMetrics.total}</p>
                   </div>
-                  <div className="rounded-xl border border-green-200 dark:border-green-500/20 p-4 bg-green-50 dark:bg-green-500/10">
-                    <p className="text-xs text-green-700 dark:text-green-300">Active</p>
-                    <p className="text-2xl font-bold mt-1 text-green-700 dark:text-green-300">{collectorMetrics.active}</p>
+                  <div className="rounded-xl border border-emerald-200 dark:border-emerald-500/20 p-4 bg-emerald-50 dark:bg-emerald-500/10">
+                    <p className="text-xs text-emerald-700 dark:text-emerald-300">Active</p>
+                    <p className="text-2xl font-bold mt-1 text-emerald-700 dark:text-emerald-300">{collectorMetrics.active}</p>
                   </div>
                   <div className="rounded-xl border border-red-200 dark:border-red-500/20 p-4 bg-red-50 dark:bg-red-500/10">
                     <p className="text-xs text-red-700 dark:text-red-300">Inactive</p>
                     <p className="text-2xl font-bold mt-1 text-red-700 dark:text-red-300">{collectorMetrics.inactive}</p>
                   </div>
-                  <div className="rounded-xl border border-blue-200 dark:border-blue-500/20 p-4 bg-blue-50 dark:bg-blue-500/10">
-                    <p className="text-xs text-blue-700 dark:text-blue-300">Forms Assigned</p>
-                    <p className="text-2xl font-bold mt-1 text-blue-700 dark:text-blue-300">{collectorMetrics.formsCount}</p>
+                  <div className="rounded-xl border border-indigo-200 dark:border-indigo-500/20 p-4 bg-indigo-50 dark:bg-indigo-500/10">
+                    <p className="text-xs text-indigo-700 dark:text-indigo-300">Forms Assigned</p>
+                    <p className="text-2xl font-bold mt-1 text-indigo-700 dark:text-indigo-300">{collectorMetrics.formsCount}</p>
                   </div>
                 </div>
 
@@ -1094,8 +1093,8 @@ const AqsTransactions: FC = () => {
                   </button>
                 </div>
 
-                <div className="p-3 rounded-lg border border-blue-200 bg-blue-50 dark:bg-blue-500/10 dark:border-blue-500/20">
-                  <p className="text-sm text-blue-700 dark:text-blue-400">
+                <div className="p-3 rounded-lg border border-indigo-200 bg-indigo-50 dark:bg-indigo-500/10 dark:border-indigo-500/20">
+                  <p className="text-sm text-indigo-700 dark:text-indigo-400">
                     CSV columns required: username, fullName, status. Optional columns: formId.
                   </p>
                 </div>

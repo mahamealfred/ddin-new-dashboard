@@ -9,6 +9,7 @@ import logo from "../../../assets/images/brand-logos/ddinlogoT.png";
 //import Spktables from '../../../@spk/tables/spk-tables';
 //import SpkButton from '../../../@spk/uielements/spk-button';
 import * as XLSX from "xlsx";
+import { CORE_API_BASE_URL } from '../../../config/api';
 interface SalesProps { }
 
 // Define the structure of transaction data
@@ -78,7 +79,7 @@ const CompletedTrasactions: FC<SalesProps> = () => {
 
         const fetchBalance = async () => {
             try {
-                const response = await axios.get("https://app.ddin.rw/api/v1/accounts/balance/account?accountId=" + accountId,
+                const response = await axios.get(`${CORE_API_BASE_URL}/api/v1/accounts/balance/account?accountId=` + accountId,
                     {
                         headers: {
                             Authorization: "Basic " + token,
@@ -118,7 +119,7 @@ const CompletedTrasactions: FC<SalesProps> = () => {
         const fetchTransactions = async () => {
             try {
                 const response = await fetch(
-                    "https://app.ddin.rw/api/v1/transactions/logs-transactions"
+                    `${CORE_API_BASE_URL}/api/v1/transactions/logs-transactions`
                 );
                 const data = await response.json();
 
@@ -352,7 +353,7 @@ const CompletedTrasactions: FC<SalesProps> = () => {
     const fetchAllTransactionsData = async () => {
         try {
           const response = await fetch(
-            "https://app.ddin.rw/api/v1/transactions/logs-transactions"
+            `${CORE_API_BASE_URL}/api/v1/transactions/logs-transactions`
           );
           const data = await response.json();
       

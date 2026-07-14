@@ -204,9 +204,9 @@ const TransactionDetails: FC = () => {
   const getStatusBadge = (status?: string) => {
     const normalized = normalizeStatus(status);
     const cls = normalized.includes("success") || normalized.includes("complete")
-      ? "bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400"
+      ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
       : normalized.includes("pending") || normalized.includes("process")
-      ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/10 dark:text-yellow-400"
+      ? "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400"
       : "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400";
 
     return <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${cls}`}>{normalized || "unknown"}</span>;
@@ -249,8 +249,8 @@ const TransactionDetails: FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
         <div className="box"><div className="box-body"><p className="text-sm text-gray-600 dark:text-white/60">Total Transactions</p><p className="text-2xl font-bold">{metrics.total}</p></div></div>
-        <div className="box"><div className="box-body"><p className="text-sm text-gray-600 dark:text-white/60">Completed</p><p className="text-2xl font-bold text-green-600">{metrics.success}</p><p className="text-xs text-gray-500">{metrics.successRate}%</p></div></div>
-        <div className="box"><div className="box-body"><p className="text-sm text-gray-600 dark:text-white/60">Pending</p><p className="text-2xl font-bold text-yellow-600">{metrics.pending}</p><p className="text-xs text-gray-500">{metrics.pendingRate}%</p></div></div>
+        <div className="box"><div className="box-body"><p className="text-sm text-gray-600 dark:text-white/60">Completed</p><p className="text-2xl font-bold text-emerald-600">{metrics.success}</p><p className="text-xs text-gray-500">{metrics.successRate}%</p></div></div>
+        <div className="box"><div className="box-body"><p className="text-sm text-gray-600 dark:text-white/60">Pending</p><p className="text-2xl font-bold text-amber-600">{metrics.pending}</p><p className="text-xs text-gray-500">{metrics.pendingRate}%</p></div></div>
         <div className="box"><div className="box-body"><p className="text-sm text-gray-600 dark:text-white/60">Failed</p><p className="text-2xl font-bold text-red-600">{metrics.failed}</p><p className="text-xs text-gray-500">{metrics.failedRate}%</p></div></div>
       </div>
 
@@ -260,11 +260,11 @@ const TransactionDetails: FC = () => {
           <div className="box-body space-y-4">
             <div>
               <div className="flex justify-between text-sm mb-1"><span>Success</span><span>{metrics.success}</span></div>
-              <div className="h-2 bg-gray-100 dark:bg-white/10 rounded"><div className="h-2 bg-green-500 rounded" style={{ width: `${metrics.successRate}%` }}></div></div>
+              <div className="h-2 bg-gray-100 dark:bg-white/10 rounded"><div className="h-2 bg-emerald-500 rounded" style={{ width: `${metrics.successRate}%` }}></div></div>
             </div>
             <div>
               <div className="flex justify-between text-sm mb-1"><span>Pending</span><span>{metrics.pending}</span></div>
-              <div className="h-2 bg-gray-100 dark:bg-white/10 rounded"><div className="h-2 bg-yellow-500 rounded" style={{ width: `${metrics.pendingRate}%` }}></div></div>
+              <div className="h-2 bg-gray-100 dark:bg-white/10 rounded"><div className="h-2 bg-amber-500 rounded" style={{ width: `${metrics.pendingRate}%` }}></div></div>
             </div>
             <div>
               <div className="flex justify-between text-sm mb-1"><span>Failed</span><span>{metrics.failed}</span></div>

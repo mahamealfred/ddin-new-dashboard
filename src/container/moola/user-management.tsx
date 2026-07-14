@@ -79,7 +79,7 @@ const UserManagement: FC = () => {
         <div className="box animate-fade-in">
           <div className="box-header border-b border-gray-200 dark:border-defaultborder/10 pb-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
@@ -92,8 +92,8 @@ const UserManagement: FC = () => {
           </div>
           <div className="box-body">
             {submitted && (
-              <div className="mb-6 p-4 bg-green-100 dark:bg-green-500/10 border-l-4 border-green-500 rounded-lg">
-                <p className="font-semibold text-green-700 dark:text-green-400">User added successfully.</p>
+              <div className="mb-6 p-4 bg-emerald-100 dark:bg-emerald-500/10 border-l-4 border-emerald-500 rounded-lg">
+                <p className="font-semibold text-emerald-700 dark:text-emerald-400">User added successfully.</p>
               </div>
             )}
 
@@ -179,13 +179,13 @@ const UserManagement: FC = () => {
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-primary via-purple-600 to-pink-600 text-white font-semibold py-3.5 px-4 rounded-xl"
+                className="w-full bg-gradient-to-r from-primary via-indigo-600 to-indigo-600 text-white font-semibold py-3.5 px-4 rounded-xl"
               >
                 Submit Application
               </button>
 
-              <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-500/10 rounded-xl border border-blue-200 dark:border-blue-500/20">
-                <p className="text-sm text-blue-700 dark:text-blue-400">
+              <div className="mt-4 p-4 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl border border-indigo-200 dark:border-indigo-500/20">
+                <p className="text-sm text-indigo-700 dark:text-indigo-400">
                   Submissions are stored when backend registration integration is enabled.
                 </p>
               </div>
@@ -217,7 +217,7 @@ const UserManagement: FC = () => {
                   <div key={item.id} className="p-4 border border-gray-200 dark:border-defaultborder/10 rounded-xl">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-purple-600/20 rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-indigo-600/20 rounded-lg flex items-center justify-center">
                           <span className="text-primary font-bold text-sm">{(item.name || "U").charAt(0).toUpperCase()}</span>
                         </div>
                         <div>
@@ -229,7 +229,7 @@ const UserManagement: FC = () => {
                       <span
                         className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
                           item.status === "success"
-                            ? "bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400"
+                            ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
                             : "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400"
                         }`}
                       >

@@ -17,6 +17,7 @@ const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 	const normalizedRole = (userRole || "").toLowerCase();
 	const isStaffRole = normalizedRole === "staff" || normalizedRole === "stuff";
 	const isCorporateRole = normalizedRole === "corporate";
+	const isCentrikaRole = normalizedRole === "centrika";
 	const staffHiddenMenuTitles = new Set([
 		"Moola Plus",
 		"Transaction Details",
@@ -35,7 +36,6 @@ const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 		return staffHiddenMenuTitles.has(title || menutitle || "");
 	};
 	const corporateMenuWhitelist = new Set([
-		"Analytics",
 		"Dashboards",
 		"MOOLA",
 		"Dashboard",
@@ -45,6 +45,9 @@ const Sidebar: FC<SidebarProps> = ({ local_varaiable, ThemeChanger }: any) => {
 		"Report",
 		"Dispute Page",
 		"My Account",
+		"Momo Collection",
+		"Momo Disbursement",
+		"Developer Tools",
 	]);
 
 const toggleMenu = (index: number) => {
@@ -59,6 +62,21 @@ const toggleMenu = (index: number) => {
 let filteredMenuItems = MenuItems.map((item: any) => {
 	if (isStaffRole) {
 		return item;
+	}
+
+	// Centrika = admin: only show items tagged for Centrika
+	if (isCentrikaRole) {
+		if (item.menutitle) {
+			return item.roles?.some((r: string) => r.toLowerCase() === "centrika") ? item : null;
+		}
+		if (item.type === "sub") {
+			const filteredChildren = item.children?.filter((child: any) =>
+				!child.roles || child.roles.some((r: string) => r.toLowerCase() === "centrika")
+			);
+			if (!filteredChildren || filteredChildren.length === 0) return null;
+			return { ...item, children: filteredChildren };
+		}
+		return !item.roles || item.roles.some((r: string) => r.toLowerCase() === "centrika") ? item : null;
 	}
 
 	if (isCorporateRole && !corporateMenuWhitelist.has(item.title || item.menutitle)) {
@@ -720,7 +738,7 @@ let filteredMenuItems = MenuItems.map((item: any) => {
 			<aside className="app-sidebar border-r border-gray-200 dark:border-defaultborder/10 bg-white dark:!bg-bodybg" id="sidebar" onMouseOver={() => Onhover()}
 				onMouseLeave={() => Outhover()}>
 				<div className="main-sidebar-header px-6 py-6 border-b border-gray-200 dark:border-defaultborder/10">
-					<Link to={`${import.meta.env.BASE_URL}dashboards/corporate/`} className="header-logo sidebar-brand-link flex items-center gap-3 group">
+					<Link to={`${import.meta.env.BASE_URL}moola/new-momo/dashboard`} className="header-logo sidebar-brand-link flex items-center gap-3 group">
 						<div className="w-10 h-10 bg-gradient-to-br from-primary via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-all">
 							<span className="text-white text-xl font-extrabold leading-none tracking-tight">M</span>
 						</div>

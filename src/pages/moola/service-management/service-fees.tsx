@@ -14,11 +14,13 @@ import {
   Hash,
   CreditCard,
   Calendar as CalendarIcon,
-  RefreshCw,
   AlertCircle
 } from 'lucide-react';
+import { API_BASE_URL } from '../../../config/api';
 
-const API_URL = 'http://localhost:4000/v1/thirdparty/service-fee';
+const API_URL = `${API_BASE_URL}/v1/momo/service-fee`;
+const getToken = () => { try { return JSON.parse(localStorage.getItem('token') || 'null'); } catch { return null; } };
+const authHeaders = () => ({ Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' });
 
 type ServiceFee = {
   ID?: number;
@@ -80,7 +82,7 @@ export default function ServiceFeeManagement() {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.get(API_URL);
+      const res = await axios.get(API_URL, { headers: authHeaders() });
       setFees(res.data.data || []);
     } catch (e) {
       setError('Failed to fetch service fees');
@@ -99,9 +101,9 @@ export default function ServiceFeeManagement() {
     setError('');
     try {
       if (editingId) {
-        await axios.put(`${API_URL}/${editingId}`, form);
+        await axios.put(`${API_URL}/${editingId}`, form, { headers: authHeaders() });
       } else {
-        await axios.post(API_URL, form);
+        await axios.post(API_URL, form, { headers: authHeaders() });
       }
       setShowForm(false);
       setForm(initialForm);
@@ -129,7 +131,7 @@ export default function ServiceFeeManagement() {
     setLoading(true);
     setError('');
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      await axios.delete(`${API_URL}/${id}`, { headers: authHeaders() });
       fetchFees();
     } catch (e) {
       setError('Failed to delete service fee');

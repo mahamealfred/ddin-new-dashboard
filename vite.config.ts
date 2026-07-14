@@ -6,12 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: 'localhost',
-    port: 6006,
+    port: 6007,
     strictPort: false,
   },
   preview: {
     host: 'localhost',
-    port: 6006,
+    port: 6007,
     strictPort: false,
   },
   css: {

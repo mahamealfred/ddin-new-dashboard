@@ -10,6 +10,11 @@ const ReportIcon = <i className="bx bx-bar-chart-alt-2 side-menu__icon"></i>;
 const UserManagementIcon = <i className="bx bx-group side-menu__icon"></i>;
 const DisputeIcon = <i className="bx bx-error-circle side-menu__icon"></i>;
 const AccountIcon = <i className="bx bx-id-card side-menu__icon"></i>;
+const MomoIcon = <i className="bx bx-mobile-alt side-menu__icon"></i>;
+const DisbursementIcon = <i className="bx bx-send side-menu__icon"></i>;
+const ApiDocsIcon = <i className="bx bx-code-alt side-menu__icon"></i>;
+const AdminIcon = <i className="bx bx-shield-quarter side-menu__icon"></i>;
+const FeeIcon = <i className="bx bx-dollar-circle side-menu__icon"></i>;
 
 // const PagesIcon = <i className="bx bx-file-blank side-menu__icon"></i>;
 
@@ -84,15 +89,6 @@ export const MenuItems: any = [
     active: false,
     selected: false,
     children: [
-      {
-        path: `${import.meta.env.BASE_URL}dashboards/crm`,
-        type: "link",
-        active: false,
-        selected: false,
-        dirchange: false, 
-        title: "General Analytics",
-        roles: ["Staff"]
-      },
       {
         path:`${import.meta.env.BASE_URL}dashboards/collections`,
         type: "link",
@@ -232,6 +228,89 @@ export const MenuItems: any = [
     roles: ["Staff"],
   },
   {
+    icon: MomoIcon,
+    title: "Momo Collection",
+    type: "sub",
+    active: false,
+    selected: false,
+    children: [
+      {
+        path: `${import.meta.env.BASE_URL}moola/new-momo/dashboard`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Dashboard",
+        roles: ["Staff", "Agent", "Corporate"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/new-momo/collect`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Collect Money",
+        roles: ["Staff", "Agent", "Corporate"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/new-momo/transactions`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "My Transactions",
+        roles: ["Staff", "Agent", "Corporate"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/new-momo/webhooks`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Webhooks & Callbacks",
+        roles: ["Staff", "Agent", "Corporate"],
+      },
+    ],
+    roles: ["Staff", "Agent", "Corporate"],
+  },
+  {
+    icon: DisbursementIcon,
+    title: "Momo Disbursement",
+    type: "sub",
+    active: false,
+    selected: false,
+    children: [
+      {
+        path: `${import.meta.env.BASE_URL}moola/new-momo/disbursement`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Disburse Funds",
+        roles: ["Staff", "Agent", "Corporate"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/new-momo/disbursement-history`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Disbursement History",
+        roles: ["Staff", "Agent", "Corporate"],
+      },
+    ],
+    roles: ["Staff", "Agent", "Corporate"],
+  },
+  {
+    icon: ApiDocsIcon,
+    title: "Developer Tools",
+    type: "link",
+    active: false,
+    selected: false,
+    path: `${import.meta.env.BASE_URL}moola/api-docs`,
+    roles: ["Staff", "Agent", "Corporate"],
+  },
+  {
     icon: AqsIcon,
     title: "Service Management",
     type: "sub",
@@ -251,15 +330,6 @@ export const MenuItems: any = [
     roles: ["Staff"],
   },
   {
-    icon: RegisterIcon,
-    title: "Register Application",
-    type: "link",
-    active: false,
-    selected: false,
-    path: `${import.meta.env.BASE_URL}moola/register-application`,
-    roles: ["Staff", "Agent", "Corporate"],
-  },
-  {
     icon: SettlementIcon,
     title: "Auto Settlement",
     type: "sub",
@@ -267,7 +337,7 @@ export const MenuItems: any = [
     selected: false,
     children: [
       {
-        path: `${import.meta.env.BASE_URL}moola/bank-details`,
+        path: `${import.meta.env.BASE_URL}moola/new-momo/bank-details`,
         type: "link",
         active: false,
         selected: false,
@@ -288,15 +358,6 @@ export const MenuItems: any = [
     roles: ["Staff", "Agent", "Corporate"],
   },
   {
-    icon: ReportIcon,
-    title: "Report",
-    type: "link",
-    active: false,
-    selected: false,
-    path: `${import.meta.env.BASE_URL}moola/report`,
-    roles: ["Staff", "Agent", "Corporate"],
-  },
-  {
     icon: UserManagementIcon,
     title: "User Management",
     type: "link",
@@ -304,15 +365,6 @@ export const MenuItems: any = [
     selected: false,
     path: `${import.meta.env.BASE_URL}moola/user-management`,
     roles: ["Staff"],
-  },
-  {
-    icon: DisputeIcon,
-    title: "Dispute Page",
-    type: "link",
-    active: false,
-    selected: false,
-    path: `${import.meta.env.BASE_URL}moola/disputes`,
-    roles: ["Staff", "Agent", "Corporate"],
   },
   {
     icon: AccountIcon,
@@ -324,6 +376,104 @@ export const MenuItems: any = [
     roles: ["Staff", "Agent", "Corporate"],
   },
 
+  // Centrika Admin Section
+  {
+    menutitle: "Centrika Admin",
+    roles: ["Centrika"],
+  },
+  {
+    icon: AdminIcon,
+    title: "MoMo Admin",
+    type: "sub",
+    active: false,
+    selected: false,
+    children: [
+      {
+        path: `${import.meta.env.BASE_URL}centrika/momo/dashboard`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Admin Dashboard",
+        roles: ["Centrika"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/momo-collections/transactions`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "All Transactions",
+        roles: ["Centrika"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/momo-collections/report-and-analytics`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Reports & Analytics",
+        roles: ["Centrika"],
+      },
+    ],
+    roles: ["Centrika"],
+  },
+  {
+    icon: FeeIcon,
+    title: "Service Management",
+    type: "sub",
+    active: false,
+    selected: false,
+    children: [
+      {
+        path: `${import.meta.env.BASE_URL}moola/service-management/service-fees`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Service Fees",
+        roles: ["Centrika"],
+      },
+    ],
+    roles: ["Centrika"],
+  },
+  {
+    icon: AqsIcon,
+    title: "Data Collections",
+    type: "sub",
+    active: false,
+    selected: false,
+    children: [
+      {
+        path: `${import.meta.env.BASE_URL}moola/data-collections/form-list`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Form List",
+        roles: ["Centrika"],
+      },
+      {
+        path: `${import.meta.env.BASE_URL}moola/data-collections/data-collectors`,
+        type: "link",
+        active: false,
+        selected: false,
+        dirchange: false,
+        title: "Data Collectors",
+        roles: ["Centrika"],
+      },
+    ],
+    roles: ["Centrika"],
+  },
+  {
+    icon: UserManagementIcon,
+    title: "User Management",
+    type: "link",
+    active: false,
+    selected: false,
+    path: `${import.meta.env.BASE_URL}moola/user-management`,
+    roles: ["Centrika"],
+  },
   // {
   //   menutitle: "TRANSACTIONS LOGS",
   // },
@@ -1753,252 +1903,8 @@ export const MenuItems: any = [
   //   ],
   // },
 
-  {
-    menutitle: "LOGS & CHARTS",
-  },
-  {
-    title: "Transactions",
-    icon: TablesIcon,
-    type: "sub",
-    menutitle: "",
-    badgetxt: badge4,
-    active: false,
-    selected: false,
-    dirchange: false, 
-    
-    children: [
-      // {
-      //   path: `${import.meta.env.BASE_URL}tables/table`,
-      //   type: "link",
-      //   active: false,
-      //   selected: false,
-      //   dirchange: false, 
-      //   title: "Tables",
-      //   roles: ["Staff"]
-      // },
-      // {
-      //   path: `${import.meta.env.BASE_URL}tables/gridjs-table`,
-      //   type: "link",
-      //   active: false,
-      //   selected: false,
-      //   dirchange: false, 
-      //   title: "Grid JS Tables",
-      //   roles: ["Staff"]
-      // },
-      {
-        path: `${import.meta.env.BASE_URL}dashboards/completed/transactions`,
-        type: "link",
-        active: false,
-        selected: false,
-        dirchange: false, 
-        title: "Completed Tranactions",
-        roles: ["Staff"]
-      },
-      {
-        path: `${import.meta.env.BASE_URL}dashboards/incomplete/transactions`,
-        type: "link",
-        active: false,
-        selected: false,
-        dirchange: false, 
-        title: "Failed Tranactions",
-        roles: ["Staff"]
-      },
-    ],
- },
 
-  {
-    title: "Charts",
-    icon: ChartsIcon,
-    type: "sub",
-    selected: false,
-    active: false,
-    children: [
-      // {
-      //   title: "Apex Charts",
-      //   type: "sub",
-      //   menusub: true,
-      //   active: false,
-      //   selected: false,
-      //   dirchange: false, 
-      //   roles: ["Staff"],
-      //   children: [
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/line-charts`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Line Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/area-charts`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Area Charts ",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/column-charts`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Column Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/bar-charts`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Bar Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/mixed-charts`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Mixed Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/range-area-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Range Area Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/timeline-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Timeline Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/candlestick-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "CandleStick Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/boxplot-charts`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Boxplot Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/bubble-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Bubble Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/scatter-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Scatter Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/heatmap-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Heatmap Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/treemap-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Treemap Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/pie-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Pie Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/radialbar-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Radialbar Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/radar-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Radar Charts",
-      //       roles: ["Staff"]
-      //     },
-      //     {
-      //       path: `${import.meta.env.BASE_URL}apexcharts/polararea-chart`,
-      //       type: "link",
-      //       active: false,
-      //       selected: false,
-      //       dirchange: false, 
-      //       title: "Polararea Charts",
-      //       roles: ["Staff"]
-      //     },
-      //   ],
-      // },
-      {
-        path: `${import.meta.env.BASE_URL}charts/chartjs`,
-        type: "link",
-        active: false,
-        selected: false,
-        dirchange: false, 
-        title: "Transactions Charts",
-        roles: ["Staff"]
-      },
-      // {
-      //   path: `${import.meta.env.BASE_URL}charts/echart`,
-      //   type: "link",
-      //   active: false,
-      //   selected: false,
-      //   dirchange: false, 
-      //   title: "Echart Charts",
-      //   roles: ["Staff"]
-      // },
-    ],
-  },
 
-  { menutitle: "Reconciliation" },
   // {
   //   title: "Maps",
   //   icon: MapsIcon,

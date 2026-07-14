@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../config/api";
 
 export interface CollectionTransaction {
   id: number;
@@ -57,7 +58,7 @@ export const useCollectionTransactions = (options: UseCollectionTransactionsOpti
   });
 
   const refresh = useCallback(async () => {
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+    const apiBaseUrl = API_BASE_URL;
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("userData");
 

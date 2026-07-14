@@ -5,7 +5,8 @@ import Sidebar from "../components/common/sidebar/sidebar";
 import { ThemeChanger } from "../redux/action";
 import store from "../redux/store";
 import Footer from "../components/common/footer/footer";
-import Backtotop from "../components/common/backtotop/backtotop"; 
+import Backtotop from "../components/common/backtotop/backtotop";
+import IdleTimeout from "../components/common/idle-timeout/idle-timeout";
 import { Outlet, useLocation } from "react-router-dom";
 import "preline/preline";
 import { IStaticMethods } from "preline/preline";
@@ -55,6 +56,7 @@ const App = () => {
                     <Sidebar/>
                     <div className='content mt-[4.5rem]'>
                       <div className='main-content p-6'  onClick={Bodyclickk}>
+                      <IdleTimeout />
                       <Outlet/>
                       </div>
                     </div>

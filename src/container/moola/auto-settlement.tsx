@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, FormEvent, Fragment, useEffect, useState } from "react";
 import Pageheader from "../../components/common/page-header/pageheader";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 interface BankFormData {
   serviceName: string;
@@ -22,7 +23,7 @@ const AutoSettlement: FC = () => {
   });
 
   useEffect(() => {
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+    const apiBaseUrl = API_BASE_URL;
     const storedToken = localStorage.getItem("token");
     if (!storedToken) return;
 
@@ -79,7 +80,7 @@ const AutoSettlement: FC = () => {
       <Pageheader currentpage="Bank Details" activepage="Dashboard" mainpage="Settlement" />
 
       <div className="mb-6">
-        <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 rounded-xl shadow-xl p-8 text-white relative overflow-hidden">
+        <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-600 rounded-xl shadow-xl p-8 text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
           <div className="relative z-10">

@@ -6,6 +6,7 @@ import axios from 'axios';
 //import Spktables from '../../../@spk/tables/spk-tables';
 //import SpkButton from '../../../@spk/uielements/spk-button';
 import { useCollectionTransactions } from '../../../hooks/useCollectionTransactions';
+import { API_BASE_URL } from '../../../config/api';
 interface SalesProps { }
 
 // Define the structure of transaction data
@@ -81,7 +82,7 @@ const Sales: FC<SalesProps> = () => {
 
 
     useEffect(() => {
-        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+        const apiBaseUrl = API_BASE_URL;
         if (!token) return;
 
         const fetchBalance = async () => {

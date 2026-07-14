@@ -23,7 +23,7 @@ const DisputePage: FC = () => {
           <p className="text-3xl font-bold">{summary.failed.toLocaleString()}</p>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-lg p-6 text-white">
+        <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg p-6 text-white">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-white bg-opacity-20 rounded-lg p-3">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@ const DisputePage: FC = () => {
           </p>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+        <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl shadow-lg p-6 text-white">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-white bg-opacity-20 rounded-lg p-3">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,7 +65,7 @@ const DisputePage: FC = () => {
             <div className="box-body">
               {loading && (
                 <div className="flex items-center justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
                   <span className="ml-3 text-gray-600">Loading disputes...</span>
                 </div>
               )}
@@ -104,7 +104,7 @@ const DisputePage: FC = () => {
                           </td>
                           <td className="px-4 py-3">
                             <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
                                 {(item.customerName || "?")[0].toUpperCase()}
                               </div>
                               <span>{item.customerName || "-"}</span>

@@ -123,9 +123,9 @@ const Report: FC = () => {
     const statusUpper = status?.toUpperCase();
     switch (statusUpper) {
       case 'SUCCESS':
-        return 'bg-green-100 text-green-700 border-green-200';
+        return 'bg-emerald-100 text-emerald-700 border-emerald-200';
       case 'PENDING':
-        return 'bg-yellow-100 text-yellow-700 border-yellow-200';
+        return 'bg-amber-100 text-amber-700 border-amber-200';
       case 'FAILED':
         return 'bg-red-100 text-red-700 border-red-200';
       default:
@@ -165,7 +165,7 @@ const Report: FC = () => {
                         }}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                           selectedPeriod === period.value
-                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
+                            ? 'bg-gradient-to-r from-indigo-600 to-indigo-600 text-white shadow-md'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                         }`}
                       >
@@ -219,7 +219,7 @@ const Report: FC = () => {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
+        <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-white bg-opacity-20 rounded-lg p-3">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -232,7 +232,7 @@ const Report: FC = () => {
           <p className="text-xs opacity-75 mt-2">{filteredSummary.totalAmount.toLocaleString()} RWF</p>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
+        <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-white bg-opacity-20 rounded-lg p-3">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -247,7 +247,7 @@ const Report: FC = () => {
           </p>
         </div>
 
-        <div className="bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
+        <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-white bg-opacity-20 rounded-lg p-3">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -289,7 +289,7 @@ const Report: FC = () => {
               </div>
               <div className="flex gap-2">
                 <button 
-                  className="ti-btn bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 transition-all duration-300"
+                  className="ti-btn bg-gradient-to-r from-emerald-600 to-emerald-600 text-white hover:from-emerald-700 hover:to-emerald-700 transition-all duration-300"
                   onClick={exportToPDF}
                   disabled={!filteredData.length}
                 >
@@ -299,7 +299,7 @@ const Report: FC = () => {
                   Export PDF
                 </button>
                 <button 
-                  className="ti-btn bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-300"
+                  className="ti-btn bg-gradient-to-r from-indigo-600 to-indigo-600 text-white hover:from-indigo-700 hover:to-indigo-700 transition-all duration-300"
                   onClick={exportToExcel}
                   disabled={!filteredData.length}
                 >
@@ -313,7 +313,7 @@ const Report: FC = () => {
             <div className="box-body">
               {loading && (
                 <div className="flex items-center justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
                   <span className="ml-3 text-gray-600">Loading report...</span>
                 </div>
               )}
@@ -359,7 +359,7 @@ const Report: FC = () => {
                             </td>
                             <td className="px-4 py-3">
                               <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-semibold">
+                                <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-xs font-semibold">
                                   {(item.customerName || "?")[0].toUpperCase()}
                                 </div>
                                 <div>
@@ -420,7 +420,7 @@ const Report: FC = () => {
                       <button
                         onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                         disabled={currentPage === 1}
-                        className="px-4 py-2 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-200 font-semibold rounded-lg shadow-sm hover:from-purple-100 hover:to-pink-100 dark:hover:from-purple-900 dark:hover:to-pink-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-4 py-2 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-200 font-semibold rounded-lg shadow-sm hover:from-indigo-100 hover:to-indigo-100 dark:hover:from-indigo-900 dark:hover:to-indigo-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Previous
                       </button>
@@ -443,7 +443,7 @@ const Report: FC = () => {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-sm ${
                                 currentPage === pageNum
-                                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white scale-105 shadow-lg'
+                                  ? 'bg-gradient-to-r from-indigo-600 to-indigo-600 text-white scale-105 shadow-lg'
                                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                               }`}
                             >
@@ -455,7 +455,7 @@ const Report: FC = () => {
                       <button
                         onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                         disabled={currentPage === totalPages || totalPages === 0}
-                        className="px-4 py-2 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-200 font-semibold rounded-lg shadow-sm hover:from-purple-100 hover:to-pink-100 dark:hover:from-purple-900 dark:hover:to-pink-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-4 py-2 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-200 font-semibold rounded-lg shadow-sm hover:from-indigo-100 hover:to-indigo-100 dark:hover:from-indigo-900 dark:hover:to-indigo-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Next
                       </button>
